@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, Layout } from "antd";
 
-const inter = Inter({ subsets: ["latin"] });
+
+const { Header, Content, Footer } = Layout;
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,18 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <ConfigProvider
+      direction="rtl"
       theme={{
         token: {
           // Seed Token
           colorPrimary: "rgba(115, 57, 237,  1)",
-
-          // Alias Token
-          colorBgContainer: "rgba(4, 13, 44, 1)",
+          fontFamily: "iranSans",
         },
       }}
     >
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body>{children}</body>
       </html>
     </ConfigProvider>
   );
