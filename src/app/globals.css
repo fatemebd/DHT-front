@@ -15,3 +15,7 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+@font-face {
+  font-family: "iranSans";
+  src: url("../../public/fonts/IRANSansWeb.ttf");
+}
