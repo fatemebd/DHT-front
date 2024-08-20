@@ -10,7 +10,7 @@ const Page = () => {
 
   return (
     <div>
-      <Modal className="items-end" title={fa.signin} open={signupModalOpen}>
+      <Modal className="items-end bg-secondary-1000" title={fa.signin} open={signupModalOpen} >
         <Form form={form}>
           <Form.Item label={fa.email}>
             <Input
