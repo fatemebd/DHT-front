@@ -10,14 +10,17 @@ interface LayoutProps {
 
 const AuthenticatedLayout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();
+  const user = localStorage.getItem("user");
   const router = useRouter();
 
   // Redirect to login if not authenticated
   if (status === "loading") {
     return <div>Loading...</div>;
   }
+console.log(user);
 
-  if (status === "unauthenticated") {
+  if (status === "unauthenticated" && user === null) {
+    // localStorage.setItem("user", session);
     router.push("/login");
     return null; // Prevent further rendering
   }

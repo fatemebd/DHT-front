@@ -7,32 +7,41 @@ import { GithubOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-const { Title, Paragraph, Text, Link } = Typography;
+const { Paragraph } = Typography;
 const { OTP } = Input;
 import logo from "../../../public/logo.png";
-import { usePostEmail } from "./api";
+import { usePostEmail, usePostOtp } from "./api";
 import { PreSignup } from "./api/api.types";
 import { initialEmail } from "./constants/initialEmail";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
+import { User } from "@/@types/common";
+import { Response } from "@/@types/server";
 
 const Page = () => {
   const [otpSent, setOtpSent] = useState(false);
-  const [email, setEmail] = useState<PreSignup>(initialEmail);
+  const [email, setEmail] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+
   const [loadingSignIn, setLoadingSignIn] = useState(false);
 
   const [form] = Form.useForm();
   const { data: session } = useSession();
   const { mutate: postEmailMutate, isPending: isPostEmailPending } =
     usePostEmail();
+  const { mutate: postOtpMutate, isPending: isPostOtpPending } = usePostOtp();
+  const router = useRouter();
 
   if (session) {
     redirect("/homepage");
   }
+
   const handleEmailSentSuccess = () => {
     toast.success(fa.emailSentSuccess);
     setOtpSent(true);
   };
+
   const handleEmailSentFailed = (error: unknown) => {
     if (error instanceof AxiosError) {
       toast.error(error.message);
@@ -40,67 +49,96 @@ const Page = () => {
       toast.error("An unknown error occurred");
     }
   };
+
+  const handleOtpSentSuccess = (res: Response<User>) => {
+    toast.success(fa.otpSentSuccess);
+    localStorage.setItem("user", JSON.stringify(res.data));
+    console.log(res);
+    router.push("/homepage");
+  };
+
+  const handleOtpSentFailed = (error: unknown) => {
+    if (error instanceof AxiosError) {
+      toast.error(error.message);
+    } else {
+      toast.error("An unknown error occurred");
+    }
+  };
+
   const handleSendEmail = () => {
-    postEmailMutate(email, {
-      onSuccess: handleEmailSentSuccess,
-      onError: handleEmailSentFailed,
-    });
+    postEmailMutate(
+      { email: email },
+      {
+        onSuccess: handleEmailSentSuccess,
+        onError: handleEmailSentFailed,
+      }
+    );
   };
 
   const handleGithubSignIn = async () => {
     setLoadingSignIn(true); // Start loading
     try {
-      const response = await signIn("github");
+      const res = await signIn("github");
     } finally {
       setLoadingSignIn(false); // End loading
     }
   };
 
-  const handleOtp = () => {};
+  const handleOtp = () => {
+    // signIn("credentials")
+    postOtpMutate(
+      { email: email, otp: otpCode },
+      { onSuccess: handleOtpSentSuccess, onError: handleOtpSentFailed }
+    );
+  };
 
   return (
     <Row
       justify="space-between"
-      className="bg-white   bg-opacity-10 backdrop-blur-lg w-full h-full md:h-auto md:w-[60%] md:rounded-xl rounded-xl shadow-xl  text-white p-20 flex drop-shadow-2xl"
+      className="bg-white bg-opacity-10 backdrop-blur-lg w-full h-full md:h-[70%] md:w-[60%] md:rounded-xl rounded-xl shadow-xl  text-white p-20 flex drop-shadow-2xl"
     >
-      <Col md={16}>
-        <Typography>
-          <Paragraph>{fa.hello}! :)</Paragraph>
-          <Paragraph>{fa.welcome}</Paragraph>
-          <Paragraph> {fa.thanks}😍</Paragraph>
-        </Typography>
-        <Form layout="vertical" form={form} className="w-full">
-          {!otpSent ? (
+      <Col md={15}>
+        {otpSent ? (
+          <Typography>{fa.otpText}😍</Typography>
+        ) : (
+          <Typography>
+            <Paragraph>{fa.hello}! :)</Paragraph>
+            <Paragraph>{fa.welcome}</Paragraph>
+            <Paragraph> {fa.thanks}😍</Paragraph>
+          </Typography>
+        )}
+        <Form layout="vertical" form={form} className="w-full mt-5">
+          {otpSent ? (
             <Form.Item label={fa.otp} className="w-full">
               <OTP
+                dir="ltr"
                 length={6}
                 onKeyDown={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();
                   }
                 }}
-                onChange={(e) => console.log(e)
-                }
+                onChange={(otp) => setOtpCode(otp)}
               />
             </Form.Item>
           ) : (
             <Form.Item label={fa.email}>
               <Input
                 className="text-black"
-                onChange={(e) => setEmail({ email: e.target.value })}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Item>
           )}
         </Form>
-        {/* </Modal> */}
         <Button
           className="w-full"
           type="primary"
           onClick={otpSent ? handleOtp : handleSendEmail}
+          disabled={isPostEmailPending || isPostOtpPending}
         >
-          {fa.signin}
+          {otpSent ? fa.sentOtp : fa.signin}
         </Button>
-        <Divider >{fa.or}</Divider>
+        <Divider>{fa.or}</Divider>
         <Button
           className="text-black w-full"
           icon={<GithubOutlined />}

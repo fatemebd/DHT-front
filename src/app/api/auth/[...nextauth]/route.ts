@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import type { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-
+import CredentialsProvider from "next-auth/providers/credentials";
+import axiosInstance from "@/utils/axios";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -10,8 +11,12 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET as string,
     }),
   ],
+
   callbacks: {
     async jwt({ token, user }) {
+      console.log("@@", token);
+      localStorage.setItem("user", JSON.stringify(token));
+
       return token;
     },
   },
