@@ -19,3 +19,35 @@
   font-family: "iranSans";
   src: url("../../public/fonts/IRANSansWeb.ttf");
 }
+body {
+  font-family: "iranSans" !important;
+}
+.Toastify__toast {
+  font-family: "iranSans" !important;
+  direction: rtl !important;
+  background-color: #363d56 !important; /* Blue color */
+}
+.Toastify__toast--success .Toastify__progress-bar-theme--dark {
+  background-color: #037f3d !important;
+}
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #037f3d !important; /* Change this to your desired color */
+}
+
+.Toastify__toast--error .Toastify__progress-bar-theme--dark {
+  background-color: #FF0000 !important;
+}
+.Toastify__toast--error .Toastify__toast-icon svg {
+  fill: #FF0000 !important; /* Change this to your desired color */
+}
+
+.ant-otp {
+  width: 100% !important;
+  height: 70%;
+  font-weight: 800;
+}
+
+:where(.css-dev-only-do-not-override-18zpel0).ant-input{
+  color:black !important;
+
+}

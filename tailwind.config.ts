@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backdropBlur: {
+        xs: "2px",
+      },
+      fontFamily: {
+        custom: ["Your Custom Font", "Arial", "sans-serif"],
+      },
       colors: {
         primary: {
           100: "rgba(115, 57, 237,  0.1)",
