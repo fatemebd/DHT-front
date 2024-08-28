@@ -2,17 +2,16 @@
 import { Button, Col, Divider, Form, Input, Row, Typography } from "antd";
 import React, { useState } from "react";
 import fa from "./fa.json";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { GithubOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 const { Paragraph } = Typography;
 const { OTP } = Input;
 import logo from "../../../public/logo.png";
+import thrilled from "../../../public/thrilled.png";
+
 import { usePostEmail, usePostOtp } from "./api";
-import { PreSignup } from "./api/api.types";
-import { initialEmail } from "./constants/initialEmail";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -104,7 +103,7 @@ const Page = () => {
           <Typography>
             <Paragraph>{fa.hello}! :)</Paragraph>
             <Paragraph>{fa.welcome}</Paragraph>
-            <Paragraph> {fa.thanks}😍</Paragraph>
+            <Paragraph>{fa.thanks}😍</Paragraph>
           </Typography>
         )}
         <Form layout="vertical" form={form} className="w-full mt-5">

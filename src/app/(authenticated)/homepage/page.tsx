@@ -52,7 +52,7 @@ const Page = () => {
         <Col
           md={{ span: 6, order: 2 }}
           xs={{ span: 24, order: 2 }}
-          className="bg-white opacity-10 rounded-lg "
+          className="bg-white bg-opacity-10 rounded-lg backdrop-blur-lg"
         >
           <LeftSide />
         </Col>
