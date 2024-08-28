@@ -19,23 +19,25 @@ const Page = () => {
     }
   };
   return (
-    <div className="px-40">
+    <div className="px-[5%]">
       <Header />
-      <Row justify="space-between" className="  h-screen w-full">
-        <Col md={6} className="bg-white opacity-10 rounded-lg">
+      <Row gutter={[16,16]} justify="space-between" className="  h-full w-full">
+        <Col md={6} xs={{span:24, order:1}} className="bg-white opacity-10 rounded-lg">
           {/* to do list */}
           to do list
         </Col>
-        <Col md={10}>
+        <Col className="px-0" md={12} xs={{span:24, order:0}}         
+>
           <Search
             placeholder={fa.googleSearch}
             allowClear
             enterButton={<SearchOutlined />}
-            size="large"
+            // size="large"
             onSearch={handleSearch}
+            className="w-full h-fit p-0"
           />
         </Col>
-        <Col md={6} className="bg-white opacity-10 rounded-lg">
+        <Col md={6} xs={{span:24, order:2}} className="bg-white opacity-10 rounded-lg ">
           {/* mood tracker and habits*/}
           mood tracker
         </Col>
