@@ -1,8 +1,8 @@
-import jalaali from 'jalaali-js';
+import jalaali from "jalaali-js";
 
 export const getFormattedDateTime = (
   date: Date | string | number | null | undefined,
-  shouldPersian = true,
+  shouldPersian = true
 ) => {
   if (!date) {
     return null;
