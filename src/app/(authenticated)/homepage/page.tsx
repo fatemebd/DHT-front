@@ -8,6 +8,7 @@ import fa from "./fa.json";
 import LeftSide from "./components/LeftSide";
 import Task from "./components/Task";
 import Habit from "./components/Habit";
+import HabitHistory from "./components/HabitHistory";
 const { useBreakpoint } = Grid;
 
 const Page = () => {
@@ -44,7 +45,7 @@ const Page = () => {
       <Header />
       <Row gutter={[16, 16]} justify="space-between" className="  w-full">
         <Col
-          md={{ span: 8, order: 0 }}
+          md={{ span: 6, order: 0 }}
           xs={{ span: 24, order: 1 }}
           className="bg-white bg-opacity-10 rounded-lg h-fit"
         >
@@ -58,7 +59,7 @@ const Page = () => {
         </Col>
         <Col
           className="px-0"
-          md={{ span: 7, order: 1 }}
+          md={{ span: 9, order: 1 }}
           xs={{ span: 24, order: 0 }}
         >
           <Search
@@ -67,8 +68,9 @@ const Page = () => {
             enterButton={<SearchOutlined />}
             size={screens.xs ? "small" : "large"}
             onSearch={handleSearch}
-            className="w-full h-fit p-0"
+            className="w-full h-fit p-0 text-black"
           />
+          <HabitHistory />
         </Col>
         <Col
           md={{ span: 8, order: 2 }}
