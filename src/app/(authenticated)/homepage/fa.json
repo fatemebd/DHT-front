@@ -1,3 +1,8 @@
 {
-    "googleSearch" : "جستجو در گوگل..."
+    "googleSearch" : "جستجو در گوگل...",
+    "thrilled":"هیجان‌زده",
+    "happy":"خوشحال",
+    "neutral":"خنثی",
+    "sad":"ناراحت",
+    "verySad":"افسرده"
 }
