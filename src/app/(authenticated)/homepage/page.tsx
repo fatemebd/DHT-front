@@ -14,6 +14,7 @@ import { getMessaging, onMessage } from "firebase/messaging";
 import firebaseApp from "@/utils/firebase";
 import useFcmToken from "@/utils/hooks/useFCMToken";
 import { useGetToDoList } from "./api";
+import Reminder from "./components/Reminder";
 const { useBreakpoint } = Grid;
 
 const Page = () => {
@@ -63,22 +64,42 @@ const Page = () => {
         <Col
           md={{ span: 6, order: 0 }}
           xs={{ span: 24, order: 1 }}
-          className="bg-white bg-opacity-10 rounded-lg h-fit p-2"
+          // className="bg-white bg-opacity-10 rounded-lg h-fit p-2"
         >
-          <Typography className="text-MD font-semibold">
-            {fa.toDoList}
-          </Typography>
-          {toDoListData &&
-            toDoListData.map((task, index) => (
-              <Habit
-                key={index}
-                id={task.id}
-                title={task.title}
-                description={task.description}
-                deadline={task.deadline}
-                done={task.done}
-              />
-            ))}
+          {" "}
+          <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 ">
+            <Typography className="text-md font-semibold">
+              {fa.toDoList}
+            </Typography>
+            {toDoListData &&
+              toDoListData.map((task, index) => (
+                <Habit
+                  key={index}
+                  id={task.id}
+                  title={task.title}
+                  description={task.description}
+                  deadline={task.deadline}
+                  done={task.done}
+                />
+              ))}
+          </div>
+          <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 ">
+            <Typography className="text-md font-semibold">
+              عادت‌های امروز
+            </Typography>
+            <Reminder
+              id={1}
+              title={"Reminder1"}
+              description={"Reminder1"}
+              deadline="امروز 15:30"
+            />
+            <Reminder
+              id={2}
+              title={"Reminder2"}
+              description={"Reminder2"}
+              deadline="امروز 17:00"
+            />
+          </div>
         </Col>
         <Col
           className="px-0"
@@ -98,7 +119,8 @@ const Page = () => {
         <Col
           md={{ span: 8, order: 2 }}
           xs={{ span: 24, order: 2 }}
-          className="bg-white bg-opacity-10 rounded-lg backdrop-blur-lg  h-fit"
+          className="p-0"
+          // className="bg-white bg-opacity-10 rounded-lg backdrop-blur-lg  h-fit"
         >
           <LeftSide />
         </Col>

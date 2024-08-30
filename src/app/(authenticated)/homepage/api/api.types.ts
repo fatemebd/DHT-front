@@ -5,3 +5,4 @@ export interface Task {
   done: boolean;
   deadline: string;
 }
+export type Habit = Omit <Task, "done">

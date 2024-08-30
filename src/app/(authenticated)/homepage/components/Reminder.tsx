@@ -5,7 +5,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
 import { Habit } from "../api/api.types";
 
-const Habit = ({ id, title, description, deadline }: Habit) => {
+const Reminder = ({ id, title, description, deadline }: Habit) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -16,16 +16,12 @@ const Habit = ({ id, title, description, deadline }: Habit) => {
       <Row justify="space-between" align="middle">
         <Col span={8} className="flex items-center gap-2">
           {/* <Checkbox checked={done} disabled={done} /> */}
-          <Typography
-            className={ "text-white"}
-          >
-            {title}
-          </Typography>
+          <Typography className={"text-white"}>{title}</Typography>
         </Col>
 
         <Col span={8}>
           <Typography className="text-gray-700 font-semibold text-end  text-[10px]">
-            {/* {getFormattedDateTime(deadline)} */}
+            {deadline}
           </Typography>
         </Col>
       </Row>
@@ -47,4 +43,4 @@ const Habit = ({ id, title, description, deadline }: Habit) => {
   );
 };
 
-export default Habit;
+export default Reminder;
