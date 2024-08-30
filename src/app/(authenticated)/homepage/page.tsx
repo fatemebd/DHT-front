@@ -23,17 +23,24 @@ const Page = () => {
   const [form] = Form.useForm();
   const { Search } = Input;
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
+
   // Use the token as needed
-  fcmToken && console.log("FCM token:", notificationPermissionStatus);
+  fcmToken && console.log("FCM token:", fcmToken);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       const messaging = getMessaging(firebaseApp);
       const unsubscribe = onMessage(messaging, (payload) => {
-        console.log("Foreground push notification received:", payload);
-        // Handle the received push notification while the app is in the foreground
-        // You can display a notification or update the UI based on the payload
+        // console.log("Foreground push notification received:", payload);
+         navigator.serviceWorker.ready.then((registration) => {
+           registration.showNotification("Vibration Sample", {
+             body: "Buzz! Buzz!",
+             icon: "/logo.png",
+             vibrate: [200, 100, 200, 100, 200, 100, 200],
+             tag: "vibration-sample",
+           });
+         });
       });
       return () => {
         unsubscribe(); // Unsubscribe from the onMessage event
@@ -48,9 +55,6 @@ const Page = () => {
       )}`;
     }
   };
-  // console.log(messaging);
-
-  // requestUserPermission(messaging);
   interface HabitProps {
     id: number;
     title: string;
