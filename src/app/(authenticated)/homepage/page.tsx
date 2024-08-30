@@ -1,14 +1,18 @@
 "use client";
 import { Grid, Col, Form, Input, Modal, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import Header from "./components/Header";
 import { SearchOutlined } from "@ant-design/icons";
 import fa from "./fa.json";
 import LeftSide from "./components/LeftSide";
+// import { messaging } from "@/utils/firebase";
 import Task from "./components/Task";
 import Habit from "./components/Habit";
 import HabitHistory from "./components/HabitHistory";
+import { getMessaging, onMessage } from "firebase/messaging";
+import firebaseApp from "@/utils/firebase";
+import useFcmToken from "@/utils/hooks/useFCMToken";
 const { useBreakpoint } = Grid;
 
 const Page = () => {
@@ -18,6 +22,31 @@ const Page = () => {
   const [data, setData] = useState({});
   const [form] = Form.useForm();
   const { Search } = Input;
+  const { fcmToken, notificationPermissionStatus } = useFcmToken();
+
+  // Use the token as needed
+  fcmToken && console.log("FCM token:", fcmToken);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const messaging = getMessaging(firebaseApp);
+      const unsubscribe = onMessage(messaging, (payload) => {
+        // console.log("Foreground push notification received:", payload);
+         navigator.serviceWorker.ready.then((registration) => {
+           registration.showNotification("Vibration Sample", {
+             body: "Buzz! Buzz!",
+             icon: "/logo.png",
+             vibrate: [200, 100, 200, 100, 200, 100, 200],
+             tag: "vibration-sample",
+           });
+         });
+      });
+      return () => {
+        unsubscribe(); // Unsubscribe from the onMessage event
+      };
+    }
+  }, []);
 
   const handleSearch = (value: string) => {
     if (value) {
@@ -42,6 +71,8 @@ const Page = () => {
   };
   return (
     <div className="px-[5%]">
+      {/* <FcmTokenComp /> */}
+
       <Header />
       <Row gutter={[16, 16]} justify="space-between" className="  w-full">
         <Col
