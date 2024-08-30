@@ -2,17 +2,15 @@
 import { Button, Col, Divider, Form, Input, Row, Typography } from "antd";
 import React, { useState } from "react";
 import fa from "./fa.json";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { GithubOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 const { Paragraph } = Typography;
 const { OTP } = Input;
 import logo from "../../../public/logo.png";
+
 import { usePostEmail, usePostOtp } from "./api";
-import { PreSignup } from "./api/api.types";
-import { initialEmail } from "./constants/initialEmail";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -27,14 +25,17 @@ const Page = () => {
   const [loadingSignIn, setLoadingSignIn] = useState(false);
 
   const [form] = Form.useForm();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const user = localStorage.getItem("user");
+
   const { mutate: postEmailMutate, isPending: isPostEmailPending } =
     usePostEmail();
   const { mutate: postOtpMutate, isPending: isPostOtpPending } = usePostOtp();
   const router = useRouter();
 
-  if (session) {
-    redirect("/homepage");
+  if (status === "authenticated" || user) {
+    router.push("/homepage");
+    return null;
   }
 
   const handleEmailSentSuccess = () => {
@@ -104,12 +105,12 @@ const Page = () => {
           <Typography>
             <Paragraph>{fa.hello}! :)</Paragraph>
             <Paragraph>{fa.welcome}</Paragraph>
-            <Paragraph> {fa.thanks}😍</Paragraph>
+            <Paragraph>{fa.thanks}😍</Paragraph>
           </Typography>
         )}
         <Form layout="vertical" form={form} className="w-full mt-5">
           {otpSent ? (
-            <Form.Item label={fa.otp} className="w-full">
+            <Form.Item label={fa.otp} className="w-ful">
               <OTP
                 dir="ltr"
                 length={6}
