@@ -9,7 +9,6 @@ import { redirect } from "next/navigation";
 const { Paragraph } = Typography;
 const { OTP } = Input;
 import logo from "../../../public/logo.png";
-import thrilled from "../../../public/thrilled.png";
 
 import { usePostEmail, usePostOtp } from "./api";
 import { toast } from "react-toastify";
@@ -26,14 +25,17 @@ const Page = () => {
   const [loadingSignIn, setLoadingSignIn] = useState(false);
 
   const [form] = Form.useForm();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const user = localStorage.getItem("user");
+
   const { mutate: postEmailMutate, isPending: isPostEmailPending } =
     usePostEmail();
   const { mutate: postOtpMutate, isPending: isPostOtpPending } = usePostOtp();
   const router = useRouter();
 
-  if (session) {
-    redirect("/homepage");
+  if (status === "authenticated" || user) {
+    router.push("/homepage");
+    return null;
   }
 
   const handleEmailSentSuccess = () => {
@@ -108,7 +110,7 @@ const Page = () => {
         )}
         <Form layout="vertical" form={form} className="w-full mt-5">
           {otpSent ? (
-            <Form.Item label={fa.otp} className="w-full">
+            <Form.Item label={fa.otp} className="w-ful">
               <OTP
                 dir="ltr"
                 length={6}

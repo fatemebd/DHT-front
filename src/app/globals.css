@@ -54,3 +54,10 @@ body {
 .ant-col{
   padding: 0;
 }
+:where(.css-dev-only-do-not-override-1c1mmdz).ant-input-group {
+  color: black !important;
+}
+.css-dev-only-do-not-override-1c1mmdz.ant-input {
+    /* Your CSS properties */
+    color: black;  /* Example property */
+}
