@@ -15,6 +15,7 @@ import firebaseApp from "@/utils/firebase";
 import useFcmToken from "@/utils/hooks/useFCMToken";
 import { useGetToDoList } from "./api";
 import Reminder from "./components/Reminder";
+import { useGetUserDetail } from "../api";
 const { useBreakpoint } = Grid;
 
 const Page = () => {
@@ -26,6 +27,7 @@ const Page = () => {
   const { Search } = Input;
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
   const { data: toDoListData, isLoading } = useGetToDoList();
+  const { data: user, isLoading: isUserLoading } = useGetUserDetail();
 
   // Use the token as needed
   fcmToken && console.log("FCM token:", fcmToken);
@@ -59,7 +61,7 @@ const Page = () => {
     <div className="px-[5%]">
       {/* <FcmTokenComp /> */}
 
-      <Header />
+      { <Header />}
       <Row gutter={[16, 16]} justify="space-between" className="  w-full">
         <Col
           md={{ span: 6, order: 0 }}
