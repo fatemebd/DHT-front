@@ -65,3 +65,9 @@ body {
       color: black;  /* Example property */
 
 }
+.ant-picker-panel-container{
+  background-color: rgba(3, 6, 55, 1) !important;
+}
+.ant-picker-dropdown .ant-picker-header button{
+  color: #fff !important;
+}

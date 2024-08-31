@@ -1,34 +1,33 @@
 "use client";
 
 import React, { ReactNode, useState } from "react";
-import { Button, Layout, Menu, theme, Typography } from "antd";
+import { Layout, Menu, theme, Typography } from "antd";
 import { MdChevronLeft } from "react-icons/md";
 import { sidebarItems } from "./constants/sidebarMenu";
 import Score from "@/components/Score";
-const { Header, Sider, Content } = Layout;
 import fa from "./fa.json";
 import { usePathname, useRouter } from "next/navigation";
+import { useGetUserDetail } from "../api";
+const { Header, Sider, Content } = Layout;
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-
 const DashboardLayout = ({ children }: LayoutProps) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
   const handleRedirect = (href: string) => {
-    console.log(href);
-
-    // router.push(href)
     const formattedHref = href.startsWith("/") ? href : `/dashboard/${href}`;
     router.replace(formattedHref);
   };
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
+  const { data: user,  } = useGetUserDetail();
+
   return (
     <Layout className="bg-secondary-1000 h-full">
       <Sider
@@ -65,7 +64,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
       <Layout className="bg-secondary-1000 m-6 space-y-5">
         <Header className="bg-[#1E2642] rounded-lg p-3 flex justify-between items-center shadow-lg">
           <Typography>{fa.hello} فاطمه !</Typography>
-          <Score score={5} />
+          <Score score={user?.score} />
         </Header>
         <Content
           className="bg-[#1E2642] shadow-lg"

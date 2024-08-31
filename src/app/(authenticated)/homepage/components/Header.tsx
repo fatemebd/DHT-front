@@ -7,9 +7,12 @@ import { MdOutlineSportsMartialArts } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
 import Link from "next/link";
 import { SearchOutlined } from "@ant-design/icons";
-
+import { useGetUserDetail } from "../../api";
+import Score from "@/components/Score";
 
 const Header = () => {
+  const { data: user, isLoading } = useGetUserDetail();
+
   return (
     <Row justify="space-between" className="my-5 w-full">
       <Col md={8} className="flex items-center gap-5 ">
@@ -18,9 +21,10 @@ const Header = () => {
           {fa.friend}
         </Typography>
       </Col>
-    
+
       <Col md={8} className="flex items-center gap-5 justify-end">
-        <Link href="/dashboard">
+        <Score score={user?.score } />
+        <Link href="/dashboard/profile">
           <FaUserLarge className="text-white opacity-20 text-2xl" />
         </Link>
         <Link href="/">

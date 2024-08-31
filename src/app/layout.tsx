@@ -25,12 +25,12 @@ export default function RootLayout({
           theme={{
             components: {
               Form: { labelColor: "#fff" },
-               Menu: {
-      darkItemSelectedBg: "transparent",
-      darkItemSelectedColor: "rgba(115, 57, 237,  1)",
-    },
+              Menu: {
+                darkItemSelectedBg: "transparent",
+                darkItemSelectedColor: "rgba(115, 57, 237,  1)",
+              },
             },
-            
+
             token: {
               // Seed Token
               colorPrimary: "rgba(115, 57, 237,  1)",
@@ -42,7 +42,7 @@ export default function RootLayout({
           }}
         >
           <SessionProvider session={session}>
-            <ToastContainer theme="dark"/>
+            <ToastContainer theme="dark" />
             <QueryClientProvider>{children} </QueryClientProvider>
           </SessionProvider>
         </ConfigProvider>
