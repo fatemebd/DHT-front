@@ -1,14 +1,25 @@
 "use client"
 
 import React, { useState } from 'react';
-
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Layout, Menu, theme, Typography } from 'antd';
 import { MdChevronLeft } from 'react-icons/md';
 import { sidebarItems } from './constants/sidebarMenu';
+import Score from '@/components/Score';
 const { Header, Sider, Content } = Layout;
+import fa from "./fa.json"
+import { redirect, useRouter } from 'next/navigation';
 
 const DashboardLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
+const router = useRouter()
+     const handleRedirect = (href: string) => {
+console.log(href);
+
+// router.push(href)
+    const formattedHref = href.startsWith("/") ? href : `${href}`;
+    router.push(formattedHref);
+  };
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -34,16 +45,21 @@ const DashboardLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          className="bg-[#1E2642] h-full text-sm pt-5 "
+          className="bg-[#1E2642] h-full text-sm pt-5 space-y-5 "
           items={sidebarItems}
+                  onClick={(e) => handleRedirect(e.key)}
+
         />
       </Sider>
       <Layout className="bg-secondary-1000 m-6 space-y-5">
-        <Header className="bg-[#1E2642] rounded-lg" >
-         
+        <Header className="bg-[#1E2642] rounded-lg p-3 flex justify-between items-center shadow-lg" >
+            <Typography>
+                {fa.hello} فاطمه !
+            </Typography>
+        <Score score={5} />
         </Header>
         <Content
-        className="bg-[#1E2642] "
+        className="bg-[#1E2642] shadow-lg"
           style={{
             padding: 24,
             minHeight: 280,

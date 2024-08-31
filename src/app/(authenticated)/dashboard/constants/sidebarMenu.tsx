@@ -4,27 +4,39 @@ import {
 } from '@ant-design/icons';
 import { IoAddOutline,IoReaderOutline,IoBarChartOutline } from "react-icons/io5";
 import fa from "../fa.json"
+import { SiProbot } from "react-icons/si";
+import { MenuItemProps } from 'antd/lib/menu/MenuItem';
 
 
-export const sidebarItems = [
+
+export const sidebarItems= [
             {
-              key: '1',
+              key: 'profile',
               icon: <UserOutlined className="text-2xl"/>,
               label: fa.profile,
             },
             {
-              key: '2',
+              key: "suggest-habit",
               icon: <IoReaderOutline className="text-2xl"/>,
               label: fa.suggestHabit,
+
             },
             {
-              key: '3',
+              key: 'statics',
               icon: <IoBarChartOutline className="text-2xl"/>,
               label: fa.statics,
+
             },
               {
-              key: '4',
+              key: "add-habit",
               icon: <IoAddOutline className="text-2xl"/>,
               label: fa.addHabit,
+
+            },
+              {
+              key:"doost-club",
+              icon: <SiProbot className="text-2xl"/>,
+              label: fa.club,
+
             },
           ]
