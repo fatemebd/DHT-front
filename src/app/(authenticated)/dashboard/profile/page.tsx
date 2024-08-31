@@ -1,9 +1,11 @@
-import React from 'react'
-
+import { Form } from "antd";
+import React from "react";
+const { useForm } = Form;
 const Page = () => {
-  return (
-    <div>profiel</div>
-  )
-}
+  const [form] = useForm();
+  return <Form form={form}>
+    
+  </Form>;
+};
 
-export default Page
+export default Page;
