@@ -46,7 +46,7 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
     return <Spin size="large" />;
   }
 
-  return <main className="mx-3 mt-5 h-full w-full">{children}</main>;
+  return <main className="h-full w-full">{children}</main>;
 };
 
 export default AuthenticatedLayout;

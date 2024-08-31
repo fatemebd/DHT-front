@@ -25,6 +25,10 @@ export default function RootLayout({
           theme={{
             components: {
               Form: { labelColor: "#fff" },
+               Menu: {
+      darkItemSelectedBg: "transparent",
+      darkItemSelectedColor: "rgba(115, 57, 237,  1)",
+    },
             },
             
             token: {
