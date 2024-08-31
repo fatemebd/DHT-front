@@ -24,6 +24,9 @@ declare module "jalaali-js" {
   }
 
   export interface GregorianDate {
+    gm: number;
+    gd: number | undefined;
+    gy: number;
     year: number;
     month: number;
     day: number;

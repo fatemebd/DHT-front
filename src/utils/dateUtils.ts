@@ -1,4 +1,5 @@
 import jalaali from "jalaali-js";
+import { toGregorian } from "jalaali-js";
 
 export const getFormattedDateTime = (
   date: Date | string | number | null | undefined,
@@ -46,3 +47,24 @@ export const getFormattedDateTime = (
 
   return formattedDateTime;
 };
+
+export function convertJalaaliToGregorian(jalaaliDate: string): string {
+    // Split the Jalaali date string into its components
+    const parts = jalaaliDate.split('-').map(Number);
+    if (parts.length !== 3) {
+        throw new Error('Invalid Jalaali date format. Expected format: YYYY-MM-DD');
+    }
+
+    // Destructure the year, month, and day from the parts array
+    const [jYear, jMonth, jDay] = parts;
+
+    // Convert the Jalaali date to Gregorian
+    const { gy, gm, gd } = toGregorian(jYear, jMonth, jDay);
+
+    // Format the Gregorian date as YYYY-MM-DD
+    const gregorianDate = `${gy}-${gm.toString().padStart(2, '0')}-${gd!.toString().padStart(2, '0')}`;
+    return gregorianDate;
+}
+
+// Example usage
+console.log(convertJalaaliToGregorian('1403-06-12'));  // Outputs: "2024-08-31"
