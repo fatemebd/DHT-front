@@ -1,5 +1,5 @@
 "use client";
-import { Grid, Col, Form, Input, Modal, Row } from "antd";
+import { Grid, Col, Form, Input, Modal, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
 import Header from "./components/Header";
@@ -7,12 +7,14 @@ import { SearchOutlined } from "@ant-design/icons";
 import fa from "./fa.json";
 import LeftSide from "./components/LeftSide";
 // import { messaging } from "@/utils/firebase";
-import Task from "./components/Task";
-import Habit from "./components/Habit";
+import Task from "./components/Habit";
+import Habit from "./components/Task";
 import HabitHistory from "./components/HabitHistory";
 import { getMessaging, onMessage } from "firebase/messaging";
 import firebaseApp from "@/utils/firebase";
 import useFcmToken from "@/utils/hooks/useFCMToken";
+import { useGetToDoList } from "./api";
+import Reminder from "./components/Reminder";
 const { useBreakpoint } = Grid;
 
 const Page = () => {
@@ -23,6 +25,7 @@ const Page = () => {
   const [form] = Form.useForm();
   const { Search } = Input;
   const { fcmToken, notificationPermissionStatus } = useFcmToken();
+  const { data: toDoListData, isLoading } = useGetToDoList();
 
   // Use the token as needed
   fcmToken && console.log("FCM token:", fcmToken);
@@ -31,17 +34,7 @@ const Page = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       const messaging = getMessaging(firebaseApp);
-      const unsubscribe = onMessage(messaging, (payload) => {
-        // console.log("Foreground push notification received:", payload);
-         navigator.serviceWorker.ready.then((registration) => {
-           registration.showNotification("Vibration Sample", {
-             body: "Buzz! Buzz!",
-             icon: "/logo.png",
-             vibrate: [200, 100, 200, 100, 200, 100, 200],
-             tag: "vibration-sample",
-           });
-         });
-      });
+      const unsubscribe = onMessage(messaging, (payload) => {});
       return () => {
         unsubscribe(); // Unsubscribe from the onMessage event
       };
@@ -55,14 +48,7 @@ const Page = () => {
       )}`;
     }
   };
-  interface HabitProps {
-    id: number;
-    title: string;
-    description: string;
-    done: boolean;
-    deadline: string;
-  }
-  const dataa: HabitProps = {
+  const dataa = {
     id: 1,
     title: "task1",
     description: "des",
@@ -78,15 +64,42 @@ const Page = () => {
         <Col
           md={{ span: 6, order: 0 }}
           xs={{ span: 24, order: 1 }}
-          className="bg-white bg-opacity-10 rounded-lg h-fit"
+          // className="bg-white bg-opacity-10 rounded-lg h-fit p-2"
         >
-          <Habit
-            id={dataa.id}
-            title={dataa.title}
-            description={dataa.description}
-            deadline={dataa.deadline}
-            done={dataa.done}
-          />
+          {" "}
+          <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 ">
+            <Typography className="text-md font-semibold">
+              {fa.toDoList}
+            </Typography>
+            {toDoListData &&
+              toDoListData.map((task, index) => (
+                <Habit
+                  key={index}
+                  id={task.id}
+                  title={task.title}
+                  description={task.description}
+                  deadline={task.deadline}
+                  done={task.done}
+                />
+              ))}
+          </div>
+          <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 ">
+            <Typography className="text-md font-semibold">
+              عادت‌های امروز
+            </Typography>
+            <Reminder
+              id={1}
+              title={"Reminder1"}
+              description={"Reminder1"}
+              deadline="امروز 15:30"
+            />
+            <Reminder
+              id={2}
+              title={"Reminder2"}
+              description={"Reminder2"}
+              deadline="امروز 17:00"
+            />
+          </div>
         </Col>
         <Col
           className="px-0"
@@ -106,7 +119,8 @@ const Page = () => {
         <Col
           md={{ span: 8, order: 2 }}
           xs={{ span: 24, order: 2 }}
-          className="bg-white bg-opacity-10 rounded-lg backdrop-blur-lg  h-fit"
+          className="p-0"
+          // className="bg-white bg-opacity-10 rounded-lg backdrop-blur-lg  h-fit"
         >
           <LeftSide />
         </Col>
