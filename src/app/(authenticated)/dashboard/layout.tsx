@@ -75,7 +75,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
           <Score score={user?.score} />
         </Header>
         <Content
-          className="bg-[#1E2642] shadow-lg"
+          className="bg-[#1E2642] shadow-lg pb-15"
           style={{
             padding: 24,
             minHeight: 280,

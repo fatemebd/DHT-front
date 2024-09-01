@@ -124,10 +124,7 @@ const Page = () => {
             </Form.Item>
           ) : (
             <Form.Item label={fa.email}>
-              <Input
-                className="text-black"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <Input onChange={(e) => setEmail(e.target.value)} />
             </Form.Item>
           )}
         </Form>
@@ -141,7 +138,7 @@ const Page = () => {
         </Button>
         <Divider>{fa.or}</Divider>
         <Button
-          className="text-black w-full"
+          className=" w-full"
           icon={<GithubOutlined />}
           onClick={handleGithubSignIn}
           disabled={loadingSignIn}

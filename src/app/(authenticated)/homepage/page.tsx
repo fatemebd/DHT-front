@@ -89,7 +89,7 @@ const Page = () => {
             <Typography className="text-md font-semibold">
               عادت‌های امروز
             </Typography>
-            <Reminder
+            {/* <Reminder
               id={1}
               title={"Reminder1"}
               description={"Reminder1"}
@@ -100,7 +100,7 @@ const Page = () => {
               title={"Reminder2"}
               description={"Reminder2"}
               deadline="امروز 17:00"
-            />
+            /> */}
           </div>
         </Col>
         <Col

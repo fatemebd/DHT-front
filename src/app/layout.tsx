@@ -29,6 +29,13 @@ export default function RootLayout({
                 darkItemSelectedBg: "transparent",
                 darkItemSelectedColor: "rgba(115, 57, 237,  1)",
               },
+              InputNumber: {
+                colorText: "black",
+              },
+              Input: {
+                colorText: "black",
+              
+              },
             },
 
             token: {
