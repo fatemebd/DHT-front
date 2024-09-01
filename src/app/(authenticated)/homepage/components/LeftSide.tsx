@@ -1,5 +1,4 @@
 import { Typography } from "antd";
-import Habit from "./Habit";
 import MoodTracker from "./MoodTracker";
 
 const LeftSide = () => {
@@ -10,7 +9,7 @@ const LeftSide = () => {
         <Typography className="text-md font-semibold">
           عادت‌های امروز
         </Typography>
-        <Habit
+        {/* <Habit
           id={1}
           title={"habit1"}
           description={"habit1"}
@@ -21,7 +20,7 @@ const LeftSide = () => {
           title={"habit2"}
           description={"habit2"}
           deadline={"task.deadline"}
-        />
+        /> */}
       </div>
     </>
   );

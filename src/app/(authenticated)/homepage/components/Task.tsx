@@ -3,7 +3,7 @@ import { Button, Checkbox, Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import { Task } from "../api/api.types";
+import type{ Task } from "../api/api.types";
 
 
 

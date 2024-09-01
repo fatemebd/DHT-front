@@ -1,11 +1,10 @@
-import { getFormattedDateTime } from "@/utils/dateUtils";
-import { Button, Checkbox, Col, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import { Habit } from "../api/api.types";
+import type { Habit } from "../api/api.types";
 
-const Habit = ({ id, name, description, deadline }: Habit) => {
+const HabitComponent = ({ id, name, description, deadline }: Habit) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -16,11 +15,7 @@ const Habit = ({ id, name, description, deadline }: Habit) => {
       <Row justify="space-between" align="middle">
         <Col span={8} className="flex items-center gap-2">
           {/* <Checkbox checked={done} disabled={done} /> */}
-          <Typography
-            className={ "text-white"}
-          >
-            {name}
-          </Typography>
+          <Typography className={"text-white"}>{name}</Typography>
         </Col>
 
         <Col span={8}>
@@ -47,4 +42,4 @@ const Habit = ({ id, name, description, deadline }: Habit) => {
   );
 };
 
-export default Habit;
+export default HabitComponent;
