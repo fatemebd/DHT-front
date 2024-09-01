@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { type ReactNode, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Spin } from "antd";
@@ -23,22 +23,22 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
               // console.log("Service worker updated");
             })
             .catch((err) => {
-              console.error("Failed to update service worker:", err);
+              // console.error("Failed to update service worker:", err);
             });
         })
         .catch((err) => {
-          console.error("Service worker registration failed, error:", err);
+          // console.error("Service worker registration failed, error:", err);
         });
     }
   }, []);
   const router = useRouter();
   if (typeof localStorage !== "undefined") {
     const user = localStorage.getItem("user");
+    const startWork = localStorage.getItem("startWork");
     if (status === "unauthenticated" && user === null) {
       router.push("/login");
       return null; // Prevent further rendering
     }
-
   }
   // Redirect to login if not authenticated
   if (status === "loading") {

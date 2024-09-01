@@ -3,7 +3,7 @@ import type { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import axios from "@/utils/axios"; // Ensure this import correctly references your axios instance
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.NEXT_PUBLIC_GITHUB_ID as string,
@@ -12,14 +12,6 @@ export const authOptions: AuthOptions = {
   ],
 
   callbacks: {
-    async signIn({ user, account }) {
-      if (account!.provider === "github") {
-        // Store the token temporarily in the user object
-        // user.accessToken = account!.accessToken;
-      }
-      return true; // Return true to complete the sign-in process
-    },
-
     async jwt({ token, user }) {
       if (user?.accessToken) {
         // This should only occur on the initial login
@@ -31,18 +23,10 @@ export const authOptions: AuthOptions = {
             token: user.accessToken,
           });
         } catch (error) {
-          console.error("Error sending token to /github/", error);
+          // console.error("Error sending token to /github/", error);
         }
       }
       return token;
-    },
-
-    async session({ session, token }) {
-      if (token.accessToken) {
-        // Append the token to the session for client-side use if needed
-        // session.accessToken = token.accessToken;
-      }
-      return session;
     },
   },
 };

@@ -11,10 +11,10 @@ export default function RootLayout({
   session,
 }: Readonly<{
   children: React.ReactNode;
-  session: any;
+  session: never;
 }>) {
   return (
-    <html>
+    <html lang="fa">
       <body
         dir="rtl"
         className="h-screen flex justify-center items-center bg-secondary-1000"
@@ -34,7 +34,6 @@ export default function RootLayout({
               },
               Input: {
                 colorText: "black",
-              
               },
             },
 
