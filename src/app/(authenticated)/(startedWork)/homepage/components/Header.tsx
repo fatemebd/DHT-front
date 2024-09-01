@@ -1,13 +1,12 @@
-import { Avatar, Button, Col, Input, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import React from "react";
-import logo from "../../../../../public/logo.png";
+import logo from "../../../../../../public/logo.png";
 import Image from "next/image";
 import fa from "@/fa.json";
 import { MdOutlineSportsMartialArts } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
 import Link from "next/link";
-import { SearchOutlined } from "@ant-design/icons";
-import { useGetUserDetail } from "../../(startedWork)/api";
+import { useGetUserDetail } from "../../api";
 import Score from "@/components/Score";
 
 const Header = () => {

@@ -1,9 +1,8 @@
-import { getFormattedDateTime } from "@/utils/dateUtils";
-import { Button, Checkbox, Col, Row, Typography } from "antd";
+import {  Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import { Habit } from "../api/api.types";
+import type{ Habit } from "../api/api.types";
 
 const Reminder = ({ id, name, description, deadline }: Habit) => {
   const [showContent, setShowContent] = useState(false);

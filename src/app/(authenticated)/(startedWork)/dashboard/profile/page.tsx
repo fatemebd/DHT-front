@@ -6,7 +6,7 @@ import {
   Input,
   Button,
   Upload,
-  DatePickerProps,
+  type DatePickerProps,
   Avatar,
   Typography,
   Spin,
@@ -18,12 +18,12 @@ import {
 } from "antd-jalali";
 import { convertJalaaliToGregorian } from "@/utils/dateUtils";
 import fa from "./fa.json";
-import { useGetUserDetail } from "../../(startedWork)/api";
 import { useUpdateUser } from "./api";
 import { toast } from "react-toastify";
-import { User } from "@/@types/common";
+import type { User } from "@/@types/common";
 import { AxiosError } from "axios";
 import globalFa from "@/fa.json";
+import { useGetUserDetail } from "../../api";
 
 const Page = () => {
   const [form] = Form.useForm();
@@ -63,7 +63,6 @@ const Page = () => {
       onSuccess: () => toast.success(globalFa.updatedSuccessfully),
       onError: handleActionFailed,
     });
-    console.log("Received values of form: ", data);
   };
 
   return (
@@ -101,11 +100,12 @@ const Page = () => {
       <Form.Item
         name="avatar"
         valuePropName="fileList"
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         getValueFromEvent={(e: any) => {
           if (Array.isArray(e)) {
             return e;
           }
-          return e && e.fileList;
+          return e?.fileList;
         }}
       >
         <Upload

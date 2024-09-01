@@ -71,7 +71,7 @@ const Home: NextPage = () => {
         className="text-white text-center w-full"
       >
         {jalaliWeekdays.map((day, index) => (
-          <Col key={index} span={3}>
+          <Col key={day} span={3}>
             <Typography className="text-white">{day}</Typography>
           </Col>
         ))}
@@ -85,9 +85,9 @@ const Home: NextPage = () => {
           wrap={true}
           className="w-full"
         >
-          {data.slice(startIndex, startIndex + 7).map((item, index) => (
+          {data.slice(startIndex, startIndex + 7).map((item) => (
             <Col
-              key={index}
+              key={`${item}`}
               span={3}
               className="flex flex-col items-center w-full"
             >

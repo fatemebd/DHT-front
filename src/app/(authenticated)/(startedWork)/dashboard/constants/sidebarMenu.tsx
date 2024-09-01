@@ -5,9 +5,6 @@ import {
 import { IoAddOutline,IoReaderOutline,IoBarChartOutline } from "react-icons/io5";
 import fa from "../fa.json"
 import { SiProbot } from "react-icons/si";
-import { MenuItemProps } from 'antd/lib/menu/MenuItem';
-
-
 
 export const sidebarItems= [
             {

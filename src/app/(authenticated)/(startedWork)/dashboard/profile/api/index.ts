@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/axios";
 import { PUT_USER_PROFILE } from "./constants";
-import { User } from "@/@types/common";
+import type { User } from "@/@types/common";
 import { useMutation } from "@tanstack/react-query";
 import { useGetUserDetail } from "@/app/(authenticated)/(startedWork)/api";
 

@@ -1,13 +1,13 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
+import React, { type ReactNode, useState } from "react";
 import { Layout, Menu, theme, Typography } from "antd";
 import { MdChevronLeft } from "react-icons/md";
 import { sidebarItems } from "./constants/sidebarMenu";
 import Score from "@/components/Score";
 import fa from "./fa.json";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetUserDetail } from "../(startedWork)/api";
+import { useGetUserDetail } from "../api";
 const { Header, Sider, Content } = Layout;
 
 interface LayoutProps {
@@ -42,6 +42,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         className=" h-full w-fit relative bg-[#1E2642] "
       >
         <div className="demo-logo-vertical" />
+        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <label
           htmlFor="hamburgerMenu"
           onClick={() => setCollapsed(!collapsed)}

@@ -12,12 +12,11 @@ import {
 import fa from "./fa.json";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import coin from "../../../../../public/coin.png.png";
+import coin from "../../../../../../public/coin.png.png";
 import Image from "next/image";
 import { useCreateHabit } from "./api";
-import { CreatedHabit } from "./api/api.types";
+import type{ CreatedHabit } from "./api/api.types";
 import globalFa from "@/fa.json";
-import { jalaaliWeekdays } from "jalaali-js";
 const { TextArea } = Input;
 
 const Page = () => {

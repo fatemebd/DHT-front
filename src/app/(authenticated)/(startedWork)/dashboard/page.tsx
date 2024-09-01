@@ -1,8 +1,6 @@
 "use client";
 
 import { Spin } from "antd";
-import { usePathname, useRouter } from "next/navigation";
-
 import React from "react";
 
 const Page = () => {

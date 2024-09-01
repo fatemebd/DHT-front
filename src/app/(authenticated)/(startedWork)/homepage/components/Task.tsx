@@ -7,7 +7,7 @@ import type{ Task } from "../api/api.types";
 
 
 
-const Task = ({ id, title, description, done, deadline }: Task) => {
+const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -50,4 +50,4 @@ const Task = ({ id, title, description, done, deadline }: Task) => {
   );
 };
 
-export default Task;
+export default TaskComponent;

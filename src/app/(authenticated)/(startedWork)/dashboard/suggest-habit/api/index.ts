@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axios";
 import { CREATE_NEW_SUGGESTION } from "./constants";
 import { useMutation } from "@tanstack/react-query";
-import { Suggestion } from "./api.types";
+import type { Suggestion } from "./api.types";
 
 const createSuggestion = async (suggestion: Suggestion) => {
   const response = await axiosInstance.post(CREATE_NEW_SUGGESTION, suggestion);

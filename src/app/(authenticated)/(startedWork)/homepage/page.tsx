@@ -1,36 +1,25 @@
 "use client";
-import { Grid, Col, Form, Input, Modal, Row, Typography } from "antd";
-import React, { useEffect, useState } from "react";
-import { signOut } from "next-auth/react";
+import { Grid, Col, Input, Row, Typography } from "antd";
+import React, { useEffect } from "react";
 import Header from "./components/Header";
 import { SearchOutlined } from "@ant-design/icons";
 import fa from "./fa.json";
 import LeftSide from "./components/LeftSide";
-// import { messaging } from "@/utils/firebase";
-import Task from "./components/Habit";
 import Habit from "./components/Task";
 import HabitHistory from "./components/HabitHistory";
 import { getMessaging, onMessage } from "firebase/messaging";
 import firebaseApp from "@/utils/firebase";
 import useFcmToken from "@/utils/hooks/useFCMToken";
 import { useGetToDoList } from "./api";
-import Reminder from "./components/Reminder";
-import { useGetUserDetail } from "../(startedWork)/api";
-import { useRouter } from "next/navigation";
-import { getTodayDate } from "@/utils/dateUtils";
+
 const { useBreakpoint } = Grid;
 
 const Page = () => {
   const screens = useBreakpoint();
 
-  const [signupModalOpen, setSignUpModalOpen] = useState(false);
-  const [data, setData] = useState({});
-  const [form] = Form.useForm();
   const { Search } = Input;
-  const { fcmToken, notificationPermissionStatus } = useFcmToken();
-  const { data: toDoListData, isLoading } = useGetToDoList();
-  const { data: user, isLoading: isUserLoading } = useGetUserDetail();
-  const router = useRouter();
+  const { fcmToken } = useFcmToken();
+  const { data: toDoListData } = useGetToDoList();
 
   // Use the token as needed
   fcmToken && console.log("FCM token:", fcmToken);
@@ -46,14 +35,6 @@ const Page = () => {
     }
   }, []);
 
-  if (typeof localStorage !== "undefined") {
-    const startWork = localStorage.getItem("startWork");
-    const todayDate = getTodayDate();
-
-    if (startWork !== todayDate) {
-      router.push("/start-work");
-    }
-  }
 
   const handleSearch = (value: string) => {
     if (value) {
