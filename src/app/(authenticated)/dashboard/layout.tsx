@@ -18,6 +18,11 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
+
+  if (pathname === "/dashboard") {
+    router.push("/dashboard/profile");
+  }
+  
   const handleRedirect = (href: string) => {
     const formattedHref = href.startsWith("/") ? href : `/dashboard/${href}`;
     router.replace(formattedHref);
@@ -26,7 +31,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
-  const { data: user,  } = useGetUserDetail();
+  const { data: user } = useGetUserDetail();
 
   return (
     <Layout className="bg-secondary-1000 h-full">
@@ -63,7 +68,10 @@ const DashboardLayout = ({ children }: LayoutProps) => {
       </Sider>
       <Layout className="bg-secondary-1000 m-6 space-y-5">
         <Header className="bg-[#1E2642] rounded-lg p-3 flex justify-between items-center shadow-lg">
-          <Typography>{fa.hello} فاطمه !</Typography>
+          <Typography>
+            {fa.hello} {user?.firstName ? user.firstName : fa.friend} {fa.dear}{" "}
+            !
+          </Typography>
           <Score score={user?.score} />
         </Header>
         <Content
