@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import MoodTracker from "./MoodTracker";
+import { MoodTracker } from "@/components/moodTracker";
 
 const LeftSide = () => {
   return (

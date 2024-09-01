@@ -1,9 +1,3 @@
 {
-    "googleSearch" : "جستجو در گوگل...",
-    "thrilled":"هیجان‌زده",
-    "happy":"خوشحال",
-    "neutral":"خنثی",
-    "sad":"ناراحت",
-    "verySad":"افسرده",
-    "toDoList":"چک لیست امور"
+    "toDoList": "چک لیست امور"
 }
