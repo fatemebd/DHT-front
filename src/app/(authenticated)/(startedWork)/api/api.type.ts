@@ -2,13 +2,13 @@ export interface User {
   id: number;
   email: string;
   score: number;
-  mood: string;
+  mood: number | null;
   startWorkSession: string;
   dailyQuote: string;
   picture: string;
   allowedHabitsCount: number;
   allowedChangeProfile: boolean;
-  firstName:string;
-  lastName:string;
-  dateOfBirth:string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
 }

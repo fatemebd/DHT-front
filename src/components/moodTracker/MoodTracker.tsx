@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Typography } from "antd";
 import Image from "next/image";
 import fa from "./fa.json";
@@ -6,9 +6,15 @@ import { twMerge } from "tailwind-merge";
 import { moods } from "./constants/Moods";
 import { usePostMood } from "./api";
 
-const MoodTracker = () => {
-  const [selectedMood, setSelectedMood] = useState<number | undefined>();
+const MoodTracker = ({ mood }: { mood: number | undefined | null }) => {
+  const [selectedMood, setSelectedMood] = useState<number | undefined | null>(
+    mood
+  );
   const { mutate: postMoodMutate } = usePostMood();
+
+  useEffect(() => {
+    setSelectedMood(mood);
+  }, [mood]);
 
   const handlePickMood = (mood: number) => {
     setSelectedMood(mood);
@@ -39,7 +45,7 @@ const MoodTracker = () => {
               {mood.alt}
             </Typography>
           </Col>
-        ))}
+        )).reverse()}
       </Row>
     </div>
   );

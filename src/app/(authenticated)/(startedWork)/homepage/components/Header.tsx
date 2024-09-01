@@ -10,7 +10,7 @@ import { useGetUserDetail } from "../../api";
 import Score from "@/components/Score";
 
 const Header = () => {
-  const { data: user, isLoading } = useGetUserDetail();
+  const { data: user } = useGetUserDetail();
 
   return (
     <Row justify="space-between" className="my-5 w-full">

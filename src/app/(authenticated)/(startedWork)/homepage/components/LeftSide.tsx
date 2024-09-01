@@ -1,10 +1,13 @@
 import { Typography } from "antd";
 import { MoodTracker } from "@/components/moodTracker";
+import { useGetUserDetail } from "../../api";
 
 const LeftSide = () => {
+    const { data: user } = useGetUserDetail();
+
   return (
     <>
-      <MoodTracker />
+      <MoodTracker mood={user?.mood} />
       <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 ">
         <Typography className="text-md font-semibold">
           عادت‌های امروز
