@@ -71,7 +71,7 @@ const Page = () => {
             enterButton={<SearchOutlined />}
             size={screens.xs ? "small" : "large"}
             onSearch={handleSearch}
-            className="w-full h-fit p-0 text-black"
+            className="h-fit w-full p-0 text-black"
           />
           <HabitHistory />
         </Col>

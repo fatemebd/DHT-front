@@ -32,7 +32,7 @@ const Page = () => {
         align="middle"
         className="md:bg-white md:bg-opacity-10 md:backdrop-blur-lg w-full  md:h-[40%] md:w-[50%] md:rounded-xl shadow-xl  text-white p-10 gap-5 flex items-center md:drop-shadow-2xl"
       >
-        <MoodTracker />
+        <MoodTracker mood={null}/>
         <Button onClick={handleStartWork} type="primary">
           {fa.startWork}
         </Button>
