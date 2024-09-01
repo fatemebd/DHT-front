@@ -1,5 +1,8 @@
 // lib/axiosInstance.ts
-import axios, { InternalAxiosRequestConfig, AxiosResponse } from "axios";
+import axios, {
+  type InternalAxiosRequestConfig,
+  type AxiosResponse,
+} from "axios";
 import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys"; // Import snakecaseKeys package (ensure to install this package)
 
@@ -16,6 +19,7 @@ const axiosInstance = axios.create({
 // Request interceptor to add token to headers and convert request data to snake_case
 axiosInstance.interceptors.request.use(
   (config: CustomAxiosRequestConfig): CustomAxiosRequestConfig => {
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     const user = JSON.parse(localStorage.getItem("user")!); // Fetch the token from localStorage
     if (user) {
       config.headers.Authorization = `Token ${user.token}`;
@@ -33,8 +37,13 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
+    if (error.response.status === 401) {
+      window.location.replace("/login");
+      //place your reentry code
+    }
+
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor to change case of the response data
@@ -55,7 +64,7 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

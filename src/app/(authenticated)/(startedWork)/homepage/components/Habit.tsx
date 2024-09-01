@@ -4,7 +4,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
 import type { Habit } from "../api/api.types";
 
-const HabitComponent = ({ id, name, description, deadline }: Habit) => {
+const HabitComponent = ({ id, name, description }: Habit) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -36,7 +36,7 @@ const HabitComponent = ({ id, name, description, deadline }: Habit) => {
           "border border-secondary-400 p-0.5 rounded"
         )}
       >
-        <Typography className="text-gray-800 text-xs">{description}</Typography>
+        <Typography className="text-gray-400 text-xs">{description}</Typography>
       </Row>
     </div>
   );
