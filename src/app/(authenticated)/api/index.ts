@@ -3,13 +3,14 @@ import { GET_USER_DETAIL } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "./api.type";
 import { Response } from "@/@types/server";
+import dayjs from "dayjs";
 // import { ListResponse } from "@/@types/server";
 
 const getUserDetail = async (signal: AbortSignal) => {
-  const response : Response<User> = await axiosInstance.get(GET_USER_DETAIL, {
+  const response: Response<User> = await axiosInstance.get(GET_USER_DETAIL, {
     signal,
   });
-  return response.data;
+  return { ...response.data, dateOfBirth: dayjs(response.data.dateOfBirth) };
 };
 
 export const useGetUserDetail = () => {
