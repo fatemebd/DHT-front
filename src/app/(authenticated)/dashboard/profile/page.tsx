@@ -23,7 +23,8 @@ import { useUpdateUser } from "./api";
 import { toast } from "react-toastify";
 import { User } from "@/@types/common";
 import { AxiosError } from "axios";
-import dayjs from "dayjs";
+import globalFa from "@/fa.json";
+
 
 const Page = () => {
   const [form] = Form.useForm();
@@ -60,7 +61,7 @@ const Page = () => {
       dateOfBirth: birthDate,
     };
     updateUserMutate(data, {
-      onSuccess: () => toast.success(fa.updatedSuccessfully),
+      onSuccess: () => toast.success(globalFa.updatedSuccessfully),
       onError: handleActionFailed,
     });
     console.log("Received values of form: ", data);
@@ -88,10 +89,10 @@ const Page = () => {
         </div>
       </div>
       <Form.Item name="firstName" label={fa.firstName}>
-        <Input className="text-black" />
+        <Input/>
       </Form.Item>
       <Form.Item name="lastName" label={fa.lastName}>
-        <Input className="text-black" />
+        <Input/>
       </Form.Item>
 
       <Form.Item name="dateOfBirth" label={fa.birthDate}>
