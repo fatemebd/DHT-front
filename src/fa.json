@@ -1,5 +1,6 @@
 {
     "friend": "دوست",
     "createdSuccessfully": "با موفقیت اضافه شد.",
-    "updatedSuccessfully": "پروفایل با موفقیت به روز رسانی شد."
+    "updatedSuccessfully": "پروفایل با موفقیت به روز رسانی شد.",
+    "required": "این فیلد الزامیه!"
 }

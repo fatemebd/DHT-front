@@ -7,9 +7,8 @@ export interface Task {
 }
 export interface Habit {
   id: number;
-  title: string;
-  description: string;
-  done: boolean;
+  name: string;
+  description?: string;
   deadline: string;
   score:number;
 }

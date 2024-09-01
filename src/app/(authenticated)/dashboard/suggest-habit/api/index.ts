@@ -1,6 +1,5 @@
 import axiosInstance from "@/utils/axios";
 import { CREATE_NEW_SUGGESTION } from "./constants";
-import { User } from "@/@types/common";
 import { useMutation } from "@tanstack/react-query";
 import { Suggestion } from "./api.types";
 

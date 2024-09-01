@@ -5,7 +5,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
 import { Habit } from "../api/api.types";
 
-const Reminder = ({ id, title, description, deadline }: Habit) => {
+const Reminder = ({ id, name, description, deadline }: Habit) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -16,7 +16,7 @@ const Reminder = ({ id, title, description, deadline }: Habit) => {
       <Row justify="space-between" align="middle">
         <Col span={8} className="flex items-center gap-2">
           {/* <Checkbox checked={done} disabled={done} /> */}
-          <Typography className={"text-white"}>{title}</Typography>
+          <Typography className={"text-white"}>{name}</Typography>
         </Col>
 
         <Col span={8}>
