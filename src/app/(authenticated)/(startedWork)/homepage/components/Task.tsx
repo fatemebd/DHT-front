@@ -27,7 +27,7 @@ const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
         </Col>
 
         <Col span={8}>
-          <Typography className="text-gray-700 font-semibold text-end  text-[10px]">
+          <Typography className="text-gray-400 font-semibold text-end  text-[10px]">
             {getFormattedDateTime(deadline)}
           </Typography>
         </Col>
@@ -44,7 +44,7 @@ const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
           "border border-secondary-400 p-0.5 rounded"
         )}
       >
-        <Typography className="text-gray-800 text-xs">{description}</Typography>
+        <Typography className="text-gray-400 text-xs">{description}</Typography>
       </Row>
     </div>
   );

@@ -1,4 +1,4 @@
-import jalaali from "jalaali-js";
+import jalaali, {toJalaali} from "jalaali-js";
 import { toGregorian } from "jalaali-js";
 interface JalaaliDate {
   day: number; // day of the month in Jalaali calendar
@@ -83,3 +83,45 @@ export const getTodayDate = (): string => {
   const today = new Date();
   return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 };
+
+
+export function formatPersianDate(isoDateString: string): string {
+  // Parse the ISO date string
+  const date = new Date(isoDateString);
+
+  // Get the current date to compare with
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0); // Reset time parts for accurate comparison
+
+  // Convert to Jalaali date
+  const jalaaliDate = toJalaali(date);
+
+  // Check if the date is today
+  const isToday = date.setHours(0, 0, 0, 0) === currentDate.getTime();
+
+  // Persian day names
+  const dayNames = [
+    "یکشنبه",
+    "دوشنبه",
+    "سه شنبه",
+    "چهارشنبه",
+    "پنجشنبه",
+    "جمعه",
+    "شنبه",
+  ];
+
+  // Format the time using Intl
+  const timeFormatter = new Intl.DateTimeFormat("fa-IR", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
+
+  const time = timeFormatter.format(date);
+  const dayName = isToday ? "امروز" : dayNames[date.getDay()];
+
+  return `${dayName} ${time}`;
+}
+
+// Example usage:
+// console.log(formatPersianDate("2024-09-01T23:17:09.531Z"));

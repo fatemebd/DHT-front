@@ -9,6 +9,12 @@ export interface Habit {
   id: number;
   name: string;
   description?: string;
-  deadline: string;
-  score:number;
+  // score:number;
+}
+
+export interface Reminder {
+  id: number;
+  name: string;
+  description?: string;
+  reminderTime:string;
 }

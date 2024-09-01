@@ -2,9 +2,15 @@ import {  Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import type{ Habit } from "../api/api.types";
+import type{ Habit, Reminder } from "../api/api.types";
+import { formatPersianDate } from "@/utils/dateUtils";
 
-const Reminder = ({ id, name, description, deadline }: Habit) => {
+const ReminderComponent = ({
+  id,
+  name,
+  description,
+  reminderTime,
+}: Reminder) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {
@@ -19,8 +25,8 @@ const Reminder = ({ id, name, description, deadline }: Habit) => {
         </Col>
 
         <Col span={8}>
-          <Typography className="text-gray-700 font-semibold text-end  text-[10px]">
-            {deadline}
+          <Typography className="text-gray-400 font-semibold text-end  text-[10px]">
+            {formatPersianDate(reminderTime)}
           </Typography>
         </Col>
       </Row>
@@ -36,10 +42,10 @@ const Reminder = ({ id, name, description, deadline }: Habit) => {
           "border border-secondary-400 p-0.5 rounded"
         )}
       >
-        <Typography className="text-gray-800 text-xs">{description}</Typography>
+        <Typography className="text-gray-400 text-xs">{description}</Typography>
       </Row>
     </div>
   );
 };
 
-export default Reminder;
+export default ReminderComponent;

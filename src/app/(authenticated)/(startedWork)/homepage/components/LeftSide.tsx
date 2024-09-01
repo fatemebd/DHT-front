@@ -1,10 +1,12 @@
 import { Typography } from "antd";
 import { MoodTracker } from "@/components/moodTracker";
 import { useGetUserDetail } from "../../api";
+import { useGetHabitsList } from "../api";
+import HabitComponent from "./Habit";
 
 const LeftSide = () => {
-    const { data: user } = useGetUserDetail();
-
+  const { data: user } = useGetUserDetail();
+  const { data: habitsList } = useGetHabitsList();
   return (
     <>
       <MoodTracker mood={user?.mood} />
@@ -12,18 +14,14 @@ const LeftSide = () => {
         <Typography className="text-md font-semibold">
           عادت‌های امروز
         </Typography>
-        {/* <Habit
-          id={1}
-          title={"habit1"}
-          description={"habit1"}
-          deadline={"task.deadline"}
-        />
-        <Habit
-          id={2}
-          title={"habit2"}
-          description={"habit2"}
-          deadline={"task.deadline"}
-        /> */}
+        {habitsList?.map((habit) => (
+          <HabitComponent
+            key={habit.id}
+            id={habit.id}
+            name={habit.name}
+            description={habit.description}
+          />
+        ))}
       </div>
     </>
   );
