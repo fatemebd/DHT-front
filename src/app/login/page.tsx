@@ -14,8 +14,8 @@ import { usePostEmail, usePostOtp } from "./api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { User } from "@/@types/common";
-import { Response } from "@/@types/server";
+import type{ User } from "@/@types/common";
+import type{ Response } from "@/@types/server";
 
 const Page = () => {
   const [otpSent, setOtpSent] = useState(false);
@@ -34,7 +34,7 @@ const Page = () => {
   const router = useRouter();
 
   if (status === "authenticated" || user) {
-    router.push("/homepage");
+    router.push("/start-work");
     return null;
   }
 
@@ -54,8 +54,8 @@ const Page = () => {
   const handleOtpSentSuccess = (res: Response<User>) => {
     toast.success(fa.otpSentSuccess);
     localStorage.setItem("user", JSON.stringify(res.data));
-    console.log(res);
-    router.push("/homepage");
+    // console.log(res);
+    router.push("/start-work");
   };
 
   const handleOtpSentFailed = (error: unknown) => {

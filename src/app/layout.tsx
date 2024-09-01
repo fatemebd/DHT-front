@@ -35,6 +35,9 @@ export default function RootLayout({
               Input: {
                 colorText: "black",
               },
+              Button:{
+                colorText:"black"
+              }
             },
 
             token: {
