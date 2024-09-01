@@ -8,4 +8,7 @@ export interface User {
   picture: string;
   allowedHabitsCount: number;
   allowedChangeProfile: boolean;
+  firstName:string;
+  lastName:string;
+  dateOfBirth:string;
 }

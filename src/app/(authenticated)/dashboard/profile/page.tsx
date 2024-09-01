@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -9,6 +9,7 @@ import {
   DatePickerProps,
   Avatar,
   Typography,
+  Spin,
 } from "antd";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import {
@@ -18,30 +19,52 @@ import {
 import { convertJalaaliToGregorian } from "@/utils/dateUtils";
 import fa from "./fa.json";
 import { useGetUserDetail } from "../../api";
-
-interface CustomFormValues {
-  name: string;
-  birthdate: string; // Storing birthdate as a string in Jalali format
-  avatar: any[]; // This would ideally have a more specific type
-}
+import { useUpdateUser } from "./api";
+import { toast } from "react-toastify";
+import { User } from "@/@types/common";
+import { AxiosError } from "axios";
+import dayjs from "dayjs";
 
 const Page = () => {
   const [form] = Form.useForm();
-  const [birthDate, setBirthDate] = useState("");
-  const onChange: DatePickerProps["onChange"] = (date, dateString) => {
+  const [birthDate, setBirthDate] = useState("2024-9-1");
+  const { data: user } = useGetUserDetail();
+
+  const { mutate: updateUserMutate, isPending: isUserUpdatePending } =
+    useUpdateUser();
+
+  const onChange: DatePickerProps["onChange"] = (date) => {
     setBirthDate(convertJalaaliToGregorian(date.format("YYYY-MM-DD")));
   };
 
   useJalaliLocaleListener();
-  // Submit form data
-  const onFinish = (values: CustomFormValues) => {
+
+  useEffect(() => {
+    form.setFieldsValue(user);
+    setBirthDate(
+      convertJalaaliToGregorian(
+        user?.dateOfBirth.format("YYYY-MM-DD") || "2024-9-1"
+      )
+    );
+  }, [user, form]);
+
+  const handleActionFailed = (error: unknown) => {
+    if (error instanceof AxiosError) {
+      toast.error(error.message);
+    }
+  };
+
+  const onFinish = (values: Partial<User>) => {
     const data = {
       ...values,
-      birthdate: birthDate,
+      dateOfBirth: birthDate,
     };
+    updateUserMutate(data, {
+      onSuccess: () => toast.success(fa.updatedSuccessfully),
+      onError: handleActionFailed,
+    });
     console.log("Received values of form: ", data);
   };
-  const { data: user } = useGetUserDetail();
 
   return (
     <Form
@@ -50,20 +73,28 @@ const Page = () => {
       layout="vertical"
       className="md:px-72 px-5"
     >
-      <div className="mb-10">
+      <div className="mb-8 flex items-center gap-5">
         <Avatar
           src={user?.picture}
           icon={user?.picture ? "" : <UserOutlined />}
           size={64}
           className="mb-2"
         />
-        <Typography>{user?.email}</Typography>
+        <div>
+          <Typography>{user?.email}</Typography>
+          <Typography>
+            {user?.firstName} {user?.lastName}
+          </Typography>
+        </div>
       </div>
-      <Form.Item name="name" label={fa.name}>
+      <Form.Item name="firstName" label={fa.firstName}>
+        <Input className="text-black" />
+      </Form.Item>
+      <Form.Item name="lastName" label={fa.lastName}>
         <Input className="text-black" />
       </Form.Item>
 
-      <Form.Item name="birthdate" label={fa.birthDate}>
+      <Form.Item name="dateOfBirth" label={fa.birthDate}>
         <DatePickerJalali onChange={onChange} className="text-black w-full" />
       </Form.Item>
 
@@ -96,7 +127,12 @@ const Page = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={isUserUpdatePending}
+          icon={isUserUpdatePending && <Spin />}
+        >
           {fa.edit}
         </Button>
       </Form.Item>

@@ -1,6 +1,8 @@
 {
-    "name":"نام",
+    "firstName":"نام",
+    "lastName":"نام خانوادگی",
     "birthDate":"تاریخ تولد",
     "edit":"ویرایش اطلاعات",
-    "uploadProfile":"بارگذاری "
+    "uploadProfile":"بارگذاری ",
+    "updatedSuccessfully":"پروفایل با موفقیت به روز رسانی شد."
 }

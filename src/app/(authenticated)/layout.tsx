@@ -39,7 +39,6 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
       return null; // Prevent further rendering
     }
 
-    console.log(user);
   }
   // Redirect to login if not authenticated
   if (status === "loading") {

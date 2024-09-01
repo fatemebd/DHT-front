@@ -1,0 +1,1 @@
+export const PUT_USER_PROFILE = "/users/profile/";
