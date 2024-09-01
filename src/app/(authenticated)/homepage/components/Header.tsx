@@ -7,7 +7,7 @@ import { MdOutlineSportsMartialArts } from "react-icons/md";
 import { FaUserLarge } from "react-icons/fa6";
 import Link from "next/link";
 import { SearchOutlined } from "@ant-design/icons";
-import { useGetUserDetail } from "../../api";
+import { useGetUserDetail } from "../../(startedWork)/api";
 import Score from "@/components/Score";
 
 const Header = () => {
@@ -23,7 +23,7 @@ const Header = () => {
       </Col>
 
       <Col md={8} className="flex items-center gap-5 justify-end">
-        <Score score={user?.score } />
+        <Score score={user?.score} />
         <Link href="/dashboard/profile">
           <FaUserLarge className="text-white opacity-20 text-2xl" />
         </Link>

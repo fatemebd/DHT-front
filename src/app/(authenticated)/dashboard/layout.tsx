@@ -7,7 +7,7 @@ import { sidebarItems } from "./constants/sidebarMenu";
 import Score from "@/components/Score";
 import fa from "./fa.json";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetUserDetail } from "../api";
+import { useGetUserDetail } from "../(startedWork)/api";
 const { Header, Sider, Content } = Layout;
 
 interface LayoutProps {
@@ -22,7 +22,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   if (pathname === "/dashboard") {
     router.push("/dashboard/profile");
   }
-  
+
   const handleRedirect = (href: string) => {
     const formattedHref = href.startsWith("/") ? href : `/dashboard/${href}`;
     router.replace(formattedHref);

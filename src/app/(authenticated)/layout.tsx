@@ -4,9 +4,11 @@ import React, { type ReactNode, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Spin } from "antd";
+import { getTodayDate } from "@/utils/dateUtils";
 interface LayoutProps {
   children: ReactNode;
 }
+
 
 const AuthenticatedLayout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();
@@ -35,10 +37,15 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
   if (typeof localStorage !== "undefined") {
     const user = localStorage.getItem("user");
     const startWork = localStorage.getItem("startWork");
+    const todayDate = getTodayDate();
+
     if (status === "unauthenticated" && user === null) {
       router.push("/login");
       return null; // Prevent further rendering
     }
+    if (startWork !== todayDate) {
+      router.push("/start-work");
+    } 
   }
   // Redirect to login if not authenticated
   if (status === "loading") {

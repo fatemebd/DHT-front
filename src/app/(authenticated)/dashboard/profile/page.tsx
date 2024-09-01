@@ -18,13 +18,12 @@ import {
 } from "antd-jalali";
 import { convertJalaaliToGregorian } from "@/utils/dateUtils";
 import fa from "./fa.json";
-import { useGetUserDetail } from "../../api";
+import { useGetUserDetail } from "../../(startedWork)/api";
 import { useUpdateUser } from "./api";
 import { toast } from "react-toastify";
 import { User } from "@/@types/common";
 import { AxiosError } from "axios";
 import globalFa from "@/fa.json";
-
 
 const Page = () => {
   const [form] = Form.useForm();
@@ -89,10 +88,10 @@ const Page = () => {
         </div>
       </div>
       <Form.Item name="firstName" label={fa.firstName}>
-        <Input/>
+        <Input />
       </Form.Item>
       <Form.Item name="lastName" label={fa.lastName}>
-        <Input/>
+        <Input />
       </Form.Item>
 
       <Form.Item name="dateOfBirth" label={fa.birthDate}>

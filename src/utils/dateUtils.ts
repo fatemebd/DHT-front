@@ -78,3 +78,8 @@ export function convertJalaaliToGregorian(jalaaliDate: string): string {
   }`;
   return gregorianDate;
 }
+
+export const getTodayDate = (): string => {
+  const today = new Date();
+  return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+};
