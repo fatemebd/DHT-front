@@ -7,6 +7,7 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { IoCloseOutline } from "react-icons/io5";
 import AddTask from "./AddTask";
+import AddReminder from "./AddReminder";
 
 const RightSide = () => {
   const { data: remindersList } = useGetRemindersList();
@@ -31,7 +32,7 @@ const RightSide = () => {
         cancelButtonProps={{ className: "hidden" }}
         okButtonProps={{ className: "hidden" }}
       >
-        <AddTask />
+        {modalContent === "addTask" ? <AddTask /> : <AddReminder />}
       </Modal>
       <div className="mt-3 w-full space-y-3 rounded-md bg-white bg-opacity-10 px-2 py-1 md:h-[40%]">
         <Typography className="text-md font-semibold">{fa.toDoList}</Typography>

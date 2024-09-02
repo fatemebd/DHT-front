@@ -4,6 +4,7 @@ import {
   GET_HABITS_LIST,
   GET_REMINDERS_LIST,
   CREATE_NEW_TASK,
+  CREATE_NEW_REMINDER,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse } from "@/@types/server";
@@ -42,6 +43,11 @@ const createTask = async (task: Task) => {
   return response;
 };
 
+const createReminder= async (reminder: Reminder) => {
+  const response = await axiosInstance.post(CREATE_NEW_REMINDER, reminder);
+  return response;
+};
+
 export const useGetToDoList = () => {
   return useQuery({
     queryKey: [GET_TO_DO_LIST],
@@ -69,6 +75,18 @@ export const useCreateTask = () => {
   return useMutation({
     mutationKey: [CREATE_NEW_TASK],
     mutationFn: createTask,
+    onSuccess: () => {
+      refetch();
+    },
+  });
+};
+
+export const useCreateReminder= () => {
+  const { refetch } = useGetRemindersList();
+
+  return useMutation({
+    mutationKey: [CREATE_NEW_REMINDER],
+    mutationFn: createReminder,
     onSuccess: () => {
       refetch();
     },

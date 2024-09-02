@@ -9,36 +9,33 @@ import globalFa from "@/fa.json";
 
 import fa from "../fa.json";
 import dayjs from "dayjs";
-import type { Task } from "../api/api.types";
-import {
-  formatDateToISOString,
-} from "@/utils/dateUtils";
-import { useCreateTask } from "../api";
+import type { Reminder, Task } from "../api/api.types";
+import { formatDateToISOString } from "@/utils/dateUtils";
+import { useCreateReminder, useCreateTask } from "../api";
 import { toast } from "react-toastify";
 
-
-const AddTask = () => {
-  const { mutate: createTaskMutate, isPending: isCreateTaskPending } =
-    useCreateTask();
+const AddReminder = () => {
+  const { mutate: createReminderMutate, isPending: isCreateReminderPending } =
+    useCreateReminder();
 
   JalaliLocaleListener();
 
-  const handleFinish = (values: Task) => {
+  const handleFinish = (values: Reminder) => {
     const postData = {
       ...values,
-      deadline: formatDateToISOString(values.deadline),
+      reminderTime: formatDateToISOString(values.reminderTime),
     };
-    createTaskMutate(postData, {
+    createReminderMutate(postData, {
       onSuccess: () => toast.success(globalFa.createdSuccessfully),
       onError: (err) => toast.error(err.message),
     });
   };
 
   return (
-    <Form title={fa.addTask} onFinish={handleFinish} className="mt-5">
+    <Form title={fa.addReminder} onFinish={handleFinish} className="mt-5">
       <Form.Item
-        name="title"
-        label={fa.title}
+        name="name"
+        label={fa.name}
         rules={[{ required: true, message: globalFa.required }]}
       >
         <Input />
@@ -46,19 +43,22 @@ const AddTask = () => {
       <Form.Item name="description" label={fa.description}>
         <TextArea />
       </Form.Item>
-      <Form.Item name="deadline" label={fa.deadline}>
+      <Form.Item name="reminderTime" label={fa.deadline}>
         <DatePickerJalali
           format="YYYY-MM-DD HH:mm:ss"
           showTime={{ defaultValue: dayjs("00:00:00", "HH:mm:ss") }}
           className="text-black w-full"
         />
       </Form.Item>
+      <Form.Item name="notifBody" label={fa.notifBody}>
+        <TextArea />
+      </Form.Item>
       <Form.Item className="mt-5 flex w-full justify-end">
         <Button
           type="primary"
           htmlType="submit"
-          disabled={isCreateTaskPending}
-          icon={isCreateTaskPending && <Spin />}
+          disabled={isCreateReminderPending}
+          icon={isCreateReminderPending && <Spin />}
         >
           {fa.submit}
         </Button>
@@ -67,4 +67,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default AddReminder;

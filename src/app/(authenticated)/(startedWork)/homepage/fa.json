@@ -7,5 +7,7 @@
     "title": "عنوان",
     "description": "توضیحات",
     "deadline": "مهلت انجام",
-    "submit":"ثبت"
+    "submit":"ثبت",
+    "name":"نام",
+    "notifBody":"متن اعلان"
 }
