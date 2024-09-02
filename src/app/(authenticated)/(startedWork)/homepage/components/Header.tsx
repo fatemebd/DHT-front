@@ -13,7 +13,8 @@ const Header = () => {
   const { data: user } = useGetUserDetail();
 
   return (
-    <Row justify="space-between" className="my-5 w-full">
+    <>
+    <Row justify="space-between" className="mt-4 w-full">
       <Col md={8} className="flex items-center gap-5 ">
         <Image alt="doost" width={40} height={30} src={logo} />
         <Typography className="text-4xl font-bold text-primary-1000">
@@ -31,6 +32,8 @@ const Header = () => {
         </Link>
       </Col>
     </Row>
+    <Typography className="my-2">{user?.dailyQuote} امیدوار باش</Typography>
+    </>
   );
 };
 

@@ -1,16 +1,5 @@
 import jalaali, { toJalaali } from "jalaali-js";
 import { toGregorian } from "jalaali-js";
-interface JalaaliDate {
-  day: number; // day of the month in Jalaali calendar
-  month: number; // month of the year in Jalaali calendar
-  year: number; // year in Jalaali calendar
-}
-
-interface JalaaliDate {
-  jd: number;
-  jm: number;
-  jy: number;
-}
 
 export const getFormattedDateTime = (
   date: Date | string | number | null | undefined,
@@ -142,8 +131,8 @@ type DateObject = {
   $y: number;
 };
 
-export function formatDateToISOString(date: unknown ): string {
-  const dateObj = date as DateObject
+export function formatDateToISOString(date: unknown): string {
+  const dateObj = date as DateObject;
   const year = dateObj.$y;
   const month = String(dateObj.$M + 1).padStart(2, "0"); // Months are 0-indexed
   const day = String(dateObj.$D).padStart(2, "0");
@@ -155,3 +144,20 @@ export function formatDateToISOString(date: unknown ): string {
   // Combine the components into the ISO 8601 format without converting to UTC
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
 }
+
+export const convertGregorianToJalali = (date: string) => {
+  const [month, day, year] = date.split("/").map(Number);
+  const newDate = new Date(year, month - 1, day);
+
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const jalali: any = jalaali.toJalaali(newDate);
+
+  const dayOfWeek = (newDate.getDay() + 1) % 7;
+
+  const jalaliDate = `${jalali.jy}/${String(jalali.jm).padStart(
+    2,
+    "0",
+  )}/${String(jalali.jd).padStart(2, "0")}`;
+
+  return jalaliDate;
+};
