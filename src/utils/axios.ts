@@ -5,6 +5,7 @@ import axios, {
 } from "axios";
 import camelcaseKeys from "camelcase-keys";
 import snakecaseKeys from "snakecase-keys"; // Import snakecaseKeys package (ensure to install this package)
+import { isClient } from "./detectUtils";
 
 // Extend the InternalAxiosRequestConfig interface to include skipCaseConversion
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -19,10 +20,12 @@ const axiosInstance = axios.create({
 // Request interceptor to add token to headers and convert request data to snake_case
 axiosInstance.interceptors.request.use(
   (config: CustomAxiosRequestConfig): CustomAxiosRequestConfig => {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-    const user = JSON.parse(localStorage.getItem("user")!); // Fetch the token from localStorage
-    if (user) {
-      config.headers.Authorization = `Token ${user.token}`;
+    if (isClient()) {
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      const user = JSON.parse(localStorage.getItem("user")!); // Fetch the token from localStorage
+      if (user) {
+        config.headers.Authorization = `Token ${user.token}`;
+      }
     }
 
     // Convert request data keys to snake_case unless skipRequestCaseConversion is set

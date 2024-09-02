@@ -6,13 +6,14 @@ import { Button, Row } from "antd";
 import { getTodayDate } from "@/utils/dateUtils";
 import fa from "./fa.json";
 import { useRouter } from "next/navigation";
+import { isClient } from "@/utils/detectUtils";
 
 const Page = () => {
   const router = useRouter();
 
   const todayDate = getTodayDate();
 
-  if (typeof localStorage !== "undefined") {
+  if (isClient()) {
     const startWork = localStorage.getItem("startWork");
 
     if (startWork === todayDate) {
