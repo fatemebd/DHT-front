@@ -1,23 +1,48 @@
-import { Typography } from "antd";
-import { MoodTracker } from "@/components/moodTracker";
-import { useGetUserDetail } from "../../api";
-import { useGetHabitsList, useGetRemindersList, useGetToDoList } from "../api";
-import HabitComponent from "./Habit";
+import { Button, Modal, Typography } from "antd";
+import { useGetRemindersList, useGetToDoList } from "../api";
 import TaskComponent from "./Task";
 import fa from "../fa.json";
 import ReminderComponent from "./Reminder";
+import { useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { IoCloseOutline } from "react-icons/io5";
+import AddTask from "./AddTask";
+import AddReminder from "./AddReminder";
 
 const RightSide = () => {
-  const { data: user } = useGetUserDetail();
-  const { data: habitsList } = useGetHabitsList();
   const { data: remindersList } = useGetRemindersList();
   const { data: toDoListData } = useGetToDoList();
+  const [modalContent, setModalContent] = useState<
+    "addTask" | "addReminder" | undefined
+  >();
+
+  const handleCloseModal = () => {
+    setModalContent(undefined);
+  };
 
   return (
     <>
-      <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 md:h-[40%]">
+      <Modal
+        open={modalContent === "addTask" || modalContent === "addReminder"}
+        className="text-white"
+        closeIcon={<IoCloseOutline className="text-white" />}
+        onCancel={handleCloseModal}
+        onClose={handleCloseModal}
+        title={modalContent === "addTask" ? fa.addTask : fa.addReminder}
+        cancelButtonProps={{ className: "hidden" }}
+        okButtonProps={{ className: "hidden" }}
+      >
+        {modalContent === "addTask" ? (
+          <AddTask handleClose={handleCloseModal} />
+        ) : modalContent === "addReminder" ? (
+          <AddReminder handleClose={handleCloseModal} />
+        ) : (
+          ""
+        )}
+      </Modal>
+      <div className=" w-full rounded-md flex flex-col justify-between bg-white bg-opacity-10 px-2 py-1 md:max-h-[40%]  md:h-[40%] pb-3 space-y-3 ">
         <Typography className="text-md font-semibold">{fa.toDoList}</Typography>
-        <div className="md:max-h-[90%] md:overflow-y-scroll mt-2">
+        <div className="md:max-h-[65%] md:overflow-y-scroll  mt-2 ">
           {toDoListData?.map((task) => (
             <TaskComponent
               key={task.id}
@@ -29,16 +54,24 @@ const RightSide = () => {
             />
           ))}
         </div>
+
+        <Button
+          onClick={() => setModalContent("addTask")}
+          className="w-full flex-row-reverse"
+          icon={<PlusOutlined />}
+        >
+          {fa.addTask}
+        </Button>
       </div>
 
-      <div className="bg-white bg-opacity-10 w-full rounded-md px-2 py-1 mt-3 md:h-[40%]">
+      <div className="mt-3 w-full flex flex-col justify-between rounded-md bg-white bg-opacity-10 px-2 py-1 md:max-h-[40%]  md:h-[40%] pb-3 space-y-3">
         <Typography className="text-md font-semibold">
-          یادآورهای امروز{" "}
+          {fa.reminderList}{" "}
         </Typography>
-        <div className="md:max-h-[90%] md:overflow-y-scroll mt-2">
+        <div className="md:max-h-[65%] md:overflow-y-scroll mt-2">
           {remindersList?.map((habit) => (
             <ReminderComponent
-            reminderTime={habit.reminderTime}
+              reminderTime={habit.reminderTime}
               key={habit.id}
               id={habit.id}
               name={habit.name}
@@ -46,6 +79,13 @@ const RightSide = () => {
             />
           ))}
         </div>
+        <Button
+          onClick={() => setModalContent("addReminder")}
+          className="w-full flex-row-reverse"
+          icon={<PlusOutlined />}
+        >
+          {fa.addReminder}
+        </Button>
       </div>
     </>
   );

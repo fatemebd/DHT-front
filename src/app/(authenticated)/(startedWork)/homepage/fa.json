@@ -1,4 +1,13 @@
 {
     "toDoList": "چک لیست امور",
-    "googleSearch": "جستجو در گوگل..."
+    "googleSearch": "جستجو در گوگل...",
+    "reminderList": "یادآورهای امروز",
+    "addTask": "تسک جدید",
+    "addReminder": "یادآور جدید",
+    "title": "عنوان",
+    "description": "توضیحات",
+    "deadline": "مهلت انجام",
+    "submit":"ثبت",
+    "name":"نام",
+    "notifBody":"متن اعلان"
 }

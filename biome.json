@@ -13,8 +13,8 @@
         "rules": {
             "recommended": true,
             "nursery": {
-                "useSortedClasses": "warn",
-                "noConsole": "error"
+                "noConsole": "error",
+                "noUnusedFunctionParameters": "error"
             }
         }
     },

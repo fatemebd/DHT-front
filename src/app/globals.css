@@ -84,3 +84,6 @@ body {
   background-color:  rgba(115, 57, 237,  1);
   border-radius: 10px;
 }
+.ant-picker-dropdown .ant-picker-time-panel-column >li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner{
+  background: transparent !important;
+}

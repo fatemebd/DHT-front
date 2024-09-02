@@ -1,14 +1,19 @@
 import { getFormattedDateTime } from "@/utils/dateUtils";
 import { Button, Checkbox, Col, Row, Typography } from "antd";
 import React, { useState } from "react";
-import { IoNewspaper } from "react-icons/io5";
+import { IoNewspaper, IoTrashBinOutline } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
 import type{ Task } from "../api/api.types";
+import { FaRegTrashCan, FaTrash } from "react-icons/fa6";
+import { useDeleteTask } from "../api";
 
 
 
 const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
   const [showContent, setShowContent] = useState(false);
+
+    const { mutate: deleteTaskMutate, isPending: isDeleteTaskPending } =
+      useDeleteTask();
 
   const handleToggleContent = () => {
     setShowContent(!showContent);
@@ -32,11 +37,19 @@ const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
           </Typography>
         </Col>
       </Row>
-      <Row>
+      <Row justify="space-between" align="middle">
         <IoNewspaper
           onClick={handleToggleContent}
           className="text-xs my-1 text-white opacity-15 cursor-pointer"
         />
+        <Button
+          className="text-xs p-0 bg-transparent rounded-full hover:bg-transparent opacity-85"
+          type="text"
+          danger
+          onClick={() => deleteTaskMutate(id)}
+        >
+          <FaRegTrashCan className="text-xs" />
+        </Button>
       </Row>
       <Row
         className={twMerge(
