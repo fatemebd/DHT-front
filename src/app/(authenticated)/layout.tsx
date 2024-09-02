@@ -5,13 +5,16 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Spin } from "antd";
 import { getTodayDate } from "@/utils/dateUtils";
+import { isClient } from "@/utils/detectUtils";
 interface LayoutProps {
   children: ReactNode;
 }
 
 
 const AuthenticatedLayout = ({ children }: LayoutProps) => {
+
   const { data: session, status } = useSession();
+  
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -34,7 +37,7 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
     }
   }, []);
   const router = useRouter();
-  if (typeof localStorage !== "undefined") {
+  if (isClient()) {
     const user = localStorage.getItem("user");
     const startWork = localStorage.getItem("startWork");
     const todayDate = getTodayDate();
@@ -45,7 +48,7 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
     }
     if (startWork !== todayDate) {
       router.push("/start-work");
-    } 
+    }
   }
   // Redirect to login if not authenticated
   if (status === "loading") {

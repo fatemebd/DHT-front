@@ -14,29 +14,31 @@ import { usePostEmail, usePostOtp } from "./api";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import type{ User } from "@/@types/common";
-import type{ Response } from "@/@types/server";
+import type { User } from "@/@types/common";
+import type { Response } from "@/@types/server";
+import { isClient } from "@/utils/detectUtils";
 
 const Page = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [email, setEmail] = useState("");
   const [otpCode, setOtpCode] = useState("");
-
   const [loadingSignIn, setLoadingSignIn] = useState(false);
+  const router = useRouter();
 
   const [form] = Form.useForm();
-  const { data: session, status } = useSession();
-  const user = localStorage.getItem("user");
+  const { status } = useSession();
+
+  if (isClient()) {
+    const user = localStorage.getItem("user");
+    if (status === "authenticated" || user) {
+      router.push("/start-work");
+      return null;
+    }
+  }
 
   const { mutate: postEmailMutate, isPending: isPostEmailPending } =
     usePostEmail();
   const { mutate: postOtpMutate, isPending: isPostOtpPending } = usePostOtp();
-  const router = useRouter();
-
-  if (status === "authenticated" || user) {
-    router.push("/start-work");
-    return null;
-  }
 
   const handleEmailSentSuccess = () => {
     toast.success(fa.emailSentSuccess);
@@ -53,9 +55,11 @@ const Page = () => {
 
   const handleOtpSentSuccess = (res: Response<User>) => {
     toast.success(fa.otpSentSuccess);
-    localStorage.setItem("user", JSON.stringify(res.data));
+    if (isClient()) {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      router.push("/start-work");
+    }
     // console.log(res);
-    router.push("/start-work");
   };
 
   const handleOtpSentFailed = (error: unknown) => {
