@@ -8,6 +8,8 @@ import {
   Spin,
   InputNumber,
   Switch,
+  Radio,
+  type RadioChangeEvent,
 } from "antd";
 import fa from "./fa.json";
 import { toast } from "react-toastify";
@@ -15,15 +17,24 @@ import { AxiosError } from "axios";
 import coin from "../../../../../../public/coin.png.png";
 import Image from "next/image";
 import { useCreateHabit } from "./api";
-import type{ CreatedHabit } from "./api/api.types";
+import type { CreatedHabit } from "./api/api.types";
 import globalFa from "@/fa.json";
+import { useState } from "react";
+import { convertToSeconds } from "@/utils/timeUtils";
 const { TextArea } = Input;
 
 const Page = () => {
   const [form] = Form.useForm();
+  const [recurrenceFormat, setRecurrenceFormat] = useState<
+    "s" | "m" | "h" | "d"
+  >("s");
 
   const { mutate: createHabitMutate, isPending: isCreateHabitPending } =
     useCreateHabit();
+
+  const onTimeFormatChange = (e: RadioChangeEvent) => {
+    setRecurrenceFormat(e.target.value);
+  };
 
   const handleActionFailed = (error: unknown) => {
     if (error instanceof AxiosError) {
@@ -32,7 +43,11 @@ const Page = () => {
   };
 
   const onFinish = (values: CreatedHabit) => {
-    createHabitMutate(values, {
+    const postData = {
+      ...values,
+      recurrenceSeconds: convertToSeconds(values.recurrenceSeconds,recurrenceFormat),
+    };
+    createHabitMutate(postData, {
       onSuccess: () => toast.success(globalFa.createdSuccessfully),
       onError: handleActionFailed,
     });
@@ -73,7 +88,18 @@ const Page = () => {
         <Form.Item name="notifBody" label={fa.notifBody}>
           <TextArea allowClear />
         </Form.Item>
-        <Form.Item name="recurrenceSeconds" label={fa.recurrenceSeconds}>
+        <Typography className="mb-2">{fa.recurrenceSeconds}</Typography>
+        <Radio.Group
+          className="mb-3"
+          onChange={onTimeFormatChange}
+          value={recurrenceFormat}
+        >
+          <Radio value="s">{fa.second}</Radio>
+          <Radio value="m">{fa.minute}</Radio>
+          <Radio value="h">{fa.hour}</Radio>
+          <Radio value="d">{fa.day}</Radio>
+        </Radio.Group>
+        <Form.Item name="recurrenceSeconds">
           <InputNumber className="w-full" />
         </Form.Item>
         <Form.Item name="durationSeconds" label={fa.durationSeconds}>
