@@ -1,4 +1,4 @@
-import jalaali, {toJalaali} from "jalaali-js";
+import jalaali, { toJalaali } from "jalaali-js";
 import { toGregorian } from "jalaali-js";
 interface JalaaliDate {
   day: number; // day of the month in Jalaali calendar
@@ -84,7 +84,6 @@ export const getTodayDate = (): string => {
   return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
 };
 
-
 export function formatPersianDate(isoDateString: string): string {
   // Parse the ISO date string
   const date = new Date(isoDateString);
@@ -123,5 +122,36 @@ export function formatPersianDate(isoDateString: string): string {
   return `${dayName} ${time}`;
 }
 
-// Example usage:
-// console.log(formatPersianDate("2024-09-01T23:17:09.531Z"));
+type DateObject = {
+  $C: string;
+  $D: number;
+  $H: number;
+  $L: string;
+  $M: number;
+  $W: number;
+  $d: Date;
+  $isDayjsObject: boolean;
+  $jD: number;
+  $jM: number;
+  $jy: number;
+  $m: number;
+  $ms: number;
+  $s: number;
+  $u: undefined;
+  $x: object;
+  $y: number;
+};
+
+export function formatDateToISOString(date: unknown ): string {
+  const dateObj = date as DateObject
+  const year = dateObj.$y;
+  const month = String(dateObj.$M + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(dateObj.$D).padStart(2, "0");
+  const hours = String(dateObj.$H).padStart(2, "0");
+  const minutes = String(dateObj.$m).padStart(2, "0");
+  const seconds = String(dateObj.$s).padStart(2, "0");
+  const milliseconds = String(dateObj.$ms).padStart(3, "0");
+
+  // Combine the components into the ISO 8601 format without converting to UTC
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+}

@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="fa">
       <body
         dir="rtl"
-        className="h-screen flex justify-center items-center bg-secondary-1000"
+        className="flex h-screen items-center justify-center bg-secondary-1000"
       >
         {" "}
         <ConfigProvider
@@ -35,9 +35,17 @@ export default function RootLayout({
               Input: {
                 colorText: "black",
               },
-              Button:{
-                colorText:"black"
-              }
+              Button: {
+                colorText: "white",
+                colorBgBase: "transparent",
+                colorBgContainer: "transparent",
+                colorTextDisabled: "#363d56",
+                borderColorDisabled: "#363d56",
+              },
+              Modal: {
+                contentBg: "#363d56",
+                headerBg: "#363d56",
+              },
             },
 
             token: {

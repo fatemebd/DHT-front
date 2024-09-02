@@ -64,13 +64,13 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className="pr-[15%]  bg-white bg-opacity-5 p-3 text-center rounded-lg mt-4 w-full">
+    <div className="mt-4 w-full rounded-lg bg-white bg-opacity-5 p-3 pr-[15%] text-center">
       <Row
         // justify="center"
         gutter={[8, 8]}
-        className="text-white text-center w-full"
+        className="w-full text-center text-white"
       >
-        {jalaliWeekdays.map((day, index) => (
+        {jalaliWeekdays.map((day) => (
           <Col key={day} span={3}>
             <Typography className="text-white">{day}</Typography>
           </Col>
@@ -89,10 +89,10 @@ const Home: NextPage = () => {
             <Col
               key={`${item}`}
               span={3}
-              className="flex flex-col items-center w-full"
+              className="flex w-full flex-col items-center"
             >
               <div
-                className="w-full md:h-8 sm:h-10 h-8 md:m-2 m-0.5 rounded-md"
+                className="m-0.5 h-8 w-full rounded-md sm:h-10 md:m-2 md:h-8"
                 style={{
                   backgroundColor: `rgba(115, 57, 237, ${item.value / 100})`,
                 }}

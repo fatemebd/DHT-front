@@ -3,10 +3,12 @@ import {
   GET_TO_DO_LIST,
   GET_HABITS_LIST,
   GET_REMINDERS_LIST,
+  CREATE_NEW_TASK,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse } from "@/@types/server";
 import type { Habit, Reminder, Task } from "./api.types";
+import { useMutation } from "@tanstack/react-query";
 
 const getToDoList = async (signal: AbortSignal) => {
   const response: ListResponse<Task> = await axiosInstance.get(GET_TO_DO_LIST, {
@@ -16,9 +18,12 @@ const getToDoList = async (signal: AbortSignal) => {
 };
 
 const getHabitsList = async (signal: AbortSignal) => {
-  const response: ListResponse<Habit> = await axiosInstance.get(GET_HABITS_LIST, {
-    signal,
-  });
+  const response: ListResponse<Habit> = await axiosInstance.get(
+    GET_HABITS_LIST,
+    {
+      signal,
+    },
+  );
   return response.data;
 };
 
@@ -30,6 +35,11 @@ const getReminderssList = async (signal: AbortSignal) => {
     },
   );
   return response.data;
+};
+
+const createTask = async (task: Task) => {
+  const response = await axiosInstance.post(CREATE_NEW_TASK, task);
+  return response;
 };
 
 export const useGetToDoList = () => {
@@ -50,5 +60,17 @@ export const useGetRemindersList = () => {
   return useQuery({
     queryKey: [GET_REMINDERS_LIST],
     queryFn: ({ signal }) => getReminderssList(signal),
+  });
+};
+
+export const useCreateTask = () => {
+  const { refetch } = useGetToDoList();
+
+  return useMutation({
+    mutationKey: [CREATE_NEW_TASK],
+    mutationFn: createTask,
+    onSuccess: () => {
+      refetch();
+    },
   });
 };
