@@ -6,8 +6,12 @@
     "description":"توضیحات",
     "score":"امتیاز",
     "notifActive":"فعال بودن اعلان",
-    "recurrenceSeconds":"بازه زمانی نمایش اعلان (دقیقه)",
-    "durationSeconds":"مدت زمان نمایش اعلان (دقیقه)",
-    "notifBody":"متن اعلان"
+    "recurrenceSeconds":"بازه زمانی نمایش اعلان ( بر حسب ): ",
+    "durationSeconds":"مدت زمان انجام (ثانیه)",
+    "notifBody":"متن اعلان",
+    "second":"ثانیه",
+    "minute":"دقیقه",
+    "hour":"ساعت",
+    "day":"روز"
 
 }
