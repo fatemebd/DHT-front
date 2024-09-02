@@ -32,11 +32,17 @@ const RightSide = () => {
         cancelButtonProps={{ className: "hidden" }}
         okButtonProps={{ className: "hidden" }}
       >
-        {modalContent === "addTask" ? <AddTask /> : <AddReminder />}
+        {modalContent === "addTask" ? (
+          <AddTask handleClose={handleCloseModal} />
+        ) : modalContent === "addReminder" ? (
+          <AddReminder handleClose={handleCloseModal} />
+        ) : (
+          ""
+        )}
       </Modal>
-      <div className="mt-3 w-full space-y-3 rounded-md bg-white bg-opacity-10 px-2 py-1 md:h-[40%]">
+      <div className=" w-full rounded-md flex flex-col justify-between bg-white bg-opacity-10 px-2 py-1 md:max-h-[40%]  md:h-[40%] pb-3 space-y-3 ">
         <Typography className="text-md font-semibold">{fa.toDoList}</Typography>
-        <div className="md:max-h-[70%] md:overflow-y-scroll">
+        <div className="md:max-h-[65%] md:overflow-y-scroll  mt-2 ">
           {toDoListData?.map((task) => (
             <TaskComponent
               key={task.id}
@@ -48,6 +54,7 @@ const RightSide = () => {
             />
           ))}
         </div>
+
         <Button
           onClick={() => setModalContent("addTask")}
           className="w-full flex-row-reverse"
@@ -57,11 +64,11 @@ const RightSide = () => {
         </Button>
       </div>
 
-      <div className="mt-3 w-full rounded-md bg-white bg-opacity-10 px-2 py-1 md:h-[40%]  space-y-3">
+      <div className="mt-3 w-full flex flex-col justify-between rounded-md bg-white bg-opacity-10 px-2 py-1 md:max-h-[40%]  md:h-[40%] pb-3 space-y-3">
         <Typography className="text-md font-semibold">
           {fa.reminderList}{" "}
         </Typography>
-        <div className="md:max-h-[70%] md:overflow-y-scroll">
+        <div className="md:max-h-[65%] md:overflow-y-scroll mt-2">
           {remindersList?.map((habit) => (
             <ReminderComponent
               reminderTime={habit.reminderTime}

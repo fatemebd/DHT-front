@@ -14,11 +14,17 @@ import { formatDateToISOString } from "@/utils/dateUtils";
 import { useCreateReminder, useCreateTask } from "../api";
 import { toast } from "react-toastify";
 
-const AddReminder = () => {
+const AddReminder = ({ handleClose }: { handleClose: () => void }) => {
   const { mutate: createReminderMutate, isPending: isCreateReminderPending } =
     useCreateReminder();
-
+  const [form] = Form.useForm();
   JalaliLocaleListener();
+
+  const handleSuccess = () => {
+    toast.success(globalFa.createdSuccessfully);
+    form.resetFields();
+    handleClose();
+  };
 
   const handleFinish = (values: Reminder) => {
     const postData = {
@@ -26,13 +32,18 @@ const AddReminder = () => {
       reminderTime: formatDateToISOString(values.reminderTime),
     };
     createReminderMutate(postData, {
-      onSuccess: () => toast.success(globalFa.createdSuccessfully),
+      onSuccess:  handleSuccess,
       onError: (err) => toast.error(err.message),
     });
   };
 
   return (
-    <Form title={fa.addReminder} onFinish={handleFinish} className="mt-5">
+    <Form
+      form={form}
+      title={fa.addReminder}
+      onFinish={handleFinish}
+      className="mt-5"
+    >
       <Form.Item
         name="name"
         label={fa.name}
@@ -43,7 +54,11 @@ const AddReminder = () => {
       <Form.Item name="description" label={fa.description}>
         <TextArea />
       </Form.Item>
-      <Form.Item name="reminderTime" label={fa.deadline}>
+      <Form.Item
+        name="reminderTime"
+        label={fa.deadline}
+        rules={[{ required: true, message: globalFa.required }]}
+      >
         <DatePickerJalali
           format="YYYY-MM-DD HH:mm:ss"
           showTime={{ defaultValue: dayjs("00:00:00", "HH:mm:ss") }}

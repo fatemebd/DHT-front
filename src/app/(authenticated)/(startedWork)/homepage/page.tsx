@@ -28,7 +28,7 @@ const Page = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       const messaging = getMessaging(firebaseApp);
-      const unsubscribe = onMessage(messaging, (payload) => {});
+      const unsubscribe = onMessage(messaging, () => {});
       return () => {
         unsubscribe(); // Unsubscribe from the onMessage event
       };
@@ -50,13 +50,13 @@ const Page = () => {
     deadline: "2024-08-28T23:55:10.242000Z",
   };
   return (
-    <div className="px-[5%]">
+    <div className="px-[5%] flex flex-col h-lvh justify-between md:overflow-hidden">
       <Header />
-      <Row gutter={[16, 16]} justify="space-between" className="w-full">
+      <Row gutter={[16, 16]} justify="space-between" className="w-full h-full">
         <Col
           md={{ span: 6, order: 0 }}
-          xs={{ span: 24, order: 1 }}
-          className="p-0"
+          xs={{ span: 24, order: 2 }}
+          className="p-0 mb-3  md:h-dvh"
         >
           <RightSide />
         </Col>
@@ -77,7 +77,7 @@ const Page = () => {
         </Col>
         <Col
           md={{ span: 8, order: 2 }}
-          xs={{ span: 24, order: 2 }}
+          xs={{ span: 24, order: 1 }}
           className="p-0"
         >
           <LeftSide />

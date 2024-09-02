@@ -5,6 +5,8 @@ import {
   GET_REMINDERS_LIST,
   CREATE_NEW_TASK,
   CREATE_NEW_REMINDER,
+  DELETE_REMINDER,
+  DELETE_TASK,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse } from "@/@types/server";
@@ -48,6 +50,16 @@ const createReminder= async (reminder: Reminder) => {
   return response;
 };
 
+const deleteReminder= async (id: number) => {
+  const response = await axiosInstance.delete(DELETE_REMINDER(id));
+  return response;
+};
+
+const deleteTask = async (id: number) => {
+  const response = await axiosInstance.delete(DELETE_TASK(id));
+  return response;
+};
+
 export const useGetToDoList = () => {
   return useQuery({
     queryKey: [GET_TO_DO_LIST],
@@ -87,6 +99,30 @@ export const useCreateReminder= () => {
   return useMutation({
     mutationKey: [CREATE_NEW_REMINDER],
     mutationFn: createReminder,
+    onSuccess: () => {
+      refetch();
+    },
+  });
+};
+
+export const useDeleteReminder= () => {
+  const { refetch } = useGetRemindersList();
+
+  return useMutation({
+    mutationKey: [DELETE_REMINDER],
+    mutationFn: deleteReminder,
+    onSuccess: () => {
+      refetch();
+    },
+  });
+};
+
+export const useDeleteTask = () => {
+  const { refetch } = useGetToDoList();
+
+  return useMutation({
+    mutationKey: [DELETE_TASK],
+    mutationFn: deleteTask,
     onSuccess: () => {
       refetch();
     },

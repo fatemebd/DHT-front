@@ -1,9 +1,11 @@
-import {  Col, Row, Typography } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import type{ Habit, Reminder } from "../api/api.types";
+import type { Habit, Reminder } from "../api/api.types";
 import { formatPersianDate } from "@/utils/dateUtils";
+import { useDeleteReminder } from "../api";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const ReminderComponent = ({
   id,
@@ -12,6 +14,8 @@ const ReminderComponent = ({
   reminderTime,
 }: Reminder) => {
   const [showContent, setShowContent] = useState(false);
+  const { mutate: deleteReminderMutate, isPending: isDeleteReminderPending } =
+    useDeleteReminder();
 
   const handleToggleContent = () => {
     setShowContent(!showContent);
@@ -30,11 +34,19 @@ const ReminderComponent = ({
           </Typography>
         </Col>
       </Row>
-      <Row>
+      <Row justify="space-between" align="middle">
         <IoNewspaper
           onClick={handleToggleContent}
           className="text-xs my-1 text-white opacity-15 cursor-pointer"
         />
+        <Button
+          className="text-xs p-0 bg-transparent rounded-full hover:bg-transparent opacity-85"
+          type="text"
+          danger
+          onClick={() => deleteReminderMutate(id)}
+        >
+          <FaRegTrashCan className="text-xs" />
+        </Button>
       </Row>
       <Row
         className={twMerge(
