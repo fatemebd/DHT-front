@@ -7,8 +7,12 @@ import { getTodayDate } from "@/utils/dateUtils";
 import fa from "./fa.json";
 import { useRouter } from "next/navigation";
 import { isClient } from "@/utils/detectUtils";
+import { useStartWork } from "./api";
 
 const Page = () => {
+  const { mutate: startDayMutate, isPending: isStartWorkPending } =
+    useStartWork();
+
   const router = useRouter();
 
   const todayDate = getTodayDate();
@@ -23,7 +27,11 @@ const Page = () => {
 
   const handleStartWork = () => {
     localStorage.setItem("startWork", todayDate);
-    router.push("/homepage");
+    startDayMutate(undefined, {
+      onSuccess: () => {
+        router.push("/homepage");
+      },
+    });
   };
 
   return (
@@ -33,7 +41,7 @@ const Page = () => {
         align="middle"
         className="md:bg-white md:bg-opacity-10 md:backdrop-blur-lg w-full  md:h-[40%] md:w-[50%] md:rounded-xl shadow-xl  text-white p-10 gap-5 flex items-center md:drop-shadow-2xl"
       >
-        <MoodTracker mood={null}/>
+        <MoodTracker mood={null} />
         <Button onClick={handleStartWork} type="primary">
           {fa.startWork}
         </Button>

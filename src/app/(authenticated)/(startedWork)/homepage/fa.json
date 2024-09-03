@@ -9,5 +9,8 @@
     "deadline": "مهلت انجام",
     "submit":"ثبت",
     "name":"نام",
-    "notifBody":"متن اعلان"
+    "notifBody":"متن اعلان",
+    "dashboard":"پیشخوان",
+    "exercise":"تمرینات کششی",
+    "logout":"خروج"
 }
