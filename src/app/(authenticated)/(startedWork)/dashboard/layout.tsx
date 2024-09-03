@@ -8,6 +8,7 @@ import Score from "@/components/Score";
 import fa from "./fa.json";
 import { usePathname, useRouter } from "next/navigation";
 import { useGetUserDetail } from "../api";
+import LeftHabits from "@/components/LeftHabits";
 const { Header, Sider, Content } = Layout;
 
 interface LayoutProps {
@@ -74,6 +75,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
             !
           </Typography>
           <Score score={user?.score} />
+          <LeftHabits leftHabits={user?.allowedHabitsCount} />
         </Header>
         <Content
           className="bg-[#1E2642] shadow-lg pb-15"
