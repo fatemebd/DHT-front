@@ -24,8 +24,8 @@ export const usePostOtp = () => {
   return useMutation({
     mutationKey: [POST_OTP],
     mutationFn: postOtp,
-    onSuccess:(data)=>{
-        console.log(data);
-    }
+    // onSuccess:(data)=>{
+    //     console.log(data);
+    // }
   });
 };

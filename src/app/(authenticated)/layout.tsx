@@ -10,11 +10,9 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-
 const AuthenticatedLayout = ({ children }: LayoutProps) => {
-
   const { data: session, status } = useSession();
-  
+
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -27,16 +25,18 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
             .then(() => {
               // console.log("Service worker updated");
             })
-            .catch((err) => {
+            .catch(() => {
               // console.error("Failed to update service worker:", err);
             });
         })
-        .catch((err) => {
+        .catch(() => {
           // console.error("Service worker registration failed, error:", err);
         });
     }
   }, []);
+
   const router = useRouter();
+
   if (isClient()) {
     const user = localStorage.getItem("user");
     const startWork = localStorage.getItem("startWork");
@@ -44,9 +44,8 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
 
     if (status === "unauthenticated" && user === null) {
       router.push("/login");
-      return null; // Prevent further rendering
-    }
-    if (startWork !== todayDate) {
+      // return null; // Prevent further rendering
+    } else if (startWork !== todayDate) {
       router.push("/start-work");
     }
   }

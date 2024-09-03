@@ -30,9 +30,9 @@ const Page = () => {
 
   if (isClient()) {
     const user = localStorage.getItem("user");
+    
     if (status === "authenticated" || user) {
       router.push("/start-work");
-      return null;
     }
   }
 
