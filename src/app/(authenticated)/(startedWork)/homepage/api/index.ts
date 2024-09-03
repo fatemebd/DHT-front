@@ -1,16 +1,17 @@
 import axiosInstance from "@/utils/axios";
 import {
   GET_TO_DO_LIST,
-  GET_HABITS_LIST,
+  GET_TODAY_HABITS_LIST,
   GET_REMINDERS_LIST,
   CREATE_NEW_TASK,
   CREATE_NEW_REMINDER,
   DELETE_REMINDER,
   DELETE_TASK,
+  GET_HABIT_HISTORY,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse } from "@/@types/server";
-import type { Habit, Reminder, Task } from "./api.types";
+import type { Habit, HabitHistoryDay, Reminder, Task } from "./api.types";
 import { useMutation } from "@tanstack/react-query";
 
 const getToDoList = async (signal: AbortSignal) => {
@@ -22,7 +23,7 @@ const getToDoList = async (signal: AbortSignal) => {
 
 const getHabitsList = async (signal: AbortSignal) => {
   const response: ListResponse<Habit> = await axiosInstance.get(
-    GET_HABITS_LIST,
+    GET_TODAY_HABITS_LIST,
     {
       signal,
     },
@@ -45,12 +46,22 @@ const createTask = async (task: Task) => {
   return response;
 };
 
-const createReminder= async (reminder: Reminder) => {
+const getHabitHistory = async (signal: AbortSignal) => {
+  const response: ListResponse<HabitHistoryDay> = await axiosInstance.get(
+    GET_HABIT_HISTORY,
+    {
+      signal,
+    },
+  );
+  return response.data;
+};
+
+const createReminder = async (reminder: Reminder) => {
   const response = await axiosInstance.post(CREATE_NEW_REMINDER, reminder);
   return response;
 };
 
-const deleteReminder= async (id: number) => {
+const deleteReminder = async (id: number) => {
   const response = await axiosInstance.delete(DELETE_REMINDER(id));
   return response;
 };
@@ -69,7 +80,7 @@ export const useGetToDoList = () => {
 
 export const useGetHabitsList = () => {
   return useQuery({
-    queryKey: [GET_HABITS_LIST],
+    queryKey: [GET_TODAY_HABITS_LIST],
     queryFn: ({ signal }) => getHabitsList(signal),
   });
 };
@@ -78,6 +89,13 @@ export const useGetRemindersList = () => {
   return useQuery({
     queryKey: [GET_REMINDERS_LIST],
     queryFn: ({ signal }) => getReminderssList(signal),
+  });
+};
+
+export const useGetHabitHistory = () => {
+  return useQuery({
+    queryKey: [GET_HABIT_HISTORY],
+    queryFn: ({ signal }) => getHabitHistory(signal),
   });
 };
 
@@ -93,7 +111,7 @@ export const useCreateTask = () => {
   });
 };
 
-export const useCreateReminder= () => {
+export const useCreateReminder = () => {
   const { refetch } = useGetRemindersList();
 
   return useMutation({
@@ -105,7 +123,7 @@ export const useCreateReminder= () => {
   });
 };
 
-export const useDeleteReminder= () => {
+export const useDeleteReminder = () => {
   const { refetch } = useGetRemindersList();
 
   return useMutation({

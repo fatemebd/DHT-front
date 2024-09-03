@@ -146,7 +146,7 @@ export function formatDateToISOString(date: unknown): string {
 }
 
 export const convertGregorianToJalali = (date: string) => {
-  const [month, day, year] = date.split("/").map(Number);
+  const [year, month, day] = date.split("-").map(Number);
   const newDate = new Date(year, month - 1, day);
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -161,3 +161,9 @@ export const convertGregorianToJalali = (date: string) => {
 
   return jalaliDate;
 };
+
+ export function getDayOfWeekIndex(dateString: string): number {
+    const date = new Date(dateString);
+    const dayOfWeek = date.getDay();
+    return (dayOfWeek + 1) % 7;
+  }
