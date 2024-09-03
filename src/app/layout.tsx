@@ -46,6 +46,9 @@ export default function RootLayout({
                 contentBg: "#363d56",
                 headerBg: "#363d56",
               },
+              Dropdown: {
+                colorBgElevated: "#363d56",
+              },
             },
 
             token: {
