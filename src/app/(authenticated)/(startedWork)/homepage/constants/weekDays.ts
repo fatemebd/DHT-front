@@ -1,0 +1,1 @@
+export const getWeekDays = () => ["ش", "ی", "د", "س", "چ", "پ", "ج"];

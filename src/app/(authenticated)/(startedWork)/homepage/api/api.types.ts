@@ -9,7 +9,6 @@ export interface Habit {
   id: number;
   name: string;
   description?: string;
-  // score:number;
 }
 
 export interface Reminder {
@@ -17,4 +16,9 @@ export interface Reminder {
   name: string;
   description?: string;
   reminderTime:string;
+}
+
+export interface HabitHistoryDay{
+  date:string;
+  progress:number
 }
