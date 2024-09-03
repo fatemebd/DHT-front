@@ -4,7 +4,7 @@ import { Form, Input, Button, Typography, Spin, InputNumber } from "antd";
 import fa from "./fa.json";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import coin from "../../../../../../public/coin.png.png";
+import coin from "../../../../../../public/coin.png";
 import Image from "next/image";
 import { useCreateSuggestion } from "./api";
 import type { Suggestion } from "./api/api.types";

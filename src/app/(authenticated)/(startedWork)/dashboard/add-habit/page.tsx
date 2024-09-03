@@ -14,7 +14,7 @@ import {
 import fa from "./fa.json";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import coin from "../../../../../../public/coin.png.png";
+import coin from "../../../../../../public/coin.png";
 import Image from "next/image";
 import { useCreateHabit } from "./api";
 import type { CreatedHabit } from "./api/api.types";
@@ -45,7 +45,10 @@ const Page = () => {
   const onFinish = (values: CreatedHabit) => {
     const postData = {
       ...values,
-      recurrenceSeconds: convertToSeconds(values.recurrenceSeconds,recurrenceFormat),
+      recurrenceSeconds: convertToSeconds(
+        values.recurrenceSeconds,
+        recurrenceFormat
+      ),
     };
     createHabitMutate(postData, {
       onSuccess: () => toast.success(globalFa.createdSuccessfully),

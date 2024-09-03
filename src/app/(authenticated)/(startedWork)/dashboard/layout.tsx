@@ -74,8 +74,10 @@ const DashboardLayout = ({ children }: LayoutProps) => {
             {fa.hello} {user?.firstName ? user.firstName : fa.friend} {fa.dear}{" "}
             !
           </Typography>
-          <Score score={user?.score} />
-          <LeftHabits leftHabits={user?.allowedHabitsCount} />
+          <div className="flex gap-3">
+            <Score score={user?.score} />
+            <LeftHabits leftHabits={user?.allowedHabitsCount} />
+          </div>
         </Header>
         <Content
           className="bg-[#1E2642] shadow-lg pb-15"

@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 import Image from "next/image";
 import React from "react";
-import coin from "../../public/coin.png.png";
+import coin from "../../public/coin.png";
 
 interface ScoreProps {
   score: number | undefined;

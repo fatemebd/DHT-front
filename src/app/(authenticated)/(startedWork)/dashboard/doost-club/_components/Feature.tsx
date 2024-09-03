@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { Feature } from "../api/api.types";
 import { Col, Modal, Row, Typography } from "antd";
 import Image from "next/image";
-import coin from "../../../../../../../public/coin.png.png";
+import coin from "../../../../../../../public/coin.png";
 import { IoCloseOutline } from "react-icons/io5";
 import { useGetBuyFeature } from "../api";
 import fa from "../fa.json";
@@ -67,9 +67,9 @@ const FeatureComponent = ({
         align="top"
         className={twMerge(
           featureDisabled
-            ? "border-gray-700, bg-gray-400 cursor-not-allowed grayscale border border-gray-400"
+            ? "border-gray-700, bg-gray-400 cursor-not-allowed grayscale border border-gray-400 opacity-60"
             : " border border-primary-1000 cursor-pointer hover:bg-primary-900 ",
-          "w-full px-5 py-3 bg-white bg-opacity-10 rounded-lg md:h-24  duration-150"
+          "w-full px-5 py-3 bg-white bg-opacity-10 rounded-lg md:h-24  duration-500"
         )}
       >
         <Col className="space-y-5">
