@@ -26,6 +26,8 @@ const Header = () => {
       logOutMutate();
       localStorage.removeItem("startWork");
       localStorage.removeItem("user");
+      localStorage.removeItem("fcmToken");
+
       router.push("/login");
     }
   };

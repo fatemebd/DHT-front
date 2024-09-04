@@ -17,13 +17,40 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  self.registration.showNotification(payload.message.data.title, {
-    body: payload.message.data.body,
+  self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
     icon: "./logo.png",
   });
 
+  // biome-ignore lint/nursery/noConsole: <explanation>
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
+  );
+});
+self.addEventListener("notificationclick", (event) => {
+  const clickAction = "/homepage";
+
+  event.waitUntil(
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        const client = clientList.find((c) => c.url === clickAction);
+
+        if (client) {
+          client.focus();
+        } else {
+          clients.openWindow(clickAction);
+        }
+
+        event.notification.close();
+
+        if (clientList.length > 0) {
+          clientList[0].postMessage({
+            type: "NOTIFICATION_CLICK",
+            notificationData: event.notification.data,
+          });
+        }
+      })
   );
 });

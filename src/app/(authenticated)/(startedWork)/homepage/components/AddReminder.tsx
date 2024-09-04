@@ -39,6 +39,7 @@ const AddReminder = ({ handleClose }: { handleClose: () => void }) => {
 
   return (
     <Form
+      layout="vertical"
       form={form}
       title={fa.addReminder}
       onFinish={handleFinish}

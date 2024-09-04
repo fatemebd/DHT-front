@@ -17,13 +17,13 @@ import { toast } from "react-toastify";
 const AddTask = ({ handleClose }: { handleClose: () => void }) => {
   const { mutate: createTaskMutate, isPending: isCreateTaskPending } =
     useCreateTask();
-    const [form] = Form.useForm()
+  const [form] = Form.useForm();
 
   JalaliLocaleListener();
 
   const handleSuccess = () => {
     toast.success(globalFa.createdSuccessfully);
-    form.resetFields()
+    form.resetFields();
     handleClose();
   };
 
@@ -33,13 +33,14 @@ const AddTask = ({ handleClose }: { handleClose: () => void }) => {
       deadline: formatDateToISOString(values.deadline),
     };
     createTaskMutate(postData, {
-      onSuccess:  handleSuccess,
+      onSuccess: handleSuccess,
       onError: (err) => toast.error(err.message),
     });
   };
 
   return (
     <Form
+      layout="vertical"
       form={form}
       title={fa.addTask}
       onFinish={handleFinish}

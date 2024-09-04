@@ -30,8 +30,8 @@ const Page = () => {
 
   if (isClient()) {
     const user = localStorage.getItem("user");
-    
-    if (status === "authenticated" || user) {
+
+    if (user) {
       router.push("/start-work");
     }
   }
@@ -102,7 +102,7 @@ const Page = () => {
       justify="space-between"
       className="bg-white bg-opacity-10 backdrop-blur-lg w-full h-full md:h-[70%] md:w-[60%] md:rounded-xl rounded-xl shadow-xl  text-white p-20 flex drop-shadow-2xl"
     >
-      <Col md={15}>
+      <Col md={15} xs={24}>
         {otpSent ? (
           <Typography>{fa.otpText}😍</Typography>
         ) : (
@@ -138,7 +138,7 @@ const Page = () => {
           onClick={otpSent ? handleOtp : handleSendEmail}
           disabled={isPostEmailPending || isPostOtpPending}
         >
-          {otpSent ? fa.sentOtp : fa.signin}
+          {otpSent ? fa.signin : fa.sentOtp}
         </Button>
         <Divider>{fa.or}</Divider>
         <Button
@@ -147,7 +147,7 @@ const Page = () => {
           onClick={handleGithubSignIn}
           disabled={loadingSignIn}
         >
-          {fa.signInWithGit}{" "}
+          { fa.signInWithGit}
         </Button>
       </Col>
       <Col md={6}>

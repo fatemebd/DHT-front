@@ -3,6 +3,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 import firebaseApp from "@/utils/firebase";
 import { useSendFCM } from "@/app/(authenticated)/(startedWork)/homepage/api";
 import { useGetUserDetail } from "@/app/(authenticated)/(startedWork)/api";
+import { isClient } from "../detectUtils";
 
 const useFcmToken = () => {
   const [token, setToken] = useState("");
@@ -14,8 +15,17 @@ const useFcmToken = () => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (user && token !== "") {
-      sendFCM({ fcmToken: token, owner: user?.id });
+    if (isClient() && user && token !== "") {
+      const savedToken = localStorage.getItem("fcmToken");
+      if (!savedToken && savedToken !== token)
+        sendFCM(
+          { fcmToken: token, owner: user?.id },
+          {
+            onSuccess: () => {
+              localStorage.setItem("fcToken", token);
+            },
+          },
+        );
     }
   }, [token, user]);
 

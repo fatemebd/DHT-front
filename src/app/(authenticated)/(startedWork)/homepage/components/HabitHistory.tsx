@@ -47,10 +47,13 @@ const HabitHistory = () => {
             wrap={true}
             className="w-full"
           >
-            {fullData?.slice(startIndex, startIndex + 7).map((item) =>
+            {fullData?.slice(startIndex, startIndex + 7).map((item, index) =>
               item.date === "" ? (
                 <Col
-                  key={`${item}`}
+                  key={`empty${
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    index
+                  }`}
                   span={3}
                   className="flex w-full flex-col items-center"
                 >
@@ -65,7 +68,7 @@ const HabitHistory = () => {
                 </Col>
               ) : (
                 <Tooltip
-                  key={`${item}`}
+                  key={item.date}
                   title={convertGregorianToJalali(item.date)}
                 >
                   <Col span={3} className="flex w-full flex-col items-center">
