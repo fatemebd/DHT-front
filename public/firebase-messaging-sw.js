@@ -22,8 +22,35 @@ messaging.onBackgroundMessage((payload) => {
     icon: "./logo.png",
   });
 
+  // biome-ignore lint/nursery/noConsole: <explanation>
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
     payload
+  );
+});
+self.addEventListener("notificationclick", (event) => {
+  // Example: Open a specific URL when the notification is clicked
+  event.waitUntil(
+    clients.openWindow("/homepage").then((windowClient) => {
+      // Send data back to the main thread using postMessage
+      event.notification.close(); // Close the notification
+
+      // Check if the client (tab) exists
+      if (windowClient) {
+        windowClient.focus(); // Focus the existing tab
+      }
+
+      // Send event data to the main thread for storage
+      clients
+        .matchAll({ includeUncontrolled: true, type: "window" })
+        .then((clients) => {
+          if (clients?.length) {
+            clients[0].postMessage({
+              type: "NOTIFICATION_CLICK",
+              notificationData: { id: event }, // Example data
+            });
+          }
+        });
+    })
   );
 });
