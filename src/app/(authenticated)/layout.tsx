@@ -17,21 +17,21 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/firebase-messaging-sw.js")
-        .then((registration) => {
-          // console.log("Registration successful, scope is:", registration.scope);
-          // Checking for updates to the service worker immediately after registration
-          registration
-            .update()
-            .then(() => {
-              // console.log("Service worker updated");
-            })
-            .catch(() => {
-              // console.error("Failed to update service worker:", err);
-            });
-        })
-        .catch(() => {
-          // console.error("Service worker registration failed, error:", err);
-        });
+        // .then((registration) => {
+        //   // console.log("Registration successful, scope is:", registration.scope);
+        //   // Checking for updates to the service worker immediately after registration
+        //   registration
+        //     .update()
+        //     .then(() => {
+        //       // console.log("Service worker updated");
+        //     })
+        //     .catch(() => {
+        //       // console.error("Failed to update service worker:", err);
+        //     });
+        // })
+        // .catch(() => {
+        //   // console.error("Service worker registration failed, error:", err);
+        // });
     }
   }, []);
 

@@ -1,6 +1,6 @@
 "use client";
-import { Grid, Col, Input, Row, Typography } from "antd";
-import React, { useEffect } from "react";
+import { Grid, Col, Input, Row, Typography, Modal } from "antd";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { SearchOutlined } from "@ant-design/icons";
 import fa from "./fa.json";
@@ -21,12 +21,23 @@ const Page = () => {
   const { Search } = Input;
   const { fcmToken } = useFcmToken();
 
+
   // Use the token as needed
   fcmToken && console.log("FCM token:", fcmToken);
 
+  const [open, setOpen] = useState(false);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    if(typeof window!=="undefined"){
+
+       const user = localStorage.getItem("user");
+      if (user) {
+        setOpen(true);
+      }
+  }
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+     
       const messaging = getMessaging(firebaseApp);
       const unsubscribe = onMessage(messaging, () => {});
       return () => {
@@ -51,6 +62,7 @@ const Page = () => {
   };
   return (
     <div className="px-[5%] flex flex-col h-lvh justify-between md:overflow-hidden">
+      <Modal >"fdvn nmdfv"</Modal>
       <Header />
       <Row gutter={[16, 16]} justify="space-between" className="w-full h-full">
         <Col
