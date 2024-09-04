@@ -44,9 +44,11 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    if (error.response.status === 401) {
+    if (error.status === 401) {
+      localStorage.removeItem("startWork");
+      localStorage.removeItem("user");
+      localStorage.removeItem("fcmToken");
       window.location.replace("/login");
-      //place your reentry code
     }
 
     return Promise.reject(error);
@@ -70,6 +72,14 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response?.status === 401) {
+      if (isClient()) {
+        localStorage.removeItem("startWork");
+        localStorage.removeItem("user");
+        localStorage.removeItem("fcmToken");
+        window.location.replace("/login");
+      }
+    }
     return Promise.reject(error);
   },
 );

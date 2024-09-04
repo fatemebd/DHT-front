@@ -150,8 +150,8 @@ const Page = () => {
           { fa.signInWithGit}
         </Button>
       </Col>
-      <Col md={6}>
-        <Image className="hidden md:flex " alt="Doost" fill={true} src={logo} />
+      <Col md={6} xs={0}>
+        <Image className="hidden md:flex " alt="Doost" height={400} width={200}  src={logo} />
       </Col>
     </Row>
   );
