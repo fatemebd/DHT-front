@@ -1,7 +1,7 @@
 "use client";
 
 import React, { type ReactNode, useState } from "react";
-import { Layout, Menu, theme, Typography } from "antd";
+import { Button, Layout, Menu, theme, Typography } from "antd";
 import { MdChevronLeft } from "react-icons/md";
 import { sidebarItems } from "./constants/sidebarMenu";
 import Score from "@/components/Score";
@@ -9,6 +9,7 @@ import fa from "./fa.json";
 import { usePathname, useRouter } from "next/navigation";
 import { useGetUserDetail } from "../api";
 import LeftHabits from "@/components/LeftHabits";
+import Link from "next/link";
 const { Header, Sider, Content } = Layout;
 
 interface LayoutProps {
@@ -42,6 +43,9 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         collapsed={collapsed}
         className=" h-full w-fit relative bg-[#1E2642] "
       >
+        <Button>
+          <Link href={"/homepage"}>fhkvbj</Link>
+        </Button>
         <div className="demo-logo-vertical" />
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <label

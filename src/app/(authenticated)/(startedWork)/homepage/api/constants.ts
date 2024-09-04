@@ -9,3 +9,5 @@ export const DELETE_REMINDER = (id: number) => `/habits/reminder/${id}/detail/`;
 export const DELETE_TASK = (id: number) => `/habits/todo/item/${id}/`;
 
 export const GET_HABIT_HISTORY = "/habits/report/monthly/";
+
+export const POST_FCM_TOKEN = "/habits/fcm/";

@@ -8,10 +8,17 @@ import {
   DELETE_REMINDER,
   DELETE_TASK,
   GET_HABIT_HISTORY,
+  POST_FCM_TOKEN,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse } from "@/@types/server";
-import type { Habit, HabitHistoryDay, Reminder, Task } from "./api.types";
+import type {
+  FCMToken,
+  Habit,
+  HabitHistoryDay,
+  Reminder,
+  Task,
+} from "./api.types";
 import { useMutation } from "@tanstack/react-query";
 
 const getToDoList = async (signal: AbortSignal) => {
@@ -68,6 +75,11 @@ const deleteReminder = async (id: number) => {
 
 const deleteTask = async (id: number) => {
   const response = await axiosInstance.delete(DELETE_TASK(id));
+  return response;
+};
+
+const sendFCM = async (data: FCMToken) => {
+  const response = await axiosInstance.post(POST_FCM_TOKEN, data);
   return response;
 };
 
@@ -144,5 +156,12 @@ export const useDeleteTask = () => {
     onSuccess: () => {
       refetch();
     },
+  });
+};
+
+export const useSendFCM = () => {
+  return useMutation({
+    mutationKey: [POST_FCM_TOKEN],
+    mutationFn: sendFCM,
   });
 };

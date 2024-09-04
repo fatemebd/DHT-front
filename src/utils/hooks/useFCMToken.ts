@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { getMessaging, getToken } from "firebase/messaging";
 import firebaseApp from "@/utils/firebase";
+import { useSendFCM } from "@/app/(authenticated)/(startedWork)/homepage/api";
+import { useGetUserDetail } from "@/app/(authenticated)/(startedWork)/api";
 
 const useFcmToken = () => {
   const [token, setToken] = useState("");
   const [notificationPermissionStatus, setNotificationPermissionStatus] =
     useState("");
 
+  const { mutate: sendFCM } = useSendFCM();
+  const { data: user } = useGetUserDetail();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (user && token !== "") {
+      sendFCM({ fcmToken: token, owner: user?.id });
+    }
+  }, [token, user]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const retrieveToken = async () => {
       try {
@@ -24,16 +37,13 @@ const useFcmToken = () => {
             });
             if (currentToken) {
               setToken(currentToken);
-            } else {
-              console.log(
-                "No registration token available. Request permission to generate one."
-              );
+              if (user) {
+                sendFCM({ fcmToken: currentToken, owner: user?.id });
+              }
             }
           }
         }
-      } catch (error) {
-        console.log("An error occurred while retrieving token:", error);
-      }
+      } catch (error) {}
     };
 
     retrieveToken();

@@ -15,10 +15,15 @@ export interface Reminder {
   id: number;
   name: string;
   description?: string;
-  reminderTime:string;
+  reminderTime: string;
 }
 
-export interface HabitHistoryDay{
-  date:string;
-  progress:number
+export interface HabitHistoryDay {
+  date: string;
+  progress: number;
+}
+
+export interface FCMToken {
+  fcmToken: string;
+  owner: number;
 }

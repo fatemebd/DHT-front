@@ -106,9 +106,7 @@ const Page = () => {
     setFileList([]);
   };
 
-  const handleChangeProfile = () => {
-    console.log("fvfv");
-    
+  const handleChangeProfile = () => {    
     if (fileList[0]) {
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       updateUserPicMutate(fileList[0] as any as File, {
