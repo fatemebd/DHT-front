@@ -1,7 +1,7 @@
 "use client";
 
 import React, { type ReactNode, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut, getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Spin } from "antd";
 import { getTodayDate } from "@/utils/dateUtils";
@@ -15,23 +15,22 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/firebase-messaging-sw.js")
-        // .then((registration) => {
-        //   // console.log("Registration successful, scope is:", registration.scope);
-        //   // Checking for updates to the service worker immediately after registration
-        //   registration
-        //     .update()
-        //     .then(() => {
-        //       // console.log("Service worker updated");
-        //     })
-        //     .catch(() => {
-        //       // console.error("Failed to update service worker:", err);
-        //     });
-        // })
-        // .catch(() => {
-        //   // console.error("Service worker registration failed, error:", err);
-        // });
+      navigator.serviceWorker.register("/firebase-messaging-sw.js");
+      // .then((registration) => {
+      //   // console.log("Registration successful, scope is:", registration.scope);
+      //   // Checking for updates to the service worker immediately after registration
+      //   registration
+      //     .update()
+      //     .then(() => {
+      //       // console.log("Service worker updated");
+      //     })
+      //     .catch(() => {
+      //       // console.error("Failed to update service worker:", err);
+      //     });
+      // })
+      // .catch(() => {
+      //   // console.error("Service worker registration failed, error:", err);
+      // });
     }
   }, []);
 
@@ -42,7 +41,7 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
     const startWork = localStorage.getItem("startWork");
     const todayDate = getTodayDate();
 
-    if (status === "unauthenticated" && user === null) {
+    if (user === null) {
       router.push("/login");
       // return null; // Prevent further rendering
     } else if (startWork !== todayDate) {

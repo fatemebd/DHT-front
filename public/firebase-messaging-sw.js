@@ -16,48 +16,41 @@ firebase.initializeApp(firebaseConfig);
 // eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
 
-// messaging.onBackgroundMessage((payload) => {
-//   self.registration.showNotification(payload.data.title, {
-//     body: payload.data.body,
-//     icon: "./logo.png",
-//   });
+messaging.onBackgroundMessage((payload) => {
+  self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
+    icon: "./logo.png",
+  });
 
-//   // biome-ignore lint/nursery/noConsole: <explanation>
-//   console.log(
-//     "[firebase-messaging-sw.js] Received background message ",
-//     payload
-//   );
-// });
+  // biome-ignore lint/nursery/noConsole: <explanation>
+  console.log(
+    "[firebase-messaging-sw.js] Received background message ",
+    payload
+  );
+});
 self.addEventListener("notificationclick", (event) => {
-  // Example: Open a specific URL when the notification is clicked
+  const clickAction = "/homepage";
+
   event.waitUntil(
-    clients.openWindow("/homepage").then((windowClient) => {
-      // Send data back to the main thread using postMessage
-      event.notification.close(); // Close the notification
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        const client = clientList.find((c) => c.url === clickAction);
 
-      const promise = new Promise((resolve) => {
-        setTimeout(resolve, 3000);
-      }).then(() => {
-        // return the promise returned by openWindow, just in case.
-        // Opening any origin only works in Chrome 43+.
-        if (windowClient) {
-          return windowClient.focus(); // Focus the existing tab
+        if (client) {
+          client.focus();
+        } else {
+          clients.openWindow(clickAction);
         }
-        return;
-      });
-      // Check if the client (tab) exists
 
-      // Send event data to the main thread for storage
-      clients
-        .matchAll({ includeUncontrolled: true, type: "window" })
-        .then((clients) => {
-          if (clients?.length) {
-            clients[0].postMessage({
-              type: "NOTIFICATION_CLICK",
-              notificationData: { id: event }, // Example data
-            });
-          }
-        });
-    })
+        event.notification.close();
+
+        if (clientList.length > 0) {
+          clientList[0].postMessage({
+            type: "NOTIFICATION_CLICK",
+            notificationData: event.notification.data,
+          });
+        }
+      })
   );
 });
