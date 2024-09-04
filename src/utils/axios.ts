@@ -14,7 +14,10 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 }
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Base URL from .env file
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 // Request interceptor to add token to headers and convert request data to snake_case
@@ -32,7 +35,8 @@ axiosInstance.interceptors.request.use(
     if (
       !config.skipRequestCaseConversion &&
       config.data &&
-      typeof config.data === "object"
+      typeof config.data === "object" &&
+      config.headers["Content-Type"] === "application/json"
     ) {
       config.data = snakecaseKeys(config.data, { deep: true });
     }
