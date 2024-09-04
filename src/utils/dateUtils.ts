@@ -76,6 +76,8 @@ export const getTodayDate = (): string => {
 export function formatPersianDate(isoDateString: string): string {
   // Parse the ISO date string
   const date = new Date(isoDateString);
+  const time = isoDateString.split("T")[1];
+  const hourMin = `${time.split(":")[0]}:${time.split(":")[1]}`;
 
   // Get the current date to compare with
   const currentDate = new Date();
@@ -105,10 +107,10 @@ export function formatPersianDate(isoDateString: string): string {
     hour12: false,
   });
 
-  const time = timeFormatter.format(date);
+  // const time = timeFormatter.format(date);
   const dayName = isToday ? "امروز" : dayNames[date.getDay()];
 
-  return `${dayName} ${time}`;
+  return `${dayName} ${hourMin}`;
 }
 
 type DateObject = {
@@ -162,8 +164,8 @@ export const convertGregorianToJalali = (date: string) => {
   return jalaliDate;
 };
 
- export function getDayOfWeekIndex(dateString: string): number {
-    const date = new Date(dateString);
-    const dayOfWeek = date.getDay();
-    return (dayOfWeek + 1) % 7;
-  }
+export function getDayOfWeekIndex(dateString: string): number {
+  const date = new Date(dateString);
+  const dayOfWeek = date.getDay();
+  return (dayOfWeek + 1) % 7;
+}
