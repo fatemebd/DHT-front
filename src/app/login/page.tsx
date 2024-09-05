@@ -1,11 +1,9 @@
 "use client";
-import { Button, Col, Divider, Form, Input, Row, Typography } from "antd";
-import React, { useState } from "react";
+import { Button, Col, Divider, Form, Input, Row, Spin, Typography } from "antd";
+import React, { useEffect, useState } from "react";
 import fa from "./fa.json";
-import { signIn, useSession } from "next-auth/react";
 import { GithubOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 const { Paragraph } = Typography;
 const { OTP } = Input;
 import logo from "../../../public/logo.png";
@@ -24,17 +22,21 @@ const Page = () => {
   const [otpCode, setOtpCode] = useState("");
   const [loadingSignIn, setLoadingSignIn] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [form] = Form.useForm();
-  const { status } = useSession();
 
-  if (isClient()) {
-    const user = localStorage.getItem("user");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (isClient()) {
+      const user = localStorage.getItem("user");
 
-    if (user) {
-      router.push("/start-work");
+      if (user) {
+        router.push("/start-work");
+      }
+      setIsLoading(false);
     }
-  }
+  }, []);
 
   const { mutate: postEmailMutate, isPending: isPostEmailPending } =
     usePostEmail();
@@ -55,11 +57,11 @@ const Page = () => {
 
   const handleOtpSentSuccess = (res: Response<User>) => {
     toast.success(fa.otpSentSuccess);
+
     if (isClient()) {
       localStorage.setItem("user", JSON.stringify(res.data));
       router.push("/start-work");
     }
-    // console.log(res);
   };
 
   const handleOtpSentFailed = (error: unknown) => {
@@ -81,12 +83,12 @@ const Page = () => {
   };
 
   const handleGithubSignIn = async () => {
-    setLoadingSignIn(true); // Start loading
-    try {
-      const res = await signIn("github");
-    } finally {
-      setLoadingSignIn(false); // End loading
-    }
+    // setLoadingSignIn(true); // Start loading
+    // try {
+    //   const res = await signIn("github");
+    // } finally {
+    //   setLoadingSignIn(false); // End loading
+    // }
   };
 
   const handleOtp = () => {
@@ -96,6 +98,10 @@ const Page = () => {
       { onSuccess: handleOtpSentSuccess, onError: handleOtpSentFailed }
     );
   };
+
+  if (isLoading) {
+    return <Spin />;
+  }
 
   return (
     <Row
@@ -147,11 +153,17 @@ const Page = () => {
           onClick={handleGithubSignIn}
           disabled={loadingSignIn}
         >
-          { fa.signInWithGit}
+          {fa.signInWithGit}
         </Button>
       </Col>
       <Col md={6} xs={0}>
-        <Image className="hidden md:flex " alt="Doost" height={400} width={200}  src={logo} />
+        <Image
+          className="hidden md:flex "
+          alt="Doost"
+          height={400}
+          width={200}
+          src={logo}
+        />
       </Col>
     </Row>
   );

@@ -1,7 +1,6 @@
 "use client";
 
-import React, { type ReactNode, useEffect } from "react";
-import { useSession, signOut, getCsrfToken } from "next-auth/react";
+import React, { type ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Spin } from "antd";
 import { getTodayDate } from "@/utils/dateUtils";
@@ -11,7 +10,7 @@ interface LayoutProps {
 }
 
 const AuthenticatedLayout = ({ children }: LayoutProps) => {
-  const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -36,20 +35,24 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
 
   const router = useRouter();
 
-  if (isClient()) {
-    const user = localStorage.getItem("user");
-    const startWork = localStorage.getItem("startWork");
-    const todayDate = getTodayDate();
+  useEffect(() => {
+    if (isClient()) {
+      const user = localStorage.getItem("user");
+      const startWork = localStorage.getItem("startWork");
+      const todayDate = getTodayDate();
 
-    if (user === null) {
-      router.push("/login");
-      // return null; // Prevent further rendering
-    } else if (startWork !== todayDate) {
-      router.push("/start-work");
+      if (user === null) {
+        router.push("/login");
+        // return null; // Prevent further rendering
+      } else if (startWork !== todayDate) {
+        router.push("/start-work");
+      }
     }
-  }
+    setIsLoading(false);
+  }, []);
+
   // Redirect to login if not authenticated
-  if (status === "loading") {
+  if (isLoading) {
     return <Spin size="large" />;
   }
 
