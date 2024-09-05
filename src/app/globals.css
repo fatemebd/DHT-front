@@ -87,3 +87,7 @@ body {
 .ant-picker-dropdown .ant-picker-time-panel-column >li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner{
   background: transparent !important;
 }
+
+.ant-tabs .ant-tabs-tab {
+  margin-left: 32px !important;
+}

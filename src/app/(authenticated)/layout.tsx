@@ -35,6 +35,7 @@ const AuthenticatedLayout = ({ children }: LayoutProps) => {
 
   const router = useRouter();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (isClient()) {
       const user = localStorage.getItem("user");
