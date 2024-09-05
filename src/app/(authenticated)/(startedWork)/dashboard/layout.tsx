@@ -78,7 +78,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
             {fa.hello} {user?.firstName ? user.firstName : fa.friend} {fa.dear}{" "}
             !
           </Typography>
-          <div className="flex gap-3">
+          <div className="flex md:gap-3 ">
             <Score score={user?.score} />
             <LeftHabits leftHabits={user?.allowedHabitsCount} />
           </div>
