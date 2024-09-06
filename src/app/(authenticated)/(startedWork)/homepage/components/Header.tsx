@@ -25,6 +25,8 @@ const Header = () => {
 
   const handleLogOut = () => {
     if (isClient()) {
+      endWorkMutate();
+
       logOutMutate();
       localStorage.removeItem("startWork");
       localStorage.removeItem("user");
