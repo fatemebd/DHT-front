@@ -91,3 +91,7 @@ body {
 .ant-tabs .ant-tabs-tab {
   margin-left: 32px !important;
 }
+
+.ant-tabs-dropdown .ant-tabs-dropdown-menu{
+  background-color:#363d56 ;
+} 
