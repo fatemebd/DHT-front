@@ -9,17 +9,21 @@ import {
   DELETE_TASK,
   GET_HABIT_HISTORY,
   POST_FCM_TOKEN,
+  GET_HABIT_DETAIL,
+  POST_DONE_HABIT,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
-import type { ListResponse } from "@/@types/server";
+import type { ListResponse, Response } from "@/@types/server";
 import type {
   FCMToken,
   Habit,
   HabitHistoryDay,
+  HabitStatus,
   Reminder,
   Task,
 } from "./api.types";
 import { useMutation } from "@tanstack/react-query";
+import type { CreatedHabit } from "../../dashboard/add-habit/api/api.types";
 
 const getToDoList = async (signal: AbortSignal) => {
   const response: ListResponse<Task> = await axiosInstance.get(GET_TO_DO_LIST, {
@@ -83,6 +87,22 @@ const sendFCM = async (data: FCMToken) => {
   return response;
 };
 
+const changeHabitStatus = async ({
+  id,
+  data,
+}: { id: number; data: HabitStatus }) => {
+  const response = await axiosInstance.put(POST_DONE_HABIT(id), data);
+  return response;
+};
+
+const getHabitDetail = async (signal: AbortSignal, id: number) => {
+  const response: Response<CreatedHabit> = await axiosInstance.get(
+    GET_HABIT_DETAIL(id),
+    { signal },
+  );
+  return response.data;
+};
+
 export const useGetToDoList = () => {
   return useQuery({
     queryKey: [GET_TO_DO_LIST],
@@ -108,6 +128,14 @@ export const useGetHabitHistory = () => {
   return useQuery({
     queryKey: [GET_HABIT_HISTORY],
     queryFn: ({ signal }) => getHabitHistory(signal),
+  });
+};
+
+export const useGetHabitDetail = (id: number) => {
+  return useQuery({
+    queryKey: [GET_HABIT_DETAIL],
+    queryFn: ({ signal }) => getHabitDetail(signal, id),
+    enabled: !!id,
   });
 };
 
@@ -163,5 +191,12 @@ export const useSendFCM = () => {
   return useMutation({
     mutationKey: [POST_FCM_TOKEN],
     mutationFn: sendFCM,
+  });
+};
+
+export const useChangeHabitStatus = () => {
+  return useMutation({
+    mutationKey: [POST_DONE_HABIT],
+    mutationFn: changeHabitStatus,
   });
 };

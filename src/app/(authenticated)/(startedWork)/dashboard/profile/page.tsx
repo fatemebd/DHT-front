@@ -54,6 +54,12 @@ const Page = () => {
   };
 
   useEffect(() => {
+    // const data = {
+    //   ...user,
+    //   dateOfBirth: convertJalaaliToGregorian(
+    //     user?.dateOfBirth.format("YYYY-MM-DD") || "2024-9-1"
+    //   ),
+    // };
     form.setFieldsValue(user);
     setBirthDate(
       convertJalaaliToGregorian(
@@ -106,7 +112,7 @@ const Page = () => {
     setFileList([]);
   };
 
-  const handleChangeProfile = () => {    
+  const handleChangeProfile = () => {
     if (fileList[0]) {
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       updateUserPicMutate(fileList[0] as any as File, {
@@ -126,7 +132,7 @@ const Page = () => {
         onClose={handleCloseModal}
         okButtonProps={{
           icon: isUserPicUpdatePending && <Spin />,
-          disabled:isUserPicUpdatePending
+          disabled: isUserPicUpdatePending,
         }}
         onOk={handleChangeProfile}
       >
@@ -185,7 +191,11 @@ const Page = () => {
         </Form.Item>
 
         <Form.Item name="dateOfBirth" label={fa.birthDate}>
-          <DatePickerJalali onChange={onChange} className="text-black w-full" />
+          <DatePickerJalali
+            // defaultValue={birthDate}
+            onChange={onChange}
+            className="text-black w-full"
+          />
         </Form.Item>
         <Form.Item>
           <Button

@@ -26,8 +26,13 @@ const DashboardLayout = ({ children }: LayoutProps) => {
   }
 
   const handleRedirect = (href: string) => {
-    const formattedHref = href.startsWith("/") ? href : `/dashboard/${href}`;
-    router.replace(formattedHref);
+    if (href === "homepage") {
+      const formattedHref = href.startsWith("/") ? href : `/${href}`;
+      router.replace(formattedHref);
+    } else {
+      const formattedHref = href.startsWith("/") ? href : `/dashboard/${href}`;
+      router.replace(formattedHref);
+    }
   };
 
   const {
@@ -43,9 +48,6 @@ const DashboardLayout = ({ children }: LayoutProps) => {
         collapsed={collapsed}
         className=" h-full w-fit relative bg-[#1E2642] "
       >
-        <Button>
-          <Link href={"/homepage"}>fhkvbj</Link>
-        </Button>
         <div className="demo-logo-vertical" />
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <label

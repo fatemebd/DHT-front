@@ -2,7 +2,7 @@ import { Button, Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import type { Habit, Reminder } from "../api/api.types";
+import type { Reminder } from "../api/api.types";
 import { formatPersianDate } from "@/utils/dateUtils";
 import { useDeleteReminder } from "../api";
 import { FaRegTrashCan } from "react-icons/fa6";
