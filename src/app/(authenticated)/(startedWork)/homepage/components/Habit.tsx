@@ -4,7 +4,7 @@ import { IoNewspaper } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
 import type { Habit } from "../api/api.types";
 
-const HabitComponent = ({ id, name, description }: Habit) => {
+const HabitComponent = ({ name, description }: Habit) => {
   const [showContent, setShowContent] = useState(false);
 
   const handleToggleContent = () => {

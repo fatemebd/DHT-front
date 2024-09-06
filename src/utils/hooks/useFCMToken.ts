@@ -19,7 +19,7 @@ const useFcmToken = () => {
       const savedToken = localStorage.getItem("fcmToken");
       if (!savedToken && savedToken !== token)
         sendFCM(
-          { fcmToken: token, owner: user?.id },
+          { fcmToken: token, owner: user?.user },
           {
             onSuccess: () => {
               localStorage.setItem("fcToken", token);

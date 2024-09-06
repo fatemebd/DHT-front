@@ -14,6 +14,7 @@ import { useGetToDoList } from "./api";
 import RightSide from "./components/RightSide";
 import { isClient } from "@/utils/detectUtils";
 import { usePathname, useRouter } from "next/navigation";
+import NotificationModal from "./components/Notification";
 
 const { useBreakpoint } = Grid;
 
@@ -23,20 +24,19 @@ const Page = () => {
   const { Search } = Input;
   const { fcmToken } = useFcmToken();
 
-  const pathname = usePathname();
-
   // Use the token as needed
   fcmToken && console.log("FCM token:", fcmToken);
 
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("user");
-      if (user) {
-        setOpen(true);
-      }
-    }
+  const [notifId, setNotifId] = useState<number>();
 
+  useEffect(() => {
+    if (typeof notifId === "number") {
+      setOpen(true);
+    }
+  }, [notifId]);
+
+  useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       const messaging = getMessaging(firebaseApp);
 
@@ -46,7 +46,10 @@ const Page = () => {
       // Listen for messages sent from the service worker
       navigator.serviceWorker.addEventListener("message", (event) => {
         // biome-ignore lint/nursery/noConsole: <explanation>
-        console.log("Message received from service worker:", event.data);
+        console.log("Message received from service worker:", event);
+        setNotifId(
+          +event.data.data.habit_id || +event.data.notificationData.data.habit_id
+        );
       });
 
       return () => {
@@ -72,11 +75,6 @@ const Page = () => {
   //     };
   //   }
   // }, []);
-
-  useEffect(() => {
-    // biome-ignore lint/nursery/noConsole: <explanation>
-    console.log(pathname);
-  }, [pathname]);
 
   // useEffect(() => {
   //   // Function to handle the storage event
@@ -109,18 +107,15 @@ const Page = () => {
       )}`;
     }
   };
-  const dataa = {
-    id: 1,
-    title: "task1",
-    description: "des",
-    done: true,
-    deadline: "2024-08-28T23:55:10.242000Z",
-  };
+
   return (
     <div className="px-[5%] flex flex-col h-lvh justify-between md:overflow-hidden">
-      <Modal open={open} onCancel={() => setOpen(false)}>
-        "fdvn nmdfv"
-      </Modal>
+      <NotificationModal
+        open={open}
+        onCancel={() => setOpen(false)}
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
+        id={notifId!}
+      />
       <Header />
       <Row gutter={[16, 16]} justify="space-between" className="w-full h-full">
         <Col

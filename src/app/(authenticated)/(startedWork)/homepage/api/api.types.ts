@@ -27,3 +27,7 @@ export interface FCMToken {
   fcmToken: string;
   owner: number;
 }
+
+export interface HabitStatus {
+  status: "DONE" | "UNDONE";
+}

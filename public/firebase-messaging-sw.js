@@ -22,6 +22,31 @@ messaging.onBackgroundMessage((payload) => {
     icon: "./logo.png",
   });
 
+  clients
+    .matchAll({ type: "window", includeUncontrolled: true })
+    .then((clientList) => {
+      const client = clientList.find(
+        (c) => c.url === "http://localhost:3000/homepage"
+      );
+
+      if (client && "focus" in client) {
+        client.focus();
+        //  client.postMessage({
+        //    type: "NOTIFICATION_CLICK",
+        //    notificationData: event.notification,
+        //  });
+      } else {
+        client.openWindow(clickAction);
+      }
+
+      if (clientList.length > 0) {
+        client.postMessage({
+          type: "NOTIFICATION_CLICK",
+          notificationData: payload,
+        });
+      }
+    });
+
   // biome-ignore lint/nursery/noConsole: <explanation>
   console.log(
     "[firebase-messaging-sw.js] Received background message ",
@@ -29,7 +54,7 @@ messaging.onBackgroundMessage((payload) => {
   );
 });
 self.addEventListener("notificationclick", (event) => {
-  const clickAction = "/homepage";
+  const clickAction = "http://localhost:3000/homepage";
 
   event.waitUntil(
     clients
@@ -37,20 +62,24 @@ self.addEventListener("notificationclick", (event) => {
       .then((clientList) => {
         const client = clientList.find((c) => c.url === clickAction);
 
-        if (client) {
-          client.focus();
-        } else {
-          clients.openWindow(clickAction);
-        }
 
-        event.notification.close();
+        if (client && "focus" in client) {
+          client.focus();
+          //  client.postMessage({
+          //    type: "NOTIFICATION_CLICK",
+          //    notificationData: event.notification,
+          //  });
+        } else {
+          client.openWindow(clickAction);
+        }
 
         if (clientList.length > 0) {
-          clientList[0].postMessage({
+          client.postMessage({
             type: "NOTIFICATION_CLICK",
-            notificationData: event.notification.data,
+            notificationData: event,
           });
         }
+        event.notification.close();
       })
   );
 });

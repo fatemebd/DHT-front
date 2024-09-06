@@ -11,3 +11,8 @@ export const DELETE_TASK = (id: number) => `/habits/todo/item/${id}/`;
 export const GET_HABIT_HISTORY = "/habits/report/monthly/";
 
 export const POST_FCM_TOKEN = "/habits/fcm/";
+
+export const GET_HABIT_DETAIL = (id: number) =>
+  `/habits/recurring/${id}/detail/`;
+
+export  const POST_DONE_HABIT = (id:number)=>`/habits/end-habit/${id}/`
