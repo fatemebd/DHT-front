@@ -15,9 +15,9 @@ const updateUserPic = async (file: File) => {
   formData.append("picture", file);
 
   const response = await axiosInstance.put(PUT_USER_PROFILE_PICTURE, formData, {
-    // headers: {
-    //   "Content-Type": undefined, // This should allow the browser to handle the content type automatically.
-    // },
+    headers: {
+      "Content-Type": undefined, // This should allow the browser to handle the content type automatically.
+    },
   });
 
   return response;

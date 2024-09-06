@@ -1,4 +1,4 @@
-import { UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import {
   IoAddOutline,
   IoReaderOutline,
@@ -8,6 +8,11 @@ import fa from "../fa.json";
 import { SiProbot } from "react-icons/si";
 
 export const sidebarItems = [
+  {
+    key: "homepage",
+    icon: <HomeOutlined className="text-2xl" />,
+    label: fa.home,
+  },
   {
     key: "profile",
     icon: <UserOutlined className="text-2xl" />,
