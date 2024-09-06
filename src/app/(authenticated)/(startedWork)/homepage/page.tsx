@@ -28,13 +28,16 @@ const Page = () => {
   fcmToken && console.log("FCM token:", fcmToken);
 
   const [open, setOpen] = useState(false);
-  const [notifId, setNotifId] = useState<number>();
+  const [notifIds, setNotifIds] = useState<{
+    habitId: number;
+    habitInstanceId: number;
+  }>();
 
   useEffect(() => {
-    if (typeof notifId === "number") {
+    if (typeof notifIds?.habitId === "number") {
       setOpen(true);
     }
-  }, [notifId]);
+  }, [notifIds]);
 
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
@@ -47,9 +50,14 @@ const Page = () => {
       navigator.serviceWorker.addEventListener("message", (event) => {
         // biome-ignore lint/nursery/noConsole: <explanation>
         console.log("Message received from service worker:", event);
-        setNotifId(
-          +event.data.data.habit_id || +event.data.notificationData.data.habit_id
-        );
+        setNotifIds({
+          habitId:
+            +event.data?.data?.habit_id ||
+            +event.data?.notificationData?.data?.habit_id,
+          habitInstanceId:
+            +event.data?.data?.habit_instance ||
+            +event.data?.notificationData?.data?.habit_instance,
+        });
       });
 
       return () => {
@@ -114,7 +122,7 @@ const Page = () => {
         open={open}
         onCancel={() => setOpen(false)}
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        id={notifId!}
+        ids={notifIds!}
       />
       <Header />
       <Row gutter={[16, 16]} justify="space-between" className="w-full h-full">

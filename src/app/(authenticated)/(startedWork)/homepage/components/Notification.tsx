@@ -12,13 +12,16 @@ const { Countdown } = Statistic;
 interface NotificationModalProps {
   open: boolean;
   onCancel: () => void;
-  id: number;
+  ids: {
+    habitId: number;
+    habitInstanceId: number;
+  };
 }
 
-const NotificationModal = ({ open, onCancel, id }: NotificationModalProps) => {
+const NotificationModal = ({ open, onCancel, ids }: NotificationModalProps) => {
   const [deadline, setDeadline] = useState();
   // biome-ignore lint/style/noNonNullAssertion: <explanation>
-  const { data } = useGetHabitDetail(id!);
+  const { data } = useGetHabitDetail(ids?.habitId!);
   const {
     mutate: changeHabitStatusMutate,
     isPending: isChangingStatusPending,
@@ -41,7 +44,7 @@ const NotificationModal = ({ open, onCancel, id }: NotificationModalProps) => {
 
   const handleDoneHabit = () => {
     changeHabitStatusMutate(
-      { id: id, data: { status: "DONE" } },
+      { id: ids?.habitInstanceId, data: { status: "DONE" } },
       {
         onSuccess: handleDoneSuccess,
       }
@@ -50,7 +53,7 @@ const NotificationModal = ({ open, onCancel, id }: NotificationModalProps) => {
 
   const handleUnDoneHabit = () => {
     changeHabitStatusMutate(
-      { id: id, data: { status: "UNDONE" } },
+      { id: ids?.habitInstanceId, data: { status: "UNDONE" } },
       { onSuccess: onCancel }
     );
   };
@@ -60,8 +63,8 @@ const NotificationModal = ({ open, onCancel, id }: NotificationModalProps) => {
     let timer: NodeJS.Timeout;
     if (open) {
       timer = setTimeout(() => {
-        handleUnDoneHabit;
-      }, data?.durationSeconds);
+        handleUnDoneHabit();
+      }, data?.durationSeconds! * 1000);
     }
 
     return () => {
@@ -86,8 +89,8 @@ const NotificationModal = ({ open, onCancel, id }: NotificationModalProps) => {
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         // value={data?.durationSeconds!}
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
-        value={Date.now() + data?.durationSeconds! * 1000 }
-        format="ss:SSS"
+        value={Date.now() + data?.durationSeconds! * 1000}
+        format="mm:ss:SSS"
       />
     </Modal>
   );
