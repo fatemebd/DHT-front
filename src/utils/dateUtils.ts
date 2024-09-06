@@ -100,12 +100,7 @@ export function formatPersianDate(isoDateString: string): string {
     "شنبه",
   ];
 
-  // Format the time using Intl
-  const timeFormatter = new Intl.DateTimeFormat("fa-IR", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
-  });
+  
 
   // const time = timeFormatter.format(date);
   const dayName = isToday ? "امروز" : dayNames[date.getDay()];
