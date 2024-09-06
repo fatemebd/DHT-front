@@ -11,6 +11,7 @@ import Score from "@/components/Score";
 import { useEndWork, useLogOut } from "@/app/(authenticated)/start-work/api";
 import { isClient } from "@/utils/detectUtils";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const { useBreakpoint } = Grid;
 
@@ -20,6 +21,7 @@ const Header = () => {
   const { mutate: logOutMutate, isPending: isLogOutPending } = useLogOut();
 
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleLogOut = () => {
     if (isClient()) {
@@ -27,6 +29,8 @@ const Header = () => {
       localStorage.removeItem("startWork");
       localStorage.removeItem("user");
       localStorage.removeItem("fcmToken");
+      queryClient.invalidateQueries();
+      queryClient.removeQueries();
 
       router.push("/login");
     }
@@ -40,6 +44,8 @@ const Header = () => {
     endWorkMutate();
     if (isClient()) {
       localStorage.removeItem("startWork");
+      queryClient.invalidateQueries();
+      queryClient.removeQueries();
     }
     router.push("/start-work");
   };
