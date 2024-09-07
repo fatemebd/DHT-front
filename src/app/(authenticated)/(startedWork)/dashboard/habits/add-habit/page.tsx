@@ -11,16 +11,18 @@ import {
   Radio,
   type RadioChangeEvent,
 } from "antd";
-import fa from "./fa.json";
+import fa from "../fa.json";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
-import coin from "../../../../../../public/coin.png";
+import coin from "../../../../../../../public/coin.png";
 import Image from "next/image";
 import { useCreateHabit } from "./api";
 import type { CreatedHabit } from "./api/api.types";
 import globalFa from "@/fa.json";
 import { useState } from "react";
 import { convertToSeconds } from "@/utils/timeUtils";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 const { TextArea } = Input;
 
 const Page = () => {
@@ -32,8 +34,16 @@ const Page = () => {
   const { mutate: createHabitMutate, isPending: isCreateHabitPending } =
     useCreateHabit();
 
+  const router = useRouter();
+
   const onTimeFormatChange = (e: RadioChangeEvent) => {
     setRecurrenceFormat(e.target.value);
+  };
+
+  const handleActionSucceeded = () => {
+    toast.success(globalFa.createdSuccessfully);
+    form.resetFields();
+    router.push("/dashboard/habits");
   };
 
   const handleActionFailed = (error: unknown) => {
@@ -51,7 +61,7 @@ const Page = () => {
       ),
     };
     createHabitMutate(postData, {
-      onSuccess: () => toast.success(globalFa.createdSuccessfully),
+      onSuccess:  handleActionSucceeded,
       onError: handleActionFailed,
     });
   };

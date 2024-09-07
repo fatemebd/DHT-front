@@ -19,11 +19,19 @@ const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
     setShowContent(!showContent);
   };
 
+  const handleToggleDoneTask =()=>{
+
+  }
+
   return (
     <div className="bg-white bg-opacity-20 rounded-md m-3 py-1 px-2 ">
       <Row justify="space-between" align="middle">
         <Col span={8} className="flex items-center gap-2">
-          <Checkbox checked={done} disabled={done} />
+          <Checkbox
+            checked={done}
+            disabled={done}
+            onChange={handleToggleDoneTask}
+          />
           <Typography
             className={done ? "text-gray-800 line-through	" : "text-white"}
           >
