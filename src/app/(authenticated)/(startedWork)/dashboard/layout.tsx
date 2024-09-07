@@ -86,9 +86,8 @@ const DashboardLayout = ({ children }: LayoutProps) => {
           </div>
         </Header>
         <Content
-          className="bg-[#1E2642] shadow-lg pb-15"
+          className="bg-[#1E2642] shadow-lg pb-15 p-5 md:p-16"
           style={{
-            padding: 24,
             minHeight: 280,
             background: "#1E2642",
             borderRadius: borderRadiusLG,

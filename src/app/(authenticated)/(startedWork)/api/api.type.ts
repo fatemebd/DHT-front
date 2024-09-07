@@ -1,3 +1,5 @@
+import type { Dayjs } from "dayjs";
+
 export interface User {
   id: number;
   email: string;
@@ -10,6 +12,6 @@ export interface User {
   allowedChangeProfile: boolean;
   firstName: string;
   lastName: string;
-  dateOfBirth: string;
+  dateOfBirth: Dayjs | null;
   user:number;
 }
