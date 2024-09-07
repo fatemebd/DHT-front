@@ -23,7 +23,7 @@ import type {
   Task,
 } from "./api.types";
 import { useMutation } from "@tanstack/react-query";
-import type { CreatedHabit } from "../../dashboard/add-habit/api/api.types";
+import type { CreatedHabit } from "../../dashboard/habits/add-habit/api/api.types";
 
 const getToDoList = async (signal: AbortSignal) => {
   const response: ListResponse<Task> = await axiosInstance.get(GET_TO_DO_LIST, {
