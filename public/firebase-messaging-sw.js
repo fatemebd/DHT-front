@@ -26,7 +26,8 @@ messaging.onBackgroundMessage((payload) => {
     .matchAll({ type: "window", includeUncontrolled: true })
     .then((clientList) => {
       const client = clientList.find(
-        (c) => c.url === "http://localhost:3000/homepage"
+        // (c) => c.url === "http://localhost:3000/homepage"
+        (c) => c.url === "https://panel-doost.liara.run/homepage"
       );
 
       if (client && "focus" in client) {
@@ -54,14 +55,14 @@ messaging.onBackgroundMessage((payload) => {
   );
 });
 self.addEventListener("notificationclick", (event) => {
-  const clickAction = "http://localhost:3000/homepage";
+  // const clickAction = "http://localhost:3000/homepage";
+  const clickAction = "https://panel-doost.liara.run/homepage";
 
   event.waitUntil(
     clients
       .matchAll({ type: "window", includeUncontrolled: true })
       .then((clientList) => {
         const client = clientList.find((c) => c.url === clickAction);
-
 
         if (client && "focus" in client) {
           client.focus();

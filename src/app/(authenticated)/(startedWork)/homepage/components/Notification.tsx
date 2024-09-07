@@ -90,7 +90,7 @@ const NotificationModal = ({ open, onCancel, ids }: NotificationModalProps) => {
         // value={data?.durationSeconds!}
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         value={Date.now() + data?.durationSeconds! * 1000}
-        format="mm:ss:SSS"
+        format="mm:ss"
       />
     </Modal>
   );
