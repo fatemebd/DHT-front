@@ -3,25 +3,25 @@ import { Button, Checkbox, Col, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { IoNewspaper, IoTrashBinOutline } from "react-icons/io5";
 import { twMerge } from "tailwind-merge";
-import type{ Task } from "../api/api.types";
+import type { Task } from "../api/api.types";
 import { FaRegTrashCan, FaTrash } from "react-icons/fa6";
-import { useDeleteTask } from "../api";
-
-
+import { useChangeTaskStatus, useDeleteTask } from "../api";
 
 const TaskComponent = ({ id, title, description, done, deadline }: Task) => {
   const [showContent, setShowContent] = useState(false);
 
-    const { mutate: deleteTaskMutate, isPending: isDeleteTaskPending } =
-      useDeleteTask();
+  const { mutate: deleteTaskMutate, isPending: isDeleteTaskPending } =
+    useDeleteTask();
+
+  const { mutate: changeTaskStatus } = useChangeTaskStatus();
 
   const handleToggleContent = () => {
     setShowContent(!showContent);
   };
 
-  const handleToggleDoneTask =()=>{
-
-  }
+  const handleToggleDoneTask = () => {
+    changeTaskStatus({ id: id, data: { done: !done } });
+  };
 
   return (
     <div className="bg-white bg-opacity-20 rounded-md m-3 py-1 px-2 ">

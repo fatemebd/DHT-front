@@ -11,6 +11,7 @@ import {
   POST_FCM_TOKEN,
   GET_HABIT_DETAIL,
   POST_DONE_HABIT,
+  POST_DONE_TASK,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse, Response } from "@/@types/server";
@@ -92,6 +93,14 @@ const changeHabitStatus = async ({
   data,
 }: { id: number; data: HabitStatus }) => {
   const response = await axiosInstance.put(POST_DONE_HABIT(id), data);
+  return response;
+};
+
+const changeTaskStatus = async ({
+  id,
+  data,
+}: { id: number; data: { done: boolean } }) => {
+  const response = await axiosInstance.post(POST_DONE_TASK(id), data);
   return response;
 };
 
@@ -198,5 +207,17 @@ export const useChangeHabitStatus = () => {
   return useMutation({
     mutationKey: [POST_DONE_HABIT],
     mutationFn: changeHabitStatus,
+  });
+};
+
+export const useChangeTaskStatus = () => {
+  const { refetch } = useGetToDoList();
+
+  return useMutation({
+    mutationKey: [POST_DONE_TASK],
+    mutationFn: changeTaskStatus,
+    onSuccess: () => {
+      refetch();
+    },
   });
 };
