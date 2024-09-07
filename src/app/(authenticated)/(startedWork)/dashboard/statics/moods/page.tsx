@@ -3,57 +3,21 @@ import React from "react";
 import {
   PieChart,
   Pie,
-  Cell,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 import fa from "../fa.json";
 import { moods } from "@/components/moodTracker/constants/Moods";
 import Image from "next/image";
 import { Col, Grid, Row, Typography } from "antd";
+import { useGetMoodsReport } from "./api";
 const { useBreakpoint } = Grid;
 
-// Define the props for the PieChart component
-interface SimplePieChartProps {
-  thrilled: number;
-  happy: number;
-  neutral: number;
-  sad: number;
-  verySad: number;
-}
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
-const rawData: ChartDataItem[] = [
-  {
-    name: "verySad",
-    value: 50,
-  },
-  {
-    name: "sad",
-    value: 25,
-  },
-  {
-    name: "neutral",
-    value: 25,
-  },
-  {
-    name: "happy",
-    value: 0,
-  },
-  {
-    name: "thrilled",
-    value: 0,
-  },
-];
-type ChartDataItem = {
-  name: "neutral" | "verySad" | "sad" | "happy" | "thrilled";
-  value: number;
-};
-
 const SimplePieChart = () => {
+
+  const {data:moodReport} =useGetMoodsReport()
   // Transform the rawData into an array suitable for rendering in PieChart
-  const mappedData = rawData.map((item) => {
+  const mappedData = moodReport?.map((item) => {
     return { name: fa[item.name], value: item.value };
   });
   const screens = useBreakpoint();
