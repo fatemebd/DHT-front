@@ -110,7 +110,7 @@ export const useGetToDoList = () => {
   });
 };
 
-export const useGetHabitsList = () => {
+export const useGetTodayHabitsList = () => {
   return useQuery({
     queryKey: [GET_TODAY_HABITS_LIST],
     queryFn: ({ signal }) => getHabitsList(signal),
