@@ -62,9 +62,10 @@ const AddTask = ({ handleClose }: { handleClose: () => void }) => {
         rules={[{ required: true, message: globalFa.required }]}
       >
         <DatePickerJalali
+
           format="YYYY-MM-DD HH:mm:ss"
           showTime={{ defaultValue: dayjs("00:00:00", "HH:mm:ss") }}
-          className="text-black w-full"
+          className="text-black w-full "
         />
       </Form.Item>
       <Form.Item className="mt-5 flex w-full justify-end">

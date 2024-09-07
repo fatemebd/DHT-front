@@ -67,6 +67,7 @@ body {
 }
 .ant-picker-panel-container{
   background-color: rgba(3, 6, 55, 1) !important;
+  width:100% !important
 }
 .ant-picker-dropdown .ant-picker-header button{
   color: #fff !important;
@@ -86,6 +87,8 @@ body {
 }
 .ant-picker-dropdown .ant-picker-time-panel-column >li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner{
   background: transparent !important;
+    width:90% !important
+
 }
 
 .ant-tabs .ant-tabs-tab {
@@ -95,3 +98,10 @@ body {
 .ant-tabs-dropdown .ant-tabs-dropdown-menu{
   background-color:#363d56 ;
 } 
+
+@media (max-width: 600px) {
+  .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panel-layout{
+    width:340px !important;
+    overflow-x:scroll;
+  }
+}
