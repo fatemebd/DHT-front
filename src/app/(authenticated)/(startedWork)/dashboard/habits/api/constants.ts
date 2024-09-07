@@ -1,0 +1,1 @@
+export const GET_HABITS_LIST="/habits/user/list/"

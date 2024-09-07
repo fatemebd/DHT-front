@@ -48,7 +48,15 @@ export default function RootLayout({
               },
               Dropdown: {
                 colorBgElevated: "#363d56",
-              },
+              }, Table: {
+      headerBg: "rgb(115,57,237)",
+      colorBgContainer: "rgb(4,13,44)",
+      headerColor: "rgba(255,255,255,0.88)",
+      borderColor: "rgba(0,0,0,0.2)",
+      colorText: "rgba(255,255,255,0.88)"
+              }, Empty: {
+      colorTextDescription: "rgba(255,255,255,0.45)"
+    }
             },
 
             token: {

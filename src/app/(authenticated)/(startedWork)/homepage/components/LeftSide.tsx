@@ -1,12 +1,12 @@
 import { Typography } from "antd";
 import { MoodTracker } from "@/components/moodTracker";
 import { useGetUserDetail } from "../../api";
-import { useGetHabitsList } from "../api";
+import { useGetTodayHabitsList } from "../api";
 import HabitComponent from "./Habit";
 
 const LeftSide = () => {
   const { data: user } = useGetUserDetail();
-  const { data: habitsList } = useGetHabitsList();
+  const { data: habitsList } = useGetTodayHabitsList();
   return (
     <>
       <MoodTracker mood={user?.mood} />

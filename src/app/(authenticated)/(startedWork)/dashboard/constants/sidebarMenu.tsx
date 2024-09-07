@@ -6,6 +6,8 @@ import {
 } from "react-icons/io5";
 import fa from "../fa.json";
 import { SiProbot } from "react-icons/si";
+import { CiViewList } from "react-icons/ci";
+
 
 export const sidebarItems = [
   {
@@ -19,9 +21,9 @@ export const sidebarItems = [
     label: fa.profile,
   },
    {
-    key: "add-habit",
-    icon: <IoAddOutline className="text-2xl" />,
-    label: fa.addHabit,
+    key: "habits",
+    icon: <CiViewList className="text-2xl" />,
+    label: fa.habits,
   },
   {
     key: "statics/habits",
