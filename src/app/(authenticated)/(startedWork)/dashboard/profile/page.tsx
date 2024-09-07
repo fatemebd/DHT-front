@@ -61,11 +61,16 @@ const Page = () => {
     //   ),
     // };
     form.setFieldsValue(user);
-    setBirthDate(
-      convertJalaaliToGregorian(
-        user?.dateOfBirth.format("YYYY-MM-DD") || "2024-9-1"
-      )
-    );
+    if( user?.dateOfBirth === null){
+setBirthDate("1381-7-2")
+    }else{
+
+      setBirthDate(
+        convertJalaaliToGregorian(
+          user?.dateOfBirth.format("YYYY-MM-DD") || "1381-7-2"
+        )
+      );
+    }
   }, [user, form]);
 
   const handleOpenModal = () => {
@@ -157,9 +162,9 @@ const Page = () => {
         form={form}
         onFinish={onFinish}
         layout="vertical"
-        className="md:px-72 px-5"
+        className="md:px-72 px-2"
       >
-        <div className="mb-8 flex items-center gap-5">
+        <div className="mb-8 flex md:flex-row flex-col items-center gap-5">
           <div className="w-fit relative">
             <Avatar
               src={user?.picture}

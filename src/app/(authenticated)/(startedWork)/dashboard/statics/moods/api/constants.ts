@@ -1,0 +1,1 @@
+export const GET_NOODS_REPORT= "/mood-tracker/report/";

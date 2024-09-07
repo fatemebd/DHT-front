@@ -18,10 +18,10 @@ export const sidebarItems = [
     icon: <UserOutlined className="text-2xl" />,
     label: fa.profile,
   },
-  {
-    key: "suggest-habit",
-    icon: <IoReaderOutline className="text-2xl" />,
-    label: fa.suggestHabit,
+   {
+    key: "add-habit",
+    icon: <IoAddOutline className="text-2xl" />,
+    label: fa.addHabit,
   },
   {
     key: "statics/habits",
@@ -29,10 +29,10 @@ export const sidebarItems = [
     label: fa.statics,
   },
   {
-    key: "add-habit",
-    icon: <IoAddOutline className="text-2xl" />,
-    label: fa.addHabit,
-  },
+    key: "suggest-habit",
+    icon: <IoReaderOutline className="text-2xl" />,
+    label: fa.suggestHabit,
+  }, 
   {
     key: "doost-club",
     icon: <SiProbot className="text-2xl" />,
