@@ -31,3 +31,10 @@ export interface FCMToken {
 export interface HabitStatus {
   status: "DONE" | "UNDONE";
 }
+
+export interface Exercise {
+  id: number;
+  name: string;
+  description: string;
+  media: string;
+}

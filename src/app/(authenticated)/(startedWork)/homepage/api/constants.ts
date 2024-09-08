@@ -17,3 +17,6 @@ export const GET_HABIT_DETAIL = (id: number) =>
 
 export const POST_DONE_HABIT = (id: number) => `/habits/end-habit/${id}/`;
 export const POST_DONE_TASK = (id: number) => `/habits/todo/item/end/${id}/`;
+
+export const GET_EXERCISES_LIST = "/exercise/list/";
+export const GET_EXERCISE_DETAIL = (id: number) => `/exercise/${id}/`;

@@ -15,6 +15,7 @@ import RightSide from "./components/RightSide";
 import { isClient } from "@/utils/detectUtils";
 import { usePathname, useRouter } from "next/navigation";
 import NotificationModal from "./components/Notification";
+import Exercise from "./components/Exercise";
 
 const { useBreakpoint } = Grid;
 
@@ -32,6 +33,8 @@ const Page = () => {
     habitId: number;
     habitInstanceId: number;
   }>();
+
+  const [exerciseOpen, setExerciseOpen] = useState(false);
 
   useEffect(() => {
     if (typeof notifIds?.habitId === "number") {
@@ -67,47 +70,6 @@ const Page = () => {
     }
   }, []);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const user = localStorage.getItem("user");
-  //     if (user) {
-  //       setOpen(true);
-  //     }
-  //   }
-  //   if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-  //     const messaging = getMessaging(firebaseApp);
-  //     const unsubscribe = onMessage(messaging, () => {});
-  //     return () => {
-  //       unsubscribe(); // Unsubscribe from the onMessage event
-  //     };
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   // Function to handle the storage event
-  //   const handleStorageChange = (event: StorageEvent): void => {
-  //     if (isClient()) {
-  //       if (event.key === "notifId") {
-  //         // biome-ignore lint/nursery/noConsole: <explanation>
-  //         console.log("localStorage item 'myItem' changed:", event.newValue);
-  //         // Update the state when localStorage changes
-  //         // setStoredValue(event.newValue);
-  //         setOpen(true);
-  //         localStorage.removeItem("notifId");
-  //       }
-  //     }
-  //   };
-
-  //   // Add the event listener for storage changes
-  //   window.addEventListener("storage", handleStorageChange);
-
-  //   // Cleanup the event listener on component unmount
-  //   return () => {
-  //     window.removeEventListener("storage", handleStorageChange);
-  //   };
-  // }, []);
-
   const handleSearch = (value: string) => {
     if (value) {
       window.location.href = `https://www.google.com/search?q=${encodeURIComponent(
@@ -124,7 +86,11 @@ const Page = () => {
         // biome-ignore lint/style/noNonNullAssertion: <explanation>
         ids={notifIds!}
       />
-      <Header />
+      <Exercise
+        open={exerciseOpen}
+        handleClose={() => setExerciseOpen(false)}
+      />
+      <Header handleOpenExercise={()=>setExerciseOpen(true)} />
       <Row gutter={[16, 16]} justify="space-between" className="w-full h-full">
         <Col
           md={{ span: 6, order: 0 }}
