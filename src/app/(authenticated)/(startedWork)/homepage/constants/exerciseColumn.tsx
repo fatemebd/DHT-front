@@ -18,11 +18,13 @@ export const tableColumns = ({
     title: fa.description,
     dataIndex: "description",
     key: "description",
+    ellipsis:true
   },
   {
     key: "open",
     render: (record: Exercise) => {
       return <IoMdOpen className="hover:cursor-pointer" onClick={() => setExerciseId(record.id)} />;
     },
+    width:50
   },
 ];

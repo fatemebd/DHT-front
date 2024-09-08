@@ -50,7 +50,7 @@ const ExerciseModal = ({ open, handleClose }: ExerciseProps) => {
       closeIcon={<IoCloseOutline className="text-white " />}
     >
       {typeof exerciseId === "number" ? (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           {/* biome-ignore lint/style/noNonNullAssertion: <explanation> */}
           {isGif(exercise?.media!) ? (
             <img
@@ -60,8 +60,15 @@ const ExerciseModal = ({ open, handleClose }: ExerciseProps) => {
               loading="lazy"
             />
           ) : (
-            // biome-ignore lint/style/noNonNullAssertion: <explanation>
-            <Image alt={exercise?.name!} src={exercise?.media!} fill />
+            <Image
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              alt={exercise?.name!}
+              // biome-ignore lint/style/noNonNullAssertion: <explanation>
+              src={exercise?.media!}
+              width={500}
+              height={100}
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
           )}
           <Typography className="text-base font-normal mt-5">
             {exercise?.description}
