@@ -15,7 +15,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const { useBreakpoint } = Grid;
 
-const Header = () => {
+const Header = ({ handleOpenExercise }: { handleOpenExercise: () => void }) => {
   const { data: user } = useGetUserDetail();
   const { mutate: endWorkMutate, isPending: isEndWorkPending } = useEndWork();
   const { mutate: logOutMutate, isPending: isLogOutPending } = useLogOut();
@@ -38,7 +38,11 @@ const Header = () => {
     }
   };
 
-  const items = getUserItems({ logout: handleLogOut, isLogOutPending });
+  const items = getUserItems({
+    logout: handleLogOut,
+    isLogOutPending,
+    handleOpenExercise,
+  });
 
   const screens = useBreakpoint();
 
@@ -88,11 +92,6 @@ const Header = () => {
           >
             {fa.endWork}
           </Button>
-          {/* <Link href="/dashboard/profile">
-          </Link>
-          <Link href="/">
-            <MdOutlineSportsMartialArts className="text-white opacity-20 md:text-3xl text-2xl" />
-          </Link> */}
         </Col>
       </Row>
       <Typography className="my-2">{user?.dailyQuote}</Typography>

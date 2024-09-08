@@ -12,10 +12,13 @@ import {
   GET_HABIT_DETAIL,
   POST_DONE_HABIT,
   POST_DONE_TASK,
+  GET_EXERCISES_LIST,
+  GET_EXERCISE_DETAIL,
 } from "./constants";
 import { useQuery } from "@tanstack/react-query";
 import type { ListResponse, Response } from "@/@types/server";
 import type {
+  Exercise,
   FCMToken,
   Habit,
   HabitHistoryDay,
@@ -68,6 +71,16 @@ const getHabitHistory = async (signal: AbortSignal) => {
   return response.data;
 };
 
+const getExercisesList = async (signal: AbortSignal) => {
+  const response: ListResponse<Exercise> = await axiosInstance.get(
+    GET_EXERCISES_LIST,
+    {
+      signal,
+    },
+  );
+  return response.data;
+};
+
 const createReminder = async (reminder: Reminder) => {
   const response = await axiosInstance.post(CREATE_NEW_REMINDER, reminder);
   return response;
@@ -112,6 +125,14 @@ const getHabitDetail = async (signal: AbortSignal, id: number) => {
   return response.data;
 };
 
+const getExerciseDetail = async (signal: AbortSignal, id: number) => {
+  const response: Response<Exercise> = await axiosInstance.get(
+    GET_EXERCISE_DETAIL(id),
+    { signal },
+  );
+  return response.data;
+};
+
 export const useGetToDoList = () => {
   return useQuery({
     queryKey: [GET_TO_DO_LIST],
@@ -123,6 +144,13 @@ export const useGetTodayHabitsList = () => {
   return useQuery({
     queryKey: [GET_TODAY_HABITS_LIST],
     queryFn: ({ signal }) => getHabitsList(signal),
+  });
+};
+
+export const useGetExercisesList = () => {
+  return useQuery({
+    queryKey: [GET_EXERCISES_LIST],
+    queryFn: ({ signal }) => getExercisesList(signal),
   });
 };
 
@@ -144,6 +172,14 @@ export const useGetHabitDetail = (id: number) => {
   return useQuery({
     queryKey: [GET_HABIT_DETAIL],
     queryFn: ({ signal }) => getHabitDetail(signal, id),
+    enabled: !!id,
+  });
+};
+
+export const useGetExerciseDetail = (id: number) => {
+  return useQuery({
+    queryKey: [GET_EXERCISE_DETAIL(id)],
+    queryFn: ({ signal }) => getExerciseDetail(signal, id),
     enabled: !!id,
   });
 };

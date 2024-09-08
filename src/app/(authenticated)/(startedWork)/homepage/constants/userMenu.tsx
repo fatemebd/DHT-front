@@ -9,8 +9,10 @@ import type { MenuProps } from "antd";
 export const getUserItems = ({
   logout,
   isLogOutPending,
+  handleOpenExercise,
 }: {
   logout: () => void;
+  handleOpenExercise: () => void;
   isLogOutPending: boolean;
 }): MenuProps["items"] => [
   {
@@ -20,7 +22,8 @@ export const getUserItems = ({
   },
   {
     key: 2,
-    label: <Link href="/dashboard/exercise">{fa.exercise}</Link>,
+    label: fa.exercise,
+    onClick: handleOpenExercise,
     icon: <MdOutlineSportsMartialArts />,
   },
   {
@@ -29,6 +32,6 @@ export const getUserItems = ({
     label: fa.logout,
     disabled: isLogOutPending,
     icon: <IoExitOutline size={20} />,
-    onClick: logout
+    onClick: logout,
   },
 ];

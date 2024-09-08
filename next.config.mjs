@@ -4,6 +4,9 @@ const nextConfig = {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
+  images: {
+    domains: ["doost-apis.liara.run"],
+  },
 };
 
 export default nextConfig;
