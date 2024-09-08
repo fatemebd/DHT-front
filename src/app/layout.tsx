@@ -61,6 +61,9 @@ export default function RootLayout({
                 borderColor: "rgba(0,0,0,0.2)",
                 colorText: "rgba(255,255,255,0.88)",
               },
+              Tour: {
+                colorBgElevated: "#363d56",
+              },
               Empty: {
                 colorTextDescription: "rgba(255,255,255,0.45)",
               },
