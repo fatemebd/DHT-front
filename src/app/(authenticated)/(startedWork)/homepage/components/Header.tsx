@@ -1,5 +1,14 @@
-import { Button, Col, Dropdown, Grid, Row, Typography } from "antd";
-import React from "react";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Grid,
+  Row,
+  Tour,
+  type TourProps,
+  Typography,
+} from "antd";
+import React, { type MutableRefObject } from "react";
 import logo from "../../../../../../public/logo.png";
 import Image from "next/image";
 import fa from "@/fa.json";
@@ -15,7 +24,13 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const { useBreakpoint } = Grid;
 
-const Header = ({ handleOpenExercise }: { handleOpenExercise: () => void }) => {
+const Header = ({
+  handleOpenExercise,
+  refA,
+}: {
+  handleOpenExercise: () => void;
+  refA: MutableRefObject<null>;
+}) => {
   const { data: user } = useGetUserDetail();
   const { mutate: endWorkMutate, isPending: isEndWorkPending } = useEndWork();
   const { mutate: logOutMutate, isPending: isLogOutPending } = useLogOut();
@@ -89,6 +104,7 @@ const Header = ({ handleOpenExercise }: { handleOpenExercise: () => void }) => {
             onClick={handleEndWork}
             icon={<BsClockHistory />}
             disabled={isEndWorkPending}
+            ref={refA}
           >
             {fa.endWork}
           </Button>

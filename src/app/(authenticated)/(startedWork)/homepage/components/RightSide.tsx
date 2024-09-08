@@ -3,13 +3,19 @@ import { useGetRemindersList, useGetToDoList } from "../api";
 import TaskComponent from "./Task";
 import fa from "../fa.json";
 import ReminderComponent from "./Reminder";
-import { useState } from "react";
+import { type MutableRefObject, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { IoCloseOutline } from "react-icons/io5";
 import AddTask from "./AddTask";
 import AddReminder from "./AddReminder";
 
-const RightSide = () => {
+const RightSide = ({
+  reminderRef,
+  taskRef,
+}: {
+  reminderRef: MutableRefObject<null>;
+  taskRef: MutableRefObject<null>;
+}) => {
   const { data: remindersList } = useGetRemindersList();
   const { data: toDoListData } = useGetToDoList();
   const [modalContent, setModalContent] = useState<
@@ -56,6 +62,7 @@ const RightSide = () => {
         </div>
 
         <Button
+          ref={taskRef}
           onClick={() => setModalContent("addTask")}
           className="w-full flex-row-reverse"
           icon={<PlusOutlined />}
@@ -80,6 +87,7 @@ const RightSide = () => {
           ))}
         </div>
         <Button
+          ref={reminderRef}
           onClick={() => setModalContent("addReminder")}
           className="w-full flex-row-reverse"
           icon={<PlusOutlined />}
