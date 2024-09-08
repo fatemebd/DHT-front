@@ -74,7 +74,7 @@ const Page = () => {
 
   const handleSendEmail = () => {
     postEmailMutate(
-      { email: email },
+      { email: email.toLocaleLowerCase() },
       {
         onSuccess: handleEmailSentSuccess,
         onError: handleEmailSentFailed,
@@ -94,7 +94,7 @@ const Page = () => {
   const handleOtp = () => {
     // signIn("credentials")
     postOtpMutate(
-      { email: email, otp: otpCode },
+      { email: email.toLocaleLowerCase(), otp: otpCode },
       { onSuccess: handleOtpSentSuccess, onError: handleOtpSentFailed }
     );
   };
