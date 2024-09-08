@@ -1,4 +1,5 @@
 "use client";
+
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import QueryClientProvider from "@/providers/QueryClientProvider";
@@ -6,6 +7,7 @@ import { ConfigProvider } from "antd";
 import faLocale from "antd/lib/locale/fa_IR";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "next/head";
 export default function RootLayout({
   children,
   session,
@@ -15,6 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
+      <head>
+        <title>دوست</title>
+        <link rel="icon" type="image/x-icon" href="/logo.png" />
+      </head>
       <body
         dir="rtl"
         className="flex h-screen items-center justify-center bg-secondary-1000"
@@ -48,15 +54,17 @@ export default function RootLayout({
               },
               Dropdown: {
                 colorBgElevated: "#363d56",
-              }, Table: {
-      headerBg: "rgb(115,57,237)",
-      colorBgContainer: "rgb(4,13,44)",
-      headerColor: "rgba(255,255,255,0.88)",
-      borderColor: "rgba(0,0,0,0.2)",
-      colorText: "rgba(255,255,255,0.88)"
-              }, Empty: {
-      colorTextDescription: "rgba(255,255,255,0.45)"
-    }
+              },
+              Table: {
+                headerBg: "rgb(115,57,237)",
+                colorBgContainer: "rgb(4,13,44)",
+                headerColor: "rgba(255,255,255,0.88)",
+                borderColor: "rgba(0,0,0,0.2)",
+                colorText: "rgba(255,255,255,0.88)",
+              },
+              Empty: {
+                colorTextDescription: "rgba(255,255,255,0.45)",
+              },
             },
 
             token: {
@@ -70,6 +78,9 @@ export default function RootLayout({
           }}
         >
           <SessionProvider session={session}>
+            <Head>
+              <title>دوست</title>
+            </Head>
             <ToastContainer theme="dark" />
             <QueryClientProvider>{children} </QueryClientProvider>
           </SessionProvider>

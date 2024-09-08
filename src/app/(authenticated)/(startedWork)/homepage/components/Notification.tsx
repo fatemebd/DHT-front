@@ -64,6 +64,7 @@ const NotificationModal = ({ open, onCancel, ids }: NotificationModalProps) => {
     if (open) {
       timer = setTimeout(() => {
         handleUnDoneHabit();
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
       }, data?.durationSeconds! * 1000);
     }
 
