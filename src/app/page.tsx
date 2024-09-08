@@ -5,21 +5,19 @@ import landing from "../../public/Work in progress-cuate.png";
 import logo from "../../public/logo.png";
 import { accordionItems } from "./constants/accordionItems";
 import fa from "./fa.json";
+import { Button, Typography } from "antd";
 
 export default function Landing() {
   return (
-    <div className="flex flex-col p-10">
+    <div className="flex flex-col h-screen  p-10">
       <header className="flex justify-between">
         <div className="flex justify-center items-center gap-2">
           <Image src={logo} alt="logo" width={30} />
           <h2 className="text-primary-1000 font-bold text-3xl">{fa.title}</h2>
         </div>
-        <Link
-          href="/login"
-          className="text-white bg-primary-900 px-4 py-2 rounded-lg hover:bg-primary-600 flex items-center"
-        >
-          {fa.loginSignup}
-        </Link>
+        <Button type="primary">
+          <Link href="/login">{fa.loginSignup}</Link>
+        </Button>
       </header>
 
       <div className="flex justify-between items-center h-[100vh]">
@@ -42,7 +40,7 @@ export default function Landing() {
           <Image src={landing} alt="" className="w-full h-[600px]" />
         </div>
       </div>
-
+      <Typography>ویژگی‌های دوست</Typography>
       <Accordion items={accordionItems} />
     </div>
   );

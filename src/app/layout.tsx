@@ -23,7 +23,7 @@ export default function RootLayout({
       </head>
       <body
         dir="rtl"
-        className="flex items-center justify-center bg-secondary-1000"
+        className="flex h-screen items-center justify-center bg-secondary-1000"
       >
         <ConfigProvider
           locale={faLocale}
