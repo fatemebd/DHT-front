@@ -99,9 +99,17 @@ body {
   background-color:#363d56 ;
 } 
 
-@media (max-width: 600px) {
+@media (max-width: 660px) {
   .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panel-layout{
     width:340px !important;
     overflow-x:scroll;
   }
+}
+
+.ant-picker {
+width: 100%;
+}
+
+.ant-picker-panel-layout{
+  width: 500px !important;
 }

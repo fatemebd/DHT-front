@@ -32,11 +32,12 @@ import type { UploadFile, UploadProps } from "antd/lib/upload/interface";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Page = () => {
+
   useJalaliLocaleListener();
 
   const [form] = Form.useForm();
 
-  const [birthDate, setBirthDate] = useState("2024-9-1");
+  const [birthDate, setBirthDate] = useState<string>();
   const [profileModal, setProfileModal] = useState(false);
 
   const { data: user } = useGetUserDetail();
@@ -61,16 +62,16 @@ const Page = () => {
     //   ),
     // };
     form.setFieldsValue(user);
-    if( user?.dateOfBirth === null){
-setBirthDate("1381-7-2")
-    }else{
-
-      setBirthDate(
-        convertJalaaliToGregorian(
-          user?.dateOfBirth.format("YYYY-MM-DD") || "1381-7-2"
-        )
-      );
-    }
+    // if (user?.dateOfBirth === null) {
+    //   setBirthDate("1381-7-2");
+    // } 
+    //else {
+    //   setBirthDate(
+    //     convertJalaaliToGregorian(
+    //       user?.dateOfBirth.format("YYYY-MM-DD") || "1381-7-2"
+    //     )
+    //   );
+    // }
   }, [user, form]);
 
   const handleOpenModal = () => {
@@ -199,7 +200,7 @@ setBirthDate("1381-7-2")
           <DatePickerJalali
             // defaultValue={birthDate}
             onChange={onChange}
-            className="text-black w-full"
+            className="text-black w-"
           />
         </Form.Item>
         <Form.Item>

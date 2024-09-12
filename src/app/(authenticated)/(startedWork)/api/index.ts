@@ -10,7 +10,7 @@ const getUserDetail = async (signal: AbortSignal) => {
 	const response: Response<User> = await axiosInstance.get(GET_USER_DETAIL, {
 		signal,
 	});
-	if(response.data.dateOfBirth){
+	if(response.data.dateOfBirth!==null){
 		return { ...response.data, dateOfBirth: dayjs(response.data.dateOfBirth) };
 	}
 	return response.data

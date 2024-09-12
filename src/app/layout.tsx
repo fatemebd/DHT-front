@@ -1,6 +1,4 @@
-"use client";
 
-import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import QueryClientProvider from "@/providers/QueryClientProvider";
 import { ConfigProvider } from "antd";
@@ -8,9 +6,56 @@ import faLocale from "antd/lib/locale/fa_IR";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
+import type { Metadata, Viewport } from "next";
+
+const APP_NAME = "دوست";
+const APP_DEFAULT_TITLE = "دوست";
+const APP_TITLE_TEMPLATE = "%s - PWA App";
+const APP_DESCRIPTION = "یک ردیاب عادت برای حفظ بیشتر سلامتی شما";
+
+export const metadata: Metadata = {
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFFFFF",
+};
+
+
 export default function RootLayout({
   children,
-  session,
 }: Readonly<{
   children: React.ReactNode;
   session: never;
@@ -79,13 +124,11 @@ export default function RootLayout({
             },
           }}
         >
-          <SessionProvider session={session}>
             <Head>
               <title>دوست</title>
             </Head>
             <ToastContainer theme="dark" />
             <QueryClientProvider>{children} </QueryClientProvider>
-          </SessionProvider>
         </ConfigProvider>
       </body>
     </html>
